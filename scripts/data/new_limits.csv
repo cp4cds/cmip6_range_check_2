@@ -1,0 +1,99 @@
+table,var,limit name,Max,Min,kind,status,basis
+Amon,rsds,mean_absolute_valid ..,220,,update,robust,"Range set was too narrow, one model exceded by 0.08 W m-2."
+Amon,rlds,mean_absolute_valid ..,360,,update,robust,"Range set was too narrow, one model exceded by 5 W m-2. 40 models examined have a compact distribution."
+Amon,rsdt,mean_absolute_valid ..,400,,update,robust,"Range set was too narrow. This was also a problem in CMIP5, but nor corrcected at that stage."
+Amon,rlds,mean_absolute_valid ..,400,,update,robust,"Range set was too narrow, two models exceded by less than 5 W m-2. 40 models examined have a compact distribution."
+Amon,rsdscs,copy Amon.rsds,,,new,,No range set .. variable is equivalent to rsds.
+Amon,ua,valid_max_l0,80,-80,new,proposed,
+Amon,ua,valid_max,250,-250,new,proposed,
+Amon,va,valid_max_l0,80,-80,new,proposed,
+Amon,va,valid_max,250,-250,new,proposed,
+Amon,ta,valid_max_l0,340,150,new,proposed,
+Amon,ta,valid_max,400,80,new,proposed,
+Omon,tos,valid_max,40,-8,new,proposed,
+Omon,tos,mean_absolute_valid,20,8,new,proposed,
+Lmon,vCwd,valid_min,200,-0.01,new,proposed,
+Lmon,cLeaf,valid_min,200,-0.01,new,proposed,
+Lmon,cLitterAbove,valid_min,200,-0.01,new,proposed,
+Lmon,cLitterBelow,valid_min,200,-0.01,new,proposed,
+Lmon,cProduct,valid_min,200,-0.01,new,proposed,
+Lmon,cRoot,valid_min,200,-0.01,new,proposed,
+Lmon,cSoilFast,valid_min,200,-0.01,new,proposed,
+Lmon,cSoilMedium,valid_min,200,-0.01,new,proposed,
+Lmon,cSoilSlow,valid_min,200,-0.01,new,proposed,
+Lmon,burntAreaFraction,valid_min,100.001,-0.001,new,proposed,Area fraction
+Lmon,gpp,Valid_max,1E-06,-1E-09,new,proposed,
+Lmon,lai,valid_min,16,0,,proposed,"Based on 6 models (3 institutions), but physical reasoning is against significantly larger values."
+Lmon,landCoverFrac,valid_min,100.001,-0.001,,proposed,Area fraction
+Lmon,nbp,valid_min,1E-06,-1E-06,,proposed,Based on only 3 models
+Lmon,ra,valid_min,1E-06,-1E-09,,proposed,
+Lmon,rh,valid_min,1E-06,-1E-09,,proposed,
+Lmon,mrsos,valid_min,0.002,-1E-09,new,proposed,
+Lmon,tsl,--------------,,,,,
+Amon,clt,valid_max,100.2,-0.001,update,robust,"Two models exceed the CMIP6 limit fo 100.001, with values up to 100.034%."
+Amon,co2,Valid_max,0.005,5E-05,new,proposed,generous limits ? for troposphere.
+Amon,evspsbl,Valid_max,0.002,-0.0001,new,proposed ,
+Amon,pr,Valid_max,0.02,-0.0001,,proposed,Upper limit set was 0.0015 - highest model was double this. Log-normal distribution makes the upper limit a moving target.
+Amon,pr,mean_absolute_valid ..,0.0001,,,proposed,Upper limit of mean absolute was OK for historical .. but models got close.
+Amon,prsn,Valid_max,0.002,,,proposed,"OK, but close"
+Amon,prw,Valid_max,120,,,proposed,"OK, but close"
+Amon,prw,mean_absolute_valid ..,35,,,proposed,"OK, but close"
+Amon,tauu,Valid_max,25,-25,new,proposed,Range set was too narrow.            
+day,pr,valid_max,0.04,-0.0001,,proposed,Upper limit set was 0.0015 - highest model was double this. Log-normal distribution makes the upper limit a moving target.
+3hr,huss,valid_max,0.1,-0.001,new,proposed,
+3hr,tas,valid_max,345,170,new,proposed,
+3hr,vas,valid_max,80,-80,new,proposed,
+3hr,uas,valid_max,80,-80,new,proposed,
+day,mrro,valid_max,0.03,-0.001,new,proposed,
+day,sfcWindmax,valid_max,80,0,new,proposed,
+day,zg,valid_max,1200,-1000,new,proposed,
+day,psl,valid_max,120000,85000,new,proposed,
+day,hurs,valid_max,110,-0.01,new,proposed,
+day,hurs,mean_absolute_valid ..,95,10,new,proposed,
+day,huss,valid_max,0.04,-0.01,new,proposed,
+day,huss,mean_absolute_valid ..,0.02,0.001,new,proposed,
+day,va,valid_max_l0,100,-100,new,proposed,
+day,va,valid_max,250,-250,new,proposed,
+day,uas,valid_max,80,-80,new,proposed,
+day,ua,valid_max_l0,100,-100,new,proposed,
+day,ua,valid_max,250,-250,new,proposed,
+day,vas,valid_max,80,-80,new,proposed,
+day,tas,valid_max,350,140,new,proposed,
+day,tasmin,valid_max,350,160,new,proposed,
+day,tasmax,valid_max,350,140,new,proposed,
+fx,sftlf,valid_max,100,-1E-06,,,
+fx,sftlf,mean_absolute_valid ..,75,5,new,proposed,
+fx,sftgif,valid_max,100,-1E-06,,,
+fx,sftgif,mean_absolute_valid ..,75,5,new,proposed,
+Ofx,sftof,valid_max,100,-1E-06,,,
+Ofx,sftof,mean_absolute_valid ..,100.001,5,new,proposed,
+fx,orog,valid_max,12000,-500,,,
+fx,orog,mean_absolute_valid ..,2000,100,,,
+fx,areacella,valid_max,1000000000000,1000000,new,proposed,
+fx,mrsofc,valid_max,20000,0,new,proposed,
+Omon,fgco2,valid_max,5E-08,-5E-08,new,proposed,
+Omon,hfds,valid_max,1000,-3000,new,proposed,
+Omon,mascello,valid_max,50000000,0,new,proposed,
+Omon,mfo,valid_max,500000000000,-200000000000,new,proposed,
+Omon,mlotst,valid_max,10000,0,new,proposed,
+Omon,msftbarot,valid_max,2000000000000,-2000000000000,new,proposed,
+Omon,msftmrho,valid_max,800000000000,-800000000000,new,proposed,
+Omon,o2,valid_max,2,-0.0001,new,proposed,
+Omon,ph,valid_max,9.5,5.7,new,proposed,
+Omon,prsn,valid_max,0.0004,0,new,proposed,
+Omon,tauuo,valid_max,2,-2,new,proposed,
+Omon,tauvo,valid_max,2,-2,new,proposed,
+Omon,thetao,valid_max,45,-8,new,proposed,
+Omon,thkcello,valid_max,5000,0,new,proposed,"Large values may occur in isopycnal models.  E.g. this occurs sometimes at polar waters, where the ocean column is not stratified. And also occurs at some coast sea regions. See https://github.com/cp4cds/cmip6_range_check/issues/26 "
+Omon,umo,valid_max,100000000000,-100000000000,new,proposed,
+Omon,vmo,valid_max,100000000000,-100000000000,new,proposed,
+Omon,uo,valid_max,6,-6,new,proposed,
+Omon,vo,valid_max,6,-6,new,proposed,
+Omon,volcello,valid_max,100000000000000,0,new,proposed,"Large values may occur in isopycnal models.  E.g. this occurs sometimes at polar waters, where the ocean column is not stratified. And also occurs at some coast sea regions. See https://github.com/cp4cds/cmip6_range_check/issues/26 "
+Amon,uas,valid_max,80,-80,new,proposed,
+Amon,vas,valid_max,80,-80,new,proposed,
+Amon,sfcWind ,valid_max,80,0,new,proposed,
+day,sfcWind ,valid_max,80,0,new,proposed,
+Ofx,areacello,valid_max,1000000000000,1000000,new,proposed,
+Ofx,deptho,valid_max,15000,-10,new,proposed,
+Simin,sitemptop,valid_max,280,150,new,proposed,
