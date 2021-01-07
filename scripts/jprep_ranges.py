@@ -20,18 +20,29 @@ input_dataset_list = 'c3s34g_pids_qcTest_Oct2020.txt'
 major_error_codes = {'ERROR.ds.0900'}
 minor_error_codes = {'ERROR.ds.0040'}
 
-class Test(object):
-    def __init__(self,idir='/data/incoming/json_03_zip'):
+class Base(object):
+    DataRoot = '../../cmip6_range_check/scripts/json_03/'
+
+class Test(Base):
+    def __init__(self,idir=None):
+        if idir == None:
+          idir = self.DataRoot
         nr = get_new_ranges()
         print (nr.keys())
-        dirs = sorted( [x for x in glob.glob( '%s/*' % idir ) if os.path.isdir(x)] )
+        dirs = sorted( [x for x in glob.glob( '%s/fx.or*' % idir ) if os.path.isdir(x)] )
+        oo = open( 'jprep_ranges_test.csv','w')
         for d in dirs:
             dn = d.rpartition( '/' )[-1]
             ss = set()
             for f in sorted( glob.glob( '%s/*.json' % d ) ):
                 ee = json.load( open( f ) )
+                if 'mask' not in ee['data']['summary'].keys():
+                  print ('No mask item::',f)
                 ss.add( tuple( sorted( ee['data']['summary'].keys() ) ) )
             print( d, dn in nr, ss )
+            rec = [str(x) for x in [d,dn in nr, ss, len(ss) == 1]]
+            oo.write( '\t'.join(rec) + '\n' )
+        oo.close()
 
 
 class JprepRanges(object):

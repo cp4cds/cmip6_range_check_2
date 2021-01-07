@@ -1,0 +1,40 @@
+#!/bin/bash
+#SBATCH --partition=short-serial 
+#SBATCH --job-name=Amon_hi
+#SBATCH -o lotus_logs_03/%A_%a.out
+#SBATCH -e lotus_logs_03/%A_%a.err
+#SBATCH --time=20:00:00
+#SBATCH --array=1-32
+
+
+source activate myenv38
+
+vars=(ch4 clt co2 evspsbl hfls hfss hurs hus huss o3 pr prsn prw ps psl rlds rlus rlut rlutcs rsds rsdscs rsdt rsus rsuscs rsut rsutcs rtmt sbl ta tas tasmax tasmin tauu tauv ts ua va zg hur)
+
+##
+## 24 hours is max for short-serial
+## perhaps needed for ta, ua, va, hur, hus, zg
+## 27-32
+vars=(tas ts tasmax tasmin psl ps uas vas sfcWind hurs huss pr prsn evspsbl tauu tauv hfls hfss rlds rlus rsds rsus rsdt rsut rlut clt ta ua va hur hus zg)
+table=Amon
+experiment=historical
+group=03
+mode=sampledtenpercent
+### table, ddir, shelve-tag
+var=${vars[${SLURM_ARRAY_TASK_ID}-1]}
+
+echo table=$table, var=${var}
+for experiment in historical ssp119 ssp126 ssp245 ssp370 ssp434 ssp460 ssp534-over ssp585
+  do
+    flist=inputs_${group}/${experiment}/x1_${table}_${var}.txt
+    if test -f "${flist}"; then
+       echo "${flist} exists - running checks"
+
+       for f in `cat inputs_${group}/${experiment}/x1_${table}_${var}.txt`
+         do
+           CMIP_FILE=$f python test_cmip_file.py
+         done
+    else
+       echo "${flist} does not exist"
+    fi
+  done

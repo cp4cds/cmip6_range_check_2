@@ -366,9 +366,10 @@ def ssort( ll, fixed=False ):
     fn = f.rpartition( '/' )[-1]
     if not fixed:
       a,x,b = fn.rpartition( '_' )
-      oo[a].append( f )
     else:
-      oo[fn].append( f )
+      a = fn.rpartition( '.' )[0]
+
+    oo[a].append( f )
   return oo
     
 def fnfilt( ll ):

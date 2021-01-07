@@ -1,0 +1,44 @@
+#!/bin/bash
+
+#SBATCH --partition=short-serial 
+#SBATCH --job-name=Omon_hi
+#SBATCH -o lotus_logs_03/%A_%a.out
+#SBATCH -e lotus_logs_03/%A_%a.err
+#SBATCH --time=08:30:00
+#SBATCH --array=1-3
+
+source activate myenv38
+
+vars=(uo umo vo vmo sos bigthetao bigthetaoga fgco2 hfds masscello masso mfo mlotst msftbarot msftmrho msftmz msftyz o2 ph prsn so tauuo tauvo thetao thetaoga thkcello tos volcello volo zos zostoga)
+##vars=(prsn so zostoga sos tos zos)
+vars=(tos sos zos)
+table=Omon
+group=03
+
+### table, ddir, shelve-tag
+var=${vars[${SLURM_ARRAY_TASK_ID}-1]}
+
+echo table=$table, var=${var}
+##for experiment in esm-hist  hist-GHG  hist-nat 
+#for experiment in esm-hist  hist-GHG  hist-nat  historical
+for experiment in  historical ssp119 ssp126 ssp245 ssp370 ssp434 ssp460 ssp534-over ssp585
+  do
+    flist=inputs_${group}/${experiment}/x1_${table}_${var}.txt
+    if test -f "${flist}"; then
+       echo "${flist} exists - running checks"
+
+       for f in `cat ${flist}`
+         do
+##
+## return 0: OK, 101: Problems detected; 1: crashed.
+           CMIP_FILE=$f python test_cmip_file.py
+           if [ $? -eq 0 ] ; then
+               echo "**OK: $f"
+           else
+               echo "**ERROR $?: $f"
+           fi
+         done
+    else
+       echo "${flist} does not exist"
+    fi
+  done
