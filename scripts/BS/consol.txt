@@ -1,0 +1,30 @@
+#!/bin/bash
+#SBATCH --partition=short-serial 
+#SBATCH --job-name=consb
+#SBATCH -o lotus_logs_03/%A_%a.out
+#SBATCH -e lotus_logs_03/%A_%a.err
+#SBATCH --time=08:30:00
+#SBATCH --array=5-7
+
+
+source activate myenv38
+
+##
+##  8 variables from 3 tabls .... over all C3S requested experiments
+##
+##LImon snw snd
+##Lmon mrro mrsos
+##SImon siconc sithick simass sitemptop
+
+tables=(fx Lmon Ofx LImon SImon Omon Amon)
+group=03
+
+### table, ddir, shelve-tag
+table=${tables[${SLURM_ARRAY_TASK_ID}-1]}
+
+echo table=$table
+for sdir in `ls -d sh_03/${table}.*`
+  do
+    python consol_to_json.py -d ${sdir}
+  done
+
