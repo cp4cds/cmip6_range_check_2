@@ -291,7 +291,7 @@ class CMIPFileSample(object):
 
 class MaskLookUp(dict):
     def __init__(self, verify=False):
-        ii = open( 'handle_scan_report_extended_20200713.json','r')
+        ii = open( 'data/handle_scan_report_extended_20200713.json','r')
         new = json.load( ii )
         for k,item in new['results'].items():
             if 'mask' in item:

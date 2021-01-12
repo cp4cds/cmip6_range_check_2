@@ -13,6 +13,7 @@ source activate myenv38
 ##Ofx areacello deptho sftof
 vars=(areacella mrsofc sftlf sftgif orog areacello deptho sftof)
 tables=(fx fx fx fx fx Ofx Ofx Ofx)
+base=/home/users/mjuckes/work/cmip6_range_check/scripts
 
 mode=all
 group=03
@@ -25,7 +26,7 @@ echo table=$table, var=${var}
 
 for experiment in  historical ssp119 ssp126 ssp245 ssp370 ssp434 ssp460 ssp534-over ssp585
   do
-    flist=inputs_${group}/${experiment}/x1_${table}_${var}.txt
+    flist=${base}/inputs_${group}/${experiment}/x1_${table}_${var}.txt
     if test -f "${flist}"; then
        echo "${flist} exists - running checks"
 
