@@ -10,6 +10,73 @@
 
    Sa
 """
+import collections
+
+schema = {
+  "header": {
+    "qc_check:": "CF-checker",
+    "author": "Ruth Petrie",
+    "institution": "CEDA",
+    "date": "2020-07-22T09:02:51.352928",
+    "version": "1.0"
+  },
+  "datasets": {
+    "<handle>": {
+      "dset_id": "<id>",
+      "qc_status": "pass|fail",
+      "dataset_qc": {
+        "error_severity": "na|minor|major|unknown",
+        "error_message": "<output from check>|na"
+      },
+      "files": {
+        "<handle>": {
+          "filename": "<filename>",
+          "qc_status": "pass|fail",
+          "error_severity": "na|minor|major|unknown",
+          "error_message": "<output from check>|na"
+        },
+        "<handle>": {
+          "filename": "<filename>",
+          "qc_status": "pass|fail",
+          "error_severity": "na|minor|major|unknown",
+          "error_message": "<output from check>|na"
+        }
+      }
+    }
+  }
+
+
+class Dcheck(object):
+  REQUIRED = dict( datasets = dict( dset_id='identifier', qc_status='IN:pass|fail', dataset_qc='dictionary' ),
+                   header = dict( cq_check='name', author='person', institution='name', date='datetime', version='string' ),
+                   files = dict( filename='string', qc_status='IN:pass|fail', error_severity='IN:na|minor|major|unknown', error_message='message or na' ) )
+  def __init__(self):
+    self.errors = dict()
+
+  def check(self,dd):
+    assert all( [x in dd.keys() for x in ['header','datasets']] ), 'Dictionary must contain header and datasets entries'
+    self.check_header( dd['header'] )
+    self.check_datasets( dd['datasets'] )
+    if len(self.errors.keys() ) == 0:
+      print( 'NO ERRORS FOUND' )
+    else:
+      print ( self.errors )
+
+  def check_header(self,ee):
+    ma = [k for k in self.REQUIRED['header'].keys() if k not in ee]
+    if len(ma) != 0:
+        self.errors['header'] = 'Missing attribute(s): %s' % (sorted(ma))
+
+  def check_datasets(self,ee):
+    cc = collections.defaultdict( int )
+    for h,ds in ee.items():
+       ma = [k for k in self.REQUIRED['datasets'].keys() if k not in ds]
+       for a in ma:
+         cc[a] += 1
+    if cc.keys() != 0:
+      ma = sorted( list( cc.keys() ) )
+      self.errors['datasets'] = 'Missing attribute(s): %s' % ', '.join( ['%s (%s)' % (k,cc[k]) for k in ma] )
+    
 
 import csv, json, time, glob, os
 from local_utilities import get_new_ranges
@@ -22,6 +89,7 @@ minor_error_codes = {'ERROR.ds.0040'}
 
 class Base(object):
     DataRoot = '../../cmip6_range_check/scripts/json_03/'
+    DataRoot = './json_03/'
 
 class Test(Base):
     def __init__(self,idir=None):
@@ -29,7 +97,7 @@ class Test(Base):
           idir = self.DataRoot
         nr = get_new_ranges()
         print (nr.keys())
-        dirs = sorted( [x for x in glob.glob( '%s/fx.or*' % idir ) if os.path.isdir(x)] )
+        dirs = sorted( [x for x in glob.glob( '%s/*' % idir ) if os.path.isdir(x)] )
         oo = open( 'jprep_ranges_test.csv','w')
         for d in dirs:
             dn = d.rpartition( '/' )[-1]
@@ -43,7 +111,6 @@ class Test(Base):
             rec = [str(x) for x in [d,dn in nr, ss, len(ss) == 1]]
             oo.write( '\t'.join(rec) + '\n' )
         oo.close()
-
 
 class JprepRanges(object):
     def __init__(self, version='02-01'):
@@ -144,11 +211,11 @@ class JprepRanges(object):
 
 
         oo = open( jf, 'w' )
-        json.dump( {'header':info, 'results':ee}, oo, indent=4, sort_keys=True )
+        json.dump( {'header':info, 'datasets':ee}, oo, indent=4, sort_keys=True )
         oo.close()
         jf = jfile % ('extended_%s' % date )
         oo = open( jf, 'w' )
-        json.dump( {'header':info, 'results':ee2}, oo, indent=4, sort_keys=True )
+        json.dump( {'header':info, 'datasets':ee2}, oo, indent=4, sort_keys=True )
         oo.close()
 
 
