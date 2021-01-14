@@ -105,11 +105,11 @@ class Jprep(object):
 
 
         oo = open( jf, 'w' )
-        json.dump( {'header':info, 'results':ee}, oo, indent=4, sort_keys=True )
+        json.dump( {'header':info, 'datasets':ee}, oo, indent=4, sort_keys=True )
         oo.close()
         jf = jfile % ('extended_%s' % date )
         oo = open( jf, 'w' )
-        json.dump( {'header':info, 'results':ee2}, oo, indent=4, sort_keys=True )
+        json.dump( {'header':info, 'datasets':ee2}, oo, indent=4, sort_keys=True )
         oo.close()
 
 
