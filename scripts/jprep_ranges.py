@@ -44,6 +44,7 @@ schema = {
       }
     }
   }
+}
 
 
 class Dcheck(object):
@@ -87,9 +88,37 @@ input_dataset_list = 'c3s34g_pids_qcTest_Oct2020.txt'
 major_error_codes = {'ERROR.ds.0900'}
 minor_error_codes = {'ERROR.ds.0040'}
 
+workflow_errors_detected = ['Lmon.mrro', 'Amon.psl']
+print('NEED TO REVISIT DATA FOR %s' % workflow_errors_detected )
+
 class Base(object):
     DataRoot = '../../cmip6_range_check/scripts/json_03/'
     DataRoot = './json_03/'
+
+def get_result_directories(root_dir=None):
+        if root_dir == None:
+          root_dir = Base.DataRoot
+        dirs = sorted( [x for x in glob.glob( '%s/*' % idir ) if os.path.isdir(x)] )
+        dirs_excluded = [x for x in dirs if d.rpartition( '/' )[-1] in workflow_errors_detected]
+        dirs_passed = [x for x in dirs if x not in dirs_excluded]
+        return dirs_passed,dirs_excluded
+
+class FileReport(object):
+  def __init__(self,json_file):
+    assert os.path.isfile( json_file )
+    self.ee = json.load( open( json_file, 'r' ) )
+    dat = self.ee['data']
+    files = sorted( list( dat['headers'].keys() ) )
+    tmp = collections.defaultdict( set )
+
+    for r in dat['records'].keys():
+      fn,xxx,tag = r.rpartition( ':' )
+      assert fn[:-3] in files, print( r,fn,files)
+      tmp[fn].add(tag)
+
+    self.records = dict()
+    for fn,x in tmp.items():
+      self.records[fn] = sorted( list( x ) )
 
 class Test(Base):
     def __init__(self,idir=None):
@@ -112,8 +141,31 @@ class Test(Base):
             oo.write( '\t'.join(rec) + '\n' )
         oo.close()
 
+class RecordChecks(object):
+"""Look through the NetCDF file level json output and generate QC report.
+... current version gets as far as basic information .. need to add ranges , and mask info """
+  def __init__(self,fn, tags, rcbook):
+     for t in tags:
+        this = rcbook[ '%s:%s' % (fn,t) ]
+        print (fn,t,this['basic'])
+  
+
+class TestFile(object):
+  ATTRIBUTES = ('basic', 'drs', 'empty_count', 'extremes', 'mask', 'quantiles')
+  def __init__(self):
+    pass
+  def check_file(self,jfile):
+    fr = FileReport( jfile )
+    for fn,tags in fr.records.items():
+      rcs = RecordChecks(fn,tags,fr.ee['data']['records'])
+      
+
+
 class JprepRanges(object):
     def __init__(self, version='02-01'):
+        self.dirs, excluded = get_result_directories()
+        print ('Excluding: ',excluded )
+        nr = get_new_ranges()
         
         refile_june = '../esgf_fetch/lists/wg1subset-r1-datasets-pids-clean.csv'
         refile = "../esgf_fetch/lists/%s" % input_dataset_list
@@ -221,4 +273,6 @@ class JprepRanges(object):
 
 if __name__ == "__main__":
     #j = Jprep()
-    Test()
+    ##Test()
+    tf = TestFile()
+    tf.check_file('json_03/Amon.ts/ts_Amon_INM-CM5-0_ssp245_r1i1p1f1_gr1.json')
