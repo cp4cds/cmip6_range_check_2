@@ -12,6 +12,10 @@
 """
 import collections
 
+
+MASKS = {'LImon.snd': 'fx.sftlf', 'LImon.snw': 'fx.sftlf', 'Lmon.mrro': 'fx.sftlf', 'Lmon.mrsos': 'fx.sftlf', 'Ofx.deptho': 'Ofx.sftof', 'Omon.sos': 'Ofx.sftof', 'Omon.tos': 'Ofx.sftof', 'Omon.zos': 'Ofx.sftof', 'SImon.siconc': 'Ofx.sftof', 'SImon.simass': 'Ofx.sftof', 'SImon.sitemptop': 'SImon.siconc', 'SImon.sithick': 'SImon.siconc', 'fx.mrsofc': 'fx.sftlf'}
+
+
 schema = {
   "header": {
     "qc_check:": "CF-checker",
@@ -98,8 +102,8 @@ class Base(object):
 def get_result_directories(root_dir=None):
         if root_dir == None:
           root_dir = Base.DataRoot
-        dirs = sorted( [x for x in glob.glob( '%s/*' % idir ) if os.path.isdir(x)] )
-        dirs_excluded = [x for x in dirs if d.rpartition( '/' )[-1] in workflow_errors_detected]
+        dirs = sorted( [x for x in glob.glob( '%s/*' % root_dir ) if os.path.isdir(x)] )
+        dirs_excluded = [x for x in dirs if x.rpartition( '/' )[-1] in workflow_errors_detected]
         dirs_passed = [x for x in dirs if x not in dirs_excluded]
         return dirs_passed,dirs_excluded
 
@@ -113,7 +117,8 @@ class FileReport(object):
 
     for r in dat['records'].keys():
       fn,xxx,tag = r.rpartition( ':' )
-      assert fn[:-3] in files, print( r,fn,files)
+      assert fn[:-3] in files
+      ##print( 'xxxx',r,fn,files)
       tmp[fn].add(tag)
 
     self.records = dict()
@@ -141,31 +146,137 @@ class Test(Base):
             oo.write( '\t'.join(rec) + '\n' )
         oo.close()
 
-class RecordChecks(object):
-"""Look through the NetCDF file level json output and generate QC report.
-... current version gets as far as basic information .. need to add ranges , and mask info """
-  def __init__(self,fn, tags, rcbook):
-     for t in tags:
-        this = rcbook[ '%s:%s' % (fn,t) ]
-        print (fn,t,this['basic'])
+def record_checks(fn, tags, rcbook,with_mask=False):
+     """Look through the NetCDF file level json output and generate QC report.
+      current version gets as far as basic information .. need to add ranges , and mask info """
+     basic = [ rcbook[ '%s:%s' % (fn,t) ]['basic'] for t in tags ]
+     brep = ( min( [x[0] for x in basic] ),
+              max( [x[1] for x in basic] ),
+              min( [x[2] for x in basic] ),
+              max( [x[2] for x in basic] ),
+              sum( [x[3] for x in basic] ) )
+
+     if with_mask:
+       try:
+         mask = [ rcbook[ '%s:%s' % (fn,t) ]['mask_ok'] for t in tags ]
+         mrep = all( [x[0] == 'masks_match' for x in mask ] )
+       except:
+         mrep = False
+
+     else:
+       mrep = None
+     return brep, mrep
   
 
 class TestFile(object):
   ATTRIBUTES = ('basic', 'drs', 'empty_count', 'extremes', 'mask', 'quantiles')
   def __init__(self):
     pass
-  def check_file(self,jfile):
+    
+  def check_file(self,jfile, vmax=None, vmin=None, vmamax=None, vmamin=None, with_mask=False, jrep_file=None):
     fr = FileReport( jfile )
+    reps = {}
+## json_03/Amon.ts/ts_Amon_INM-CM5-0_ssp245_r1i1p1f1_gr1.json
+    if jrep_file == None:
+      jrep_file = jfile.replace( 'json_03', 'json_rep_03' )
+      tree = jrep_file.split( '/' )
+      if tree[0] == '.':
+        tree=tree[1:]
+      assert os.path.isdir( tree[0] )
+      if not os.path.isdir( '/'.join( tree[:2] ) ):
+        os.mkdir( '/'.join( tree[:2] ) )
+    
+    
     for fn,tags in fr.records.items():
-      rcs = RecordChecks(fn,tags,fr.ee['data']['records'])
+      fns = fn[:-3]
+      tid = fr.ee['data']['headers'][fns]['tech']['file_info']['tid']
+      rcs,mcs = record_checks(fn,tags,fr.ee['data']['records'],with_mask=with_mask)
+      tests = [rcs[0] >= vmin, rcs[1] <= vmax]
+      if vmamin != None:
+        tests.append( rcs[2] >= vmamin )
+      else:
+        tests.append( None )
+      if vmamax != None:
+        tests.append( rcs[3] <= vmamax )
+      else:
+        tests.append( None )
+
+      tests.append( rcs[4] == 0 )
+
+      if with_mask:
+        tests.append ( mcs )
+      else:
+        tests.append( None )
+
+      emsg = []
+      if rcs[0] < vmin:
+        emsg.append( 'Minimum %s < %s' % (rcs[0],vmin) )
+      if rcs[1] > vmax:
+        emsg.append( 'Maximum %s > %s' % (rcs[1],vmax) )
+      if vmamin != None and rcs[2] > vmamin:
+        emsg.append( 'Mean absolute %s < %s' % (rcs[2],vmamin) )
+      if vmamax != None and rcs[3] > vmamax:
+        emsg.append( 'Mean absolute %s > %s' % (rcs[3],vmamax) )
+
+      range_errors = len(emsg) > 0
+      mv_errors = rcs[4] != 0
+      if rcs[4] != 0:
+        emsg.append( 'Missing values flagged' )
+
+      mask_errors = with_mask and (not mcs)
+      if mask_errors:
+        emsg.append( 'Masks not matching' )
+
+      if len(emsg) == 0:
+        error_message = error_severity = 'na'
+        error_status = 'pass'
+      else:
+        error_message = '; '.join( emsg)
+        if range_errors or mv_errors:
+           error_status='fail'
+           error_severity='major'
+        else:
+           error_status='pass'
+           error_severity='minor'
+
+      reps[tid] = dict( filename=fn, error_message = error_message, error_status=error_status, error_severity = error_severity )
+      print ( fn, tests )
+    oo = open( jrep_file, 'w' )
+    json.dump( reps, oo, indent=4, sort_keys=True )
+    oo.close()
+        
+        
+
+##"filename": "mrro_Lmon_UKESM1-0-LL_ssp119_r1i1p1f2_gn_201501-204912.nc",
+                    ##"qc_status": "",
+                    ##"error_severity": "",
+                    ##"error_message": ""
+##pass|fail
+##na|minor|major|unknown
+
       
 
 
 class JprepRanges(object):
-    def __init__(self, version='02-01'):
-        self.dirs, excluded = get_result_directories()
+    def __init__(self, version='02-01',test_var='Amon.tas'):
+        dirs, excluded = get_result_directories()
+        self.dirs = {x.rpartition('/')[-1]:x for x in dirs}
         print ('Excluding: ',excluded )
-        nr = get_new_ranges()
+        self.nr = get_new_ranges()
+
+    def run_test( self, test_var='LImon.snd', all=False ):
+        assert test_var in self.nr and test_var in self.dirs
+        fl = sorted( glob.glob( '%s/*.json' % self.dirs[test_var] ) )
+        tf = TestFile()
+        print (self.nr[test_var])
+        r = self.nr[test_var]
+        if not all:
+          tf.check_file( fl[0], vmax=r.max.value, vmin=r.min.value, vmamax=r.ma_max.value, vmamin=r.ma_min.value, with_mask=test_var in MASKS )
+        else:
+          for f in fl:
+            tf.check_file( f, vmax=r.max.value, vmin=r.min.value, vmamax=r.ma_max.value, vmamin=r.ma_min.value, with_mask=test_var in MASKS )
+
+    def run(self):
         
         refile_june = '../esgf_fetch/lists/wg1subset-r1-datasets-pids-clean.csv'
         refile = "../esgf_fetch/lists/%s" % input_dataset_list
@@ -274,5 +385,7 @@ class JprepRanges(object):
 if __name__ == "__main__":
     #j = Jprep()
     ##Test()
-    tf = TestFile()
-    tf.check_file('json_03/Amon.ts/ts_Amon_INM-CM5-0_ssp245_r1i1p1f1_gr1.json')
+    j = JprepRanges()
+    j.run_test(all=True)
+    ##tf = TestFile()
+    ##tf.check_file('json_03/Amon.ts/ts_Amon_INM-CM5-0_ssp245_r1i1p1f1_gr1.json')
