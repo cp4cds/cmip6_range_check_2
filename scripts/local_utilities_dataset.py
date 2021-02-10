@@ -10,6 +10,7 @@ except:
 __version__ = '0.1.0'
 pid_input_june = "../esgf_fetch/lists/wg1subset-r1-datasets-pids-clean.csv"
 pid_input_oct = "../esgf_fetch/lists/c3s34g_pids_qcTest_Oct2020.txt"
+pid_input_feb21 = "../ingest_scripts/c3s34g_pids_qcTest_Feb2021.txt"
 
 NT__scope = collections.namedtuple( 'scope', ['overview','identifier','description','priority','traceability'] )
 NT__test_case_spec = collections.namedtuple( 'test_case_spec', ['ov', 'id', 'obj', 'p', 'tr', 'prec', 'i', 'expected'])
@@ -25,6 +26,65 @@ __priority__ = "MUST"
 __traceability__ = "documentation is tbd"
 test_scope = NT__scope( overview = __overview__, priority=__priority__,identifier=__identifier__, description=__description__, traceability=__traceability__)
 
+def _append_latest_to(self):
+    """Retrieve handle records for replacements until a current dataset is found."""
+    if not self.obsolete:
+      return
+    if len( self.rec['REPLACED_BY'] ) > 1:
+        print( 'WORKFLOW WARNING: multiple replacements' )
+    this = self.rec['REPLACED_BY'][-1]
+    this.get()
+    self.replacements=[this,]
+    while self.replacements[-1].obsolete:
+        if len( self.replacements[-1].rec['REPLACED_BY'] ) > 1:
+           print( 'WORKFLOW WARNING: multiple replacements [2]' )
+        that = self.replacements[-1].rec['REPLACED_BY'][-1]
+        that.get()
+        self.replacements.append( that )
+    self.latest = self.replacements[-1]
+
+def check_parts(h,ev,drs_id,ds, errors):
+          err = None
+          vns = set()
+          fns = set()
+          cc = collections.defaultdict( set  )
+          ccl = collections.defaultdict( set  )
+          for f in h.rec['HAS_PARTS']:
+                  f.get()
+                  if 'URL_ORIGINAL_DATA' not in f.rec:
+                        print ('ERROR.ds.0040: URL_ORIGINAL_DATA missing from file hdl record %s :: %s' % (drs_id,f.rec.get('URL','__NO__URL__')))
+                        err = 'ERROR.ds.0040: URL_ORIGINAL_DATA missing from file hdl record: %s' % ds
+                        errors.append( err )
+                  else:    
+                    this = f.rec['URL_ORIGINAL_DATA']
+                    locs = re2.findall( this )
+                    vnss = set()
+                    fnss = set()
+                    for loc in locs:
+                      href = re_href.findall( loc )[0]
+                      vn,fn = href.split( '/' )[-2:]
+                      vnss.add(vn)
+                      fnss.add(fn)
+                    if len( fnss ) != 1:
+                       print ('ERROR.ds.0030: multiple files in file record: (%s) %s' % (fnss,f.rec['URL']) )
+                       err = 'ERROR.ds.0030: %s: multiple files in file record' % ds
+                       errors.append( err )
+                    fn = fnss.pop()
+                    if ev != None and ev not in vnss:
+                       print ('ERROR.ds.0020: expected version not in file record original data: (%s) %s' % (vnss,f.rec['URL']) )
+                       err = 'ERROR.ds.0020: %s: expected version not in file record original data' % ds
+                       errors.append( err )
+                       vn = vnss.pop()
+                    else:
+                       vn = ev
+                    tt = fn.rpartition('.')[0].split('_')
+                    cc['l'].add( len(tt) )
+                    ccl[len(tt)].add( fn )
+                    for k in range(len(tt)):
+                        cc[k].add(tt[k])
+                    vns.add(vn)
+                    fns.add(fn)
+          return err, vns, fns, cc, ccl 
 
 def matching( result, expected):
     if type(expected) == type('') and expected.find(':') != -1 and expected.split( ':' )[0] in ['lt','gt','le','ge']:
@@ -161,6 +221,15 @@ class CMIPDatasetSample(object):
         self.drs_base = drs_base
         self.ar6 = WGIPriority()
         self.ar6.review_masks()
+        self.skipping = False
+
+   ### need to complete this ....
+    def set_skip(self,fn='hdl-reviewed_datasets_Amon_02-02_a1.csv' ):
+        self.skipping = True
+        self.to_skip = set()
+        for l in open(fn).readlines():
+            self.to_skip.add( l.split('\t')[0].strip() )
+        print( 'SKIPPING %s handles' % len(self.to_skip) )
 
     def review(self, dsids, ctag):
         self.nobs = 0
@@ -168,6 +237,7 @@ class CMIPDatasetSample(object):
         oo = open('hdl-reviewed_datasets_%s.csv' % ctag,'w')
         oo2 = open('summary-reviewed_datasets_%s.csv' % ctag,'w')
         for ds, eid, ev in dsids:
+          if (not self.skipping) or (ds not in self.to_skip):
             self.dsr = DatasetReview(ds)
             h = hddump.Open( ds )
             drs_id, err = self.review_handle_record(oo, h, ds, eid, ev )
@@ -214,53 +284,24 @@ class CMIPDatasetSample(object):
             ## CMIP6.CMIP.AS-RCEC.TaiESM1.historical.r1i1p1f1.Lmon.mrso.gn
             ## http://esgdata.gfdl.noaa.gov/thredds/fileServer/gfdl_dataroot4/OMIP/NOAA-GFDL/GFDL-OM4p5B/omip1/r1i1p1f1/Omon/volcello/gn/v20180701/volcello_Omon_GFDL-OM4p5B_omip1_r1i1p1f1_gn_180801-182712.nc
             if h.obsolete:
-                print ( 'ERROR.ds.0900: %s: ds %s is obsolete [%s]' % (self.kk,ds,h.rec['DRS_ID']) )
-                oo.write( '\t'.join( [ds,drs_id,ev,'OBSOLETE'] ) + '\n' )
-                self.nobs += 1
-                err = 'ERROR.ds.0900: Dataset obsolete: %s' % ds
-                self.obsolete = True
+                _append_latest_to(h)
+                this = h.latest
+                this.get()
+                if 'HAS_PARTS' not in this.rec:
+                  print ( 'ERROR.ds.0990: %s: ds %s has dud replacement [%s]' % (self.kk,ds,h.rec['DRS_ID']) )
+                  oo.write( '\t'.join( [ds,drs_id,ev,'ERROR.ds.0990: dud replacement'] ) + '\n' )
+                  err = 'ERROR.ds.0990: Dataset has dud replacement: %s' % ds
+                ##err, vns, fns, cc, ccl = check_parts(h.latest, None, self.dsr.errors)
+                else:
+                  print ( 'ERROR.ds.0900: %s: ds %s is obsolete [%s]' % (self.kk,ds,h.rec['DRS_ID']) )
+                  oo.write( '\t'.join( [ds,drs_id,ev,'OBSOLETE'] ) + '\n' )
+                  self.nobs += 1
+                  err = 'ERROR.ds.0900: Dataset obsolete: %s' % ds
+                  self.obsolete = True
             else:
                 self.obsolete = False
-                err = None
-                vns = set()
-                fns = set()
-                cc = collections.defaultdict( set  )
-                ccl = collections.defaultdict( set  )
-                for f in h.rec['HAS_PARTS']:
-                  f.get()
-                  if 'URL_ORIGINAL_DATA' not in f.rec:
-                        print ('ERROR.ds.0040: URL_ORIGINAL_DATA missing from file hdl record %s :: %s' % (drs_id,f.rec.get('URL','__NO__URL__')))
-                        err = 'ERROR.ds.0040: URL_ORIGINAL_DATA missing from file hdl record: %s' % ds
-                        self.dsr.errors.append( err )
-                  else:    
-                    this = f.rec['URL_ORIGINAL_DATA']
-                    locs = re2.findall( this )
-                    vnss = set()
-                    fnss = set()
-                    for loc in locs:
-                      href = re_href.findall( loc )[0]
-                      vn,fn = href.split( '/' )[-2:]
-                      vnss.add(vn)
-                      fnss.add(fn)
-                    if len( fnss ) != 1:
-                       print ('ERROR.ds.0030: multiple files in file record: (%s) %s' % (fnss,f.rec['URL']) )
-                       err = 'ERROR.ds.0030: %s: multiple files in file record' % ds
-                       self.dsr.errors.append( err )
-                    fn = fnss.pop()
-                    if ev not in vnss:
-                       print ('ERROR.ds.0020: expected version not in file record original data: (%s) %s' % (vnss,f.rec['URL']) )
-                       err = 'ERROR.ds.0020: %s: expected version not in file record original data' % ds
-                       self.dsr.errors.append( err )
-                       vn = vnss.pop()
-                    else:
-                       vn = ev
-                    tt = fn.rpartition('.')[0].split('_')
-                    cc['l'].add( len(tt) )
-                    ccl[len(tt)].add( fn )
-                    for k in range(len(tt)):
-                        cc[k].add(tt[k])
-                    vns.add(vn)
-                    fns.add(fn)
+                err, vns, fns, cc, ccl = check_parts(h, ev, drs_id, ds, self.dsr.errors)
+                ### check parts
 
                 if len(cc.keys()) == 0:
                     print ('ERROR.ds.0101: no files found (empty cc) %s' % (drs_id) )
@@ -713,7 +754,7 @@ class CheckJson(object):
               self.known_errors[this].add( fn )
       ii.close()
     
-    ii = open( pid_input_oct, 'r' )
+    ii = open( pid_input_feb21, 'r' )
     for l in ii.readlines()[1:]:
        esgf_id,pid = [x.strip() for x in l.split(',') ]
        self.pid_lookup[esgf_id] = pid
@@ -971,7 +1012,7 @@ class CheckJson(object):
     print (var,distmsg,rangemsg)
 
 
-def run_dataset_review(repeat=False, mode='a'):
+def run_dataset_review(targ='Amon',repeat=False, mode='a',query=False):
      dsl = []
      if repeat:
        if mode=='a':
@@ -992,11 +1033,16 @@ def run_dataset_review(repeat=False, mode='a'):
              dsl.append( (h,i,v) )
      else:
 
-       review_version = '02-01'
+       review_version = '02-03'
        ii = open( pid_input_oct).readlines()
        set1 = ['Omon','Amon','Lmon','day']
        this_table = 'other'
-       this_table = 'Amon'
+       if targ in ['Amon-c','Amon-s']:
+         this_table = 'Amon'
+         targ_mip = {'Amon-c':'CMIP', 'Amon-s':'ScenarioMIP'}[targ]
+       else:
+         this_table = targ
+         targ_mip = '__all__'
        ne = 0
        for l in ii[1:]:
            esgf_id,h = [x.strip() for x in l.split(',')[:2]]
@@ -1009,19 +1055,29 @@ def run_dataset_review(repeat=False, mode='a'):
            else:
              era, mip, inst, model, expt, variant, table, var, grid, version = ttt
              if mip in ['CMIP','ScenarioMIP'] and (table == this_table or (this_table == 'other' and table not in set1)):
-               dsl.append( (h, '.'.join( [era, mip, inst, model, expt, variant, this_table, var, grid] ), version) )
+               if targ_mip == '__all__' or mip == targ_mip:
+                 dsl.append( (h, '.'.join( [era, mip, inst, model, expt, variant, this_table, var, grid] ), version) )
        ###dsl = dsl[:100]
 
      
      print ("Reviewing %s datasets" % len(dsl) )
-
-     dss = CMIPDatasetSample()
-     dss.review(dsl,'%s_%s' % (this_table,review_version))
+     if not query:
+  
+       dss = CMIPDatasetSample()
+       if targ == 'Amon':
+           dss.set_skip()
+       dss.review(dsl,'%s_%s' % (targ,review_version))
 
 if __name__ == "__main__":
    mm = 'ds'
-   if mm == 'ds':
-     run_dataset_review()
+   import sys
+   if mm == 'ds' or ( len(sys.argv) > 1 and sys.argv[1] == '-a'):
+     if sys.argv[1] == '-a':
+         targ=sys.argv[2]
+         assert targ in ['Omon','Amon','Lmon','day','other','Amon-c','Amon-s']
+     else:
+         targ = 'Amon'
+     run_dataset_review(targ=targ, query='-q' in sys.argv)
    elif mm == 'ds2':
      run_dataset_review(repeat=True)
    else:

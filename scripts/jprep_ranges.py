@@ -265,7 +265,8 @@ class JprepRanges(object):
         self.nr = get_new_ranges()
 
     def run_test( self, test_var='LImon.snd', all=False ):
-        assert test_var in self.nr and test_var in self.dirs
+        assert test_var in self.nr
+        assert test_var in self.dirs
         fl = sorted( glob.glob( '%s/*.json' % self.dirs[test_var] ) )
         tf = TestFile()
         print (self.nr[test_var])

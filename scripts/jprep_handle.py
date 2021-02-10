@@ -1,17 +1,20 @@
 
-import csv, json, time
+import csv, json, time, collections
 
 ds_pass_msg = dict( error_severity='na', error_message='No handle registry errors detected' )
 
 input_dataset_list = 'c3s34g_pids_qcTest_Oct2020.txt'
 major_error_codes = {'ERROR.ds.0900'}
+major_error_codes = set()
 minor_error_codes = {'ERROR.ds.0040'}
 
+CHECK_MASKS = False
+
 class Jprep(object):
-    def __init__(self, version='02-01'):
+    def __init__(self, version='02-03'):
         refile_june = '../esgf_fetch/lists/wg1subset-r1-datasets-pids-clean.csv'
         refile = "../esgf_fetch/lists/%s" % input_dataset_list
-        review = 'summary-reviewed_datasets_%s_%s.csv'
+        review = 'hdl_05/summary-reviewed_datasets_%s_%s.csv'
         nbad = 0
 
         self.ref = dict()
@@ -28,7 +31,7 @@ class Jprep(object):
 
         self.aa = dict()
         self.aa_oflow = dict()
-        for tab in ['Amon','Lmon','day','Omon','other']:
+        for tab in ['Amon-c','Amon-s','Lmon','day','Omon','other']:
             f = review % (tab, version)
             print ( 'TABLE - START: %s, len dict: %s' % (tab, len(self.aa) ) )
             self.scan1(f)
@@ -63,6 +66,9 @@ class Jprep(object):
         jf = jfile % date
         ee = {}
         ee2 = {}
+        ccq = collections.defaultdict( int )
+        ccs = collections.defaultdict( int )
+        ccm = collections.defaultdict( int )
         for h,r in self.aa.items():
             dsidv = '%s.%s' % r[1:3]
             if r[0]:
@@ -79,13 +85,23 @@ class Jprep(object):
                         eseverity='major'
                     elif ecode in minor_error_codes:
                         eseverity='minor'
-                if f2 != 'OK':
+                if f2 != 'OK' and CHECK_MASKS:
                     if msg != '':
                         msg += '; '
                     msg += f2
                     ecat = 'Mask Availability'
+                if eseverity == 'major':
+                    qcs = 'fail'
+                else:
+                    qcs = 'pass'
                 this = {'qc_status':'fail', 'dset_id':dsidv, 
                         'dataset_qc':dict( error_message=msg, error_severity=eseverity, error_category=ecat, error_code=ecode ) }
+                if ecode == 'ERROR.ds.0900':
+                    print (ecode, dsidv )
+
+                ccq[qcs] += 1
+                ccs[eseverity] += 1
+                ccm[ecode] += 1
             that = this.copy()
             if that['qc_status'] == 'pass' and r[5] != 'na':
                that['mask']= r[5]
@@ -96,6 +112,8 @@ class Jprep(object):
         n = len(ee)
         npass = len( [h for h,e in ee.items() if e['qc_status'] == 'pass'] )
         summary = '%s records, %s passed, %s failed' % (n,npass,n-npass)
+        print (ccs )
+        print (ccm )
         print (summary)
         info = dict( source='jprep.py', history='Created at CEDA, based on a scan of handle records',
                   title = title, abstract=abstract, summary=summary,
