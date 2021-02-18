@@ -97,7 +97,7 @@ print('NEED TO REVISIT DATA FOR %s' % workflow_errors_detected )
 
 class Base(object):
     DataRoot = '../../cmip6_range_check/scripts/json_03/'
-    DataRoot = './json_03/'
+    DataRoot = './json_05/'
 
 def get_result_directories(root_dir=None):
         if root_dir == None:
@@ -173,12 +173,12 @@ class TestFile(object):
   def __init__(self):
     pass
     
-  def check_file(self,jfile, vmax=None, vmin=None, vmamax=None, vmamin=None, with_mask=False, jrep_file=None):
+  def check_file(self,jfile, vmax=None, vmin=None, vmamax=None, vmamin=None, with_mask=False, jrep_file=None, fcsv=None):
     fr = FileReport( jfile )
     reps = {}
 ## json_03/Amon.ts/ts_Amon_INM-CM5-0_ssp245_r1i1p1f1_gr1.json
     if jrep_file == None:
-      jrep_file = jfile.replace( 'json_03', 'json_rep_03' )
+      jrep_file = jfile.replace( 'json_', 'json_rep_' )
       tree = jrep_file.split( '/' )
       if tree[0] == '.':
         tree=tree[1:]
@@ -187,9 +187,17 @@ class TestFile(object):
         os.mkdir( '/'.join( tree[:2] ) )
     
     
+    ests = set()
+    esvs = set()
     for fn,tags in fr.records.items():
       fns = fn[:-3]
       tid = fr.ee['data']['headers'][fns]['tech']['file_info']['tid']
+##
+## table, var, inst, model, mip, expt, variant, grid, version
+      drs = fr.ee['data']['headers'][fns]['tech']['file_info']['drs']
+      table, var, inst, model, mip, expt, variant, grid, version = drs
+      path = '/badc/cmip6/data/CMIP6/' + '/'.join( [mip,inst,model,expt,variant,table,var,grid,version] )
+
       rcs,mcs = record_checks(fn,tags,fr.ee['data']['records'],with_mask=with_mask)
       tests = [rcs[0] >= vmin, rcs[1] <= vmax]
       if vmamin != None:
@@ -213,7 +221,7 @@ class TestFile(object):
         emsg.append( 'Minimum %s < %s' % (rcs[0],vmin) )
       if rcs[1] > vmax:
         emsg.append( 'Maximum %s > %s' % (rcs[1],vmax) )
-      if vmamin != None and rcs[2] > vmamin:
+      if vmamin != None and rcs[2] < vmamin:
         emsg.append( 'Mean absolute %s < %s' % (rcs[2],vmamin) )
       if vmamax != None and rcs[3] > vmamax:
         emsg.append( 'Mean absolute %s > %s' % (rcs[3],vmamax) )
@@ -239,11 +247,31 @@ class TestFile(object):
            error_status='pass'
            error_severity='minor'
 
+      ests.add( error_status )
+      esvs.add( error_severity )
       reps[tid] = dict( filename=fn, error_message = error_message, error_status=error_status, error_severity = error_severity )
+      if fcsv != None:
+        fcsv.write( '\t'.join( [path + '/' + fn,error_status,error_severity, error_message] ) + '\n' )
       print ( fn, tests )
+    print ('OUTPUT TO: %s' % jrep_file )
     oo = open( jrep_file, 'w' )
-    json.dump( reps, oo, indent=4, sort_keys=True )
+    if 'fail' in ests:
+      qc_status = 'fail'
+      dsqc = dict( error_severity='major', error_message='Major errors encountered: details in file error log' )
+    else:
+      qc_status = 'pass'
+      dsqc = dict( error_severity='na', error_message='na' )
+      if 'minor' in esvs:
+        dsqc['error_message'] = 'Minor errors encountered: details in file error log'
+    json.dump( dict( files=reps, dset_id='__todo__', qc_status=qc_status, dataset_qc=dsqc ), oo, indent=4, sort_keys=True )
+      ##"dset_id": "<id>",
+      ##"qc_status": "pass|fail",
+      ##"dataset_qc": {
+        ##"error_severity": "na|minor|major|unknown",
+        ##"error_message": "<output from check>|na"
+      ##},
     oo.close()
+    return jrep_file, qc_status, dsqc
         
         
 
@@ -264,7 +292,7 @@ class JprepRanges(object):
         print ('Excluding: ',excluded )
         self.nr = get_new_ranges()
 
-    def run_test( self, test_var='LImon.snd', all=False ):
+    def run_test( self, test_var='LImon.snd', all=False, fcsv=None ):
         assert test_var in self.nr
         assert test_var in self.dirs
         fl = sorted( glob.glob( '%s/*.json' % self.dirs[test_var] ) )
@@ -272,10 +300,10 @@ class JprepRanges(object):
         print (self.nr[test_var])
         r = self.nr[test_var]
         if not all:
-          tf.check_file( fl[0], vmax=r.max.value, vmin=r.min.value, vmamax=r.ma_max.value, vmamin=r.ma_min.value, with_mask=test_var in MASKS )
+          tf.check_file( fl[0], vmax=r.max.value, vmin=r.min.value, vmamax=r.ma_max.value, vmamin=r.ma_min.value, with_mask=test_var in MASKS, fcsv=fcsv )
         else:
           for f in fl:
-            tf.check_file( f, vmax=r.max.value, vmin=r.min.value, vmamax=r.ma_max.value, vmamin=r.ma_min.value, with_mask=test_var in MASKS )
+            tf.check_file( f, vmax=r.max.value, vmin=r.min.value, vmamax=r.ma_max.value, vmamin=r.ma_min.value, with_mask=test_var in MASKS, fcsv=fcsv )
 
     def run(self):
         
@@ -387,6 +415,9 @@ if __name__ == "__main__":
     #j = Jprep()
     ##Test()
     j = JprepRanges()
-    j.run_test(all=True)
+    ##j.run_test(all=True)
+    fcsv = open( 'fx.orog.csv', 'w' )
+    j.run_test(test_var='fx.orog', all=True, fcsv=fcsv )
+    fcsv.close()
     ##tf = TestFile()
     ##tf.check_file('json_03/Amon.ts/ts_Amon_INM-CM5-0_ssp245_r1i1p1f1_gr1.json')
