@@ -312,7 +312,8 @@ class ConcTestCmipFile(TestCmipFile):
     def __init__(self):
         pass
 
-NO_REPEAT_TEST = True
+NO_REPEAT_TEST = False
+NO_REPEAT_TEST_BY_PATH = True
 
 if __name__ == "__main__":
 ##
@@ -325,7 +326,7 @@ if __name__ == "__main__":
 
 #vname, table, model, expt, vnt_id, grid = fname.rpartition('.')[0].split('_')[0:6]
     import generic_utils
-    group = 3
+    group = 5
     log_dir = 'logs_%2.2i' % group
     log_factory = generic_utils.LogFactory(dir=log_dir)
 
@@ -345,13 +346,30 @@ if __name__ == "__main__":
       os.mkdir(od2)
     t.shdir = od2
     of1 = '%s/%s' % (od1,fstem)
-    if os.path.isfile( of1 ) and NO_REPEAT_TEST: 
-      print( 'Test for %s already complete' % fstem )
+    skipping = False
+    if os.path.isfile( of1 ):
+      if NO_REPEAT_TEST: 
+        print( 'Test for %s already complete' % fstem )
+        skipping = True
+      elif NO_REPEAT_TEST_BY_PATH: 
+##
+## pause to avoid race condition with potential other job still writing file
+##
+        time.sleep(1)
+        ii = open( of1 ).readlines()
+        op1 = ii[0][7:].strip()
+        if op1 == CMIP_FILE:
+          print( 'Test for %s already complete' % op1 )
+          skipping = True
     else:
+      os.mknod( of1 )
+
+    if not skipping:
       oo1 = open( of1, 'w' )
       oo1.write( '#FILE: %s\n' % CMIP_FILE )
       oo1.write( '#DATE: %s\n' % time.ctime() )
       oo1.write( '#SOURCE: %s\n' % 'test_cmip_file.py: as script' )
+      oo1.close()
       cmt = None
       wcmt = ''
     ##RAISE_FIRST = True
@@ -384,7 +402,8 @@ if __name__ == "__main__":
          if cmt != None:
            wcmt = ' | %s' % cmt
          print ( '%s: %s: %s -- %s%s' % (res,ret['id'],ret['ov'], msg, wcmt ) )
+         oo1 = open( of1, 'a' )
          oo1.write( '%s: %s: %s -- %s%s\n' % (res,ret['id'],ret['ov'], msg, wcmt ) )
+         oo1.close()
          res2 = None
-      oo1.close()
     ##t.test_file()

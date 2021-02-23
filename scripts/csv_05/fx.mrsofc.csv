@@ -1,0 +1,45 @@
+/badc/cmip6/data/CMIP6/CMIP/AWI/AWI-CM-1-1-MR/historical/r1i1p1f1/fx/mrsofc/gn/v20200511/mrsofc_fx_AWI-CM-1-1-MR_historical_r1i1p1f1_gn.nc	pass	minor	Masks not matching
+/badc/cmip6/data/CMIP6/ScenarioMIP/AWI/AWI-CM-1-1-MR/ssp126/r1i1p1f1/fx/mrsofc/gn/v20200511/mrsofc_fx_AWI-CM-1-1-MR_ssp126_r1i1p1f1_gn.nc	pass	minor	Masks not matching
+/badc/cmip6/data/CMIP6/ScenarioMIP/AWI/AWI-CM-1-1-MR/ssp245/r1i1p1f1/fx/mrsofc/gn/v20200511/mrsofc_fx_AWI-CM-1-1-MR_ssp245_r1i1p1f1_gn.nc	pass	minor	Masks not matching
+/badc/cmip6/data/CMIP6/ScenarioMIP/AWI/AWI-CM-1-1-MR/ssp370/r1i1p1f1/fx/mrsofc/gn/v20200511/mrsofc_fx_AWI-CM-1-1-MR_ssp370_r1i1p1f1_gn.nc	pass	minor	Masks not matching
+/badc/cmip6/data/CMIP6/ScenarioMIP/AWI/AWI-CM-1-1-MR/ssp585/r1i1p1f1/fx/mrsofc/gn/v20200511/mrsofc_fx_AWI-CM-1-1-MR_ssp585_r1i1p1f1_gn.nc	pass	minor	Masks not matching
+/badc/cmip6/data/CMIP6/CMIP/AWI/AWI-ESM-1-1-LR/historical/r1i1p1f1/fx/mrsofc/gn/v20200909/mrsofc_fx_AWI-ESM-1-1-LR_historical_r1i1p1f1_gn.nc	pass	minor	Masks not matching
+/badc/cmip6/data/CMIP6/CMIP/CNRM-CERFACS/CNRM-CM6-1-HR/historical/r1i1p1f2/fx/mrsofc/gr/v20191021/mrsofc_fx_CNRM-CM6-1-HR_historical_r1i1p1f2_gr.nc	fail	major	Missing values flagged; Masks not matching
+/badc/cmip6/data/CMIP6/CMIP/CNRM-CERFACS/CNRM-CM6-1/historical/r1i1p1f2/fx/mrsofc/gr/v20180917/mrsofc_fx_CNRM-CM6-1_historical_r1i1p1f2_gr.nc	fail	major	Missing values flagged; Masks not matching
+/badc/cmip6/data/CMIP6/CMIP/CNRM-CERFACS/CNRM-ESM2-1/historical/r2i1p1f2/fx/mrsofc/gr/v20190125/mrsofc_fx_CNRM-ESM2-1_historical_r2i1p1f2_gr.nc	fail	major	Missing values flagged; Masks not matching
+/badc/cmip6/data/CMIP6/CMIP/NOAA-GFDL/GFDL-CM4/historical/r1i1p1f1/fx/mrsofc/gr1/v20180701/mrsofc_fx_GFDL-CM4_historical_r1i1p1f1_gr1.nc	fail	major	Missing values flagged; Masks not matching
+/badc/cmip6/data/CMIP6/CMIP/NOAA-GFDL/GFDL-CM4/historical/r1i1p1f1/fx/mrsofc/gr2/v20180701/mrsofc_fx_GFDL-CM4_historical_r1i1p1f1_gr2.nc	fail	major	Missing values flagged; Masks not matching
+/badc/cmip6/data/CMIP6/ScenarioMIP/NOAA-GFDL/GFDL-CM4/ssp245/r1i1p1f1/fx/mrsofc/gr1/v20180701/mrsofc_fx_GFDL-CM4_ssp245_r1i1p1f1_gr1.nc	fail	major	Missing values flagged; Masks not matching
+/badc/cmip6/data/CMIP6/ScenarioMIP/NOAA-GFDL/GFDL-CM4/ssp245/r1i1p1f1/fx/mrsofc/gr2/v20180701/mrsofc_fx_GFDL-CM4_ssp245_r1i1p1f1_gr2.nc	fail	major	Missing values flagged; Masks not matching
+/badc/cmip6/data/CMIP6/ScenarioMIP/NOAA-GFDL/GFDL-CM4/ssp585/r1i1p1f1/fx/mrsofc/gr1/v20180701/mrsofc_fx_GFDL-CM4_ssp585_r1i1p1f1_gr1.nc	fail	major	Missing values flagged; Masks not matching
+/badc/cmip6/data/CMIP6/ScenarioMIP/NOAA-GFDL/GFDL-CM4/ssp585/r1i1p1f1/fx/mrsofc/gr2/v20180701/mrsofc_fx_GFDL-CM4_ssp585_r1i1p1f1_gr2.nc	fail	major	Missing values flagged; Masks not matching
+/badc/cmip6/data/CMIP6/CMIP/INM/INM-CM4-8/historical/r1i1p1f1/fx/mrsofc/gr1/v20190528/mrsofc_fx_INM-CM4-8_historical_r1i1p1f1_gr1.nc	fail	major	Missing values flagged; Masks not matching
+/badc/cmip6/data/CMIP6/ScenarioMIP/INM/INM-CM4-8/ssp126/r1i1p1f1/fx/mrsofc/gr1/v20190603/mrsofc_fx_INM-CM4-8_ssp126_r1i1p1f1_gr1.nc	fail	major	Missing values flagged; Masks not matching
+/badc/cmip6/data/CMIP6/ScenarioMIP/INM/INM-CM4-8/ssp245/r1i1p1f1/fx/mrsofc/gr1/v20190603/mrsofc_fx_INM-CM4-8_ssp245_r1i1p1f1_gr1.nc	fail	major	Missing values flagged; Masks not matching
+/badc/cmip6/data/CMIP6/ScenarioMIP/INM/INM-CM4-8/ssp370/r1i1p1f1/fx/mrsofc/gr1/v20190603/mrsofc_fx_INM-CM4-8_ssp370_r1i1p1f1_gr1.nc	fail	major	Missing values flagged; Masks not matching
+/badc/cmip6/data/CMIP6/ScenarioMIP/INM/INM-CM4-8/ssp585/r1i1p1f1/fx/mrsofc/gr1/v20190603/mrsofc_fx_INM-CM4-8_ssp585_r1i1p1f1_gr1.nc	fail	major	Missing values flagged; Masks not matching
+/badc/cmip6/data/CMIP6/CMIP/INM/INM-CM5-0/historical/r1i1p1f1/fx/mrsofc/gr1/v20190610/mrsofc_fx_INM-CM5-0_historical_r1i1p1f1_gr1.nc	fail	major	Missing values flagged; Masks not matching
+/badc/cmip6/data/CMIP6/ScenarioMIP/INM/INM-CM5-0/ssp126/r1i1p1f1/fx/mrsofc/gr1/v20190619/mrsofc_fx_INM-CM5-0_ssp126_r1i1p1f1_gr1.nc	fail	major	Missing values flagged; Masks not matching
+/badc/cmip6/data/CMIP6/ScenarioMIP/INM/INM-CM5-0/ssp245/r1i1p1f1/fx/mrsofc/gr1/v20190619/mrsofc_fx_INM-CM5-0_ssp245_r1i1p1f1_gr1.nc	fail	major	Missing values flagged; Masks not matching
+/badc/cmip6/data/CMIP6/ScenarioMIP/INM/INM-CM5-0/ssp370/r1i1p1f1/fx/mrsofc/gr1/v20190618/mrsofc_fx_INM-CM5-0_ssp370_r1i1p1f1_gr1.nc	fail	major	Missing values flagged; Masks not matching
+/badc/cmip6/data/CMIP6/CMIP/IPSL/IPSL-CM6A-LR/historical/r1i1p1f1/fx/mrsofc/gr/v20180803/mrsofc_fx_IPSL-CM6A-LR_historical_r1i1p1f1_gr.nc	fail	major	Missing values flagged; Masks not matching
+/badc/cmip6/data/CMIP6/ScenarioMIP/IPSL/IPSL-CM6A-LR/ssp119/r1i1p1f1/fx/mrsofc/gr/v20190410/mrsofc_fx_IPSL-CM6A-LR_ssp119_r1i1p1f1_gr.nc	fail	major	Missing values flagged; Masks not matching
+/badc/cmip6/data/CMIP6/ScenarioMIP/IPSL/IPSL-CM6A-LR/ssp126/r1i1p1f1/fx/mrsofc/gr/v20190903/mrsofc_fx_IPSL-CM6A-LR_ssp126_r1i1p1f1_gr.nc	fail	major	Missing values flagged; Masks not matching
+/badc/cmip6/data/CMIP6/ScenarioMIP/IPSL/IPSL-CM6A-LR/ssp245/r1i1p1f1/fx/mrsofc/gr/v20190119/mrsofc_fx_IPSL-CM6A-LR_ssp245_r1i1p1f1_gr.nc	fail	major	Missing values flagged; Masks not matching
+/badc/cmip6/data/CMIP6/ScenarioMIP/IPSL/IPSL-CM6A-LR/ssp370/r1i1p1f1/fx/mrsofc/gr/v20190119/mrsofc_fx_IPSL-CM6A-LR_ssp370_r1i1p1f1_gr.nc	fail	major	Missing values flagged; Masks not matching
+/badc/cmip6/data/CMIP6/ScenarioMIP/IPSL/IPSL-CM6A-LR/ssp434/r1i1p1f1/fx/mrsofc/gr/v20190506/mrsofc_fx_IPSL-CM6A-LR_ssp434_r1i1p1f1_gr.nc	fail	major	Missing values flagged; Masks not matching
+/badc/cmip6/data/CMIP6/ScenarioMIP/IPSL/IPSL-CM6A-LR/ssp460/r1i1p1f1/fx/mrsofc/gr/v20190506/mrsofc_fx_IPSL-CM6A-LR_ssp460_r1i1p1f1_gr.nc	fail	major	Missing values flagged; Masks not matching
+/badc/cmip6/data/CMIP6/ScenarioMIP/IPSL/IPSL-CM6A-LR/ssp534-over/r1i1p1f1/fx/mrsofc/gr/v20190909/mrsofc_fx_IPSL-CM6A-LR_ssp534-over_r1i1p1f1_gr.nc	fail	major	Missing values flagged; Masks not matching
+/badc/cmip6/data/CMIP6/ScenarioMIP/IPSL/IPSL-CM6A-LR/ssp585/r1i1p1f1/fx/mrsofc/gr/v20190903/mrsofc_fx_IPSL-CM6A-LR_ssp585_r1i1p1f1_gr.nc	fail	major	Missing values flagged; Masks not matching
+/badc/cmip6/data/CMIP6/CMIP/MPI-M/MPI-ESM1-2-HR/historical/r1i1p1f1/fx/mrsofc/gn/v20190815/mrsofc_fx_MPI-ESM1-2-HR_historical_r1i1p1f1_gn.nc	pass	minor	Masks not matching
+/badc/cmip6/data/CMIP6/ScenarioMIP/DKRZ/MPI-ESM1-2-HR/ssp126/r1i1p1f1/fx/mrsofc/gn/v20190815/mrsofc_fx_MPI-ESM1-2-HR_ssp126_r1i1p1f1_gn.nc	pass	minor	Masks not matching
+/badc/cmip6/data/CMIP6/ScenarioMIP/DWD/MPI-ESM1-2-HR/ssp126/r2i1p1f1/fx/mrsofc/gn/v20190815/mrsofc_fx_MPI-ESM1-2-HR_ssp126_r2i1p1f1_gn.nc	pass	minor	Masks not matching
+/badc/cmip6/data/CMIP6/ScenarioMIP/DKRZ/MPI-ESM1-2-HR/ssp245/r1i1p1f1/fx/mrsofc/gn/v20190815/mrsofc_fx_MPI-ESM1-2-HR_ssp245_r1i1p1f1_gn.nc	pass	minor	Masks not matching
+/badc/cmip6/data/CMIP6/ScenarioMIP/DKRZ/MPI-ESM1-2-HR/ssp370/r1i1p1f1/fx/mrsofc/gn/v20190815/mrsofc_fx_MPI-ESM1-2-HR_ssp370_r1i1p1f1_gn.nc	pass	minor	Masks not matching
+/badc/cmip6/data/CMIP6/ScenarioMIP/DKRZ/MPI-ESM1-2-HR/ssp585/r1i1p1f1/fx/mrsofc/gn/v20190815/mrsofc_fx_MPI-ESM1-2-HR_ssp585_r1i1p1f1_gn.nc	pass	minor	Masks not matching
+/badc/cmip6/data/CMIP6/ScenarioMIP/DWD/MPI-ESM1-2-HR/ssp585/r2i1p1f1/fx/mrsofc/gn/v20190815/mrsofc_fx_MPI-ESM1-2-HR_ssp585_r2i1p1f1_gn.nc	pass	minor	Masks not matching
+/badc/cmip6/data/CMIP6/CMIP/MPI-M/MPI-ESM1-2-LR/historical/r1i1p1f1/fx/mrsofc/gn/v20190815/mrsofc_fx_MPI-ESM1-2-LR_historical_r1i1p1f1_gn.nc	pass	minor	Masks not matching
+/badc/cmip6/data/CMIP6/ScenarioMIP/MPI-M/MPI-ESM1-2-LR/ssp126/r1i1p1f1/fx/mrsofc/gn/v20190815/mrsofc_fx_MPI-ESM1-2-LR_ssp126_r1i1p1f1_gn.nc	pass	minor	Masks not matching
+/badc/cmip6/data/CMIP6/ScenarioMIP/MPI-M/MPI-ESM1-2-LR/ssp245/r1i1p1f1/fx/mrsofc/gn/v20190815/mrsofc_fx_MPI-ESM1-2-LR_ssp245_r1i1p1f1_gn.nc	pass	minor	Masks not matching
+/badc/cmip6/data/CMIP6/ScenarioMIP/MPI-M/MPI-ESM1-2-LR/ssp370/r1i1p1f1/fx/mrsofc/gn/v20190815/mrsofc_fx_MPI-ESM1-2-LR_ssp370_r1i1p1f1_gn.nc	pass	minor	Masks not matching
+/badc/cmip6/data/CMIP6/ScenarioMIP/MPI-M/MPI-ESM1-2-LR/ssp585/r1i1p1f1/fx/mrsofc/gn/v20190815/mrsofc_fx_MPI-ESM1-2-LR_ssp585_r1i1p1f1_gn.nc	pass	minor	Masks not matching

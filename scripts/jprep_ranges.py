@@ -92,8 +92,9 @@ input_dataset_list = 'c3s34g_pids_qcTest_Oct2020.txt'
 major_error_codes = {'ERROR.ds.0900'}
 minor_error_codes = {'ERROR.ds.0040'}
 
-workflow_errors_detected = ['Lmon.mrro', 'Amon.psl']
-print('NEED TO REVISIT DATA FOR %s' % workflow_errors_detected )
+##workflow_errors_detected = ['Lmon.mrro', 'Amon.psl']
+##print('NEED TO REVISIT DATA FOR %s' % workflow_errors_detected )
+workflow_errors_detected = []
 
 class Base(object):
     DataRoot = '../../cmip6_range_check/scripts/json_03/'
@@ -125,6 +126,18 @@ class FileReport(object):
     for fn,x in tmp.items():
       self.records[fn] = sorted( list( x ) )
 
+def range_dump( ofile='ranges_clean.csv'):
+        nr = get_new_ranges()
+        ks = sorted( list( nr.keys() ) )
+        oo = open( ofile, 'w' )
+        for k in ks:
+          this = nr[k]._asdict()
+          #rec = [k,] + [str(this[x].value) for x in ['max', 'min', 'ma_max', 'ma_min', 'max_l0', 'min_l0'] ]
+          rec = [k,] + [str(this[x].value) for x in ['max', 'min', 'ma_max', 'ma_min'] ]
+          print( rec )
+          oo.write( '\t'.join( rec ) + '\n' )
+        oo.close()
+
 class Test(Base):
     def __init__(self,idir=None):
         if idir == None:
@@ -146,15 +159,36 @@ class Test(Base):
             oo.write( '\t'.join(rec) + '\n' )
         oo.close()
 
+def apply_conditional( func, ll, tt, kk ):
+   this =  [x[kk] for x in ll if type(x[kk]) == tt ]
+   if len( this ) > 0:
+     return func( this )
+   return None
+
 def record_checks(fn, tags, rcbook,with_mask=False):
      """Look through the NetCDF file level json output and generate QC report.
       current version gets as far as basic information .. need to add ranges , and mask info """
      basic = [ rcbook[ '%s:%s' % (fn,t) ]['basic'] for t in tags ]
-     brep = ( min( [x[0] for x in basic] ),
+     nn = sum( [x[3] for x in basic] )
+     try:
+       brep = ( min( [x[0] for x in basic] ),
               max( [x[1] for x in basic] ),
               min( [x[2] for x in basic] ),
               max( [x[2] for x in basic] ),
-              sum( [x[3] for x in basic] ) )
+              nn )
+     except:
+       print( fn, 'FAILED TO EXTRACT EXTREMES, nn=', nn )
+       print ( basic[0][0], type( basic[0][0] ) )
+       try:
+           basicx = [x for x in basic if type(x[0]) == type(1.)]
+           brep = ( apply_conditional( min, basic, type(1.0), 0 ),
+              apply_conditional( max, basic, type(1.0), 1 ),
+              apply_conditional( min, basic, type(1.0), 2 ),
+              apply_conditional( max, basic, type(1.0), 2 ),
+              nn )
+       except:
+          print( fn, 'FAILED AGAIN TO EXTRACT EXTREMES', basic)
+          raise
 
      if with_mask:
        try:
@@ -199,7 +233,11 @@ class TestFile(object):
       path = '/badc/cmip6/data/CMIP6/' + '/'.join( [mip,inst,model,expt,variant,table,var,grid,version] )
 
       rcs,mcs = record_checks(fn,tags,fr.ee['data']['records'],with_mask=with_mask)
-      tests = [rcs[0] >= vmin, rcs[1] <= vmax]
+      if rcs[0] == None:
+        tests = [False,False]
+      else:
+        tests = [rcs[0] >= vmin, rcs[1] <= vmax]
+
       if vmamin != None:
         tests.append( rcs[2] >= vmamin )
       else:
@@ -217,18 +255,32 @@ class TestFile(object):
         tests.append( None )
 
       emsg = []
-      if rcs[0] < vmin:
+      if rcs[0] == None:
+        emsg.append( 'Minimum value not found' )
+      elif rcs[0] < vmin:
         emsg.append( 'Minimum %s < %s' % (rcs[0],vmin) )
-      if rcs[1] > vmax:
+
+      if rcs[1] == None:
+        emsg.append( 'Maximum value not found' )
+      elif rcs[1] > vmax:
         emsg.append( 'Maximum %s > %s' % (rcs[1],vmax) )
+
       if vmamin != None and rcs[2] < vmamin:
         emsg.append( 'Mean absolute %s < %s' % (rcs[2],vmamin) )
+
       if vmamax != None and rcs[3] > vmamax:
         emsg.append( 'Mean absolute %s > %s' % (rcs[3],vmamax) )
 
       range_errors = len(emsg) > 0
-      mv_errors = rcs[4] != 0
-      if rcs[4] != 0:
+
+      if table == 'Amon' and var in ['ta','ua','va','zg','hur','hus']:
+        mv_errors = False
+      elif table in ['Omon', 'Ofx','Lmon','LImon']:
+        mv_errors = False
+      else:
+        mv_errors = rcs[4] != 0
+
+      if mv_errors:
         emsg.append( 'Missing values flagged' )
 
       mask_errors = with_mask and (not mcs)
@@ -238,11 +290,52 @@ class TestFile(object):
       if len(emsg) == 0:
         error_message = error_severity = 'na'
         error_status = 'pass'
+          
       else:
         error_message = '; '.join( emsg)
-        if range_errors or mv_errors:
+        if range_errors:
            error_status='fail'
            error_severity='major'
+           if model == 'HadGEM3-GC31-MM' and var in ['simass','sithick']:
+             if tests[0]:
+                ## ex01.001: Extreme seaice thickness in HadGEM3-GC31-MM simulations
+                error_status = 'pass'
+                error_severity = 'minor'
+                error_message += '[ex01.001]'
+           elif model == 'GISS-E2-1-H' and var in ['simass','sithick']:
+             if tests[0]:
+                ## ex01.001: Extreme seaice thickness in GISS-E2-1-H
+                error_status = 'pass'
+                error_severity = 'minor'
+                error_message += '[ex01.002]'
+           elif var == 'evspsbl' and (not mv_errors) and tests[1]:
+              if rcs[0] > -0.0003:
+                error_status = 'pass'
+                error_severity = 'minor'
+                error_message += '[ex01.003]'
+           elif var == 'areacello' and (not mv_errors) and tests[1] and grid == 'gn':
+              if rcs[0] > -0.0002:
+                error_status = 'pass'
+                error_severity = 'na'
+                error_message += '[c01.001]'
+           elif var == 'deptho' and (not mv_errors) and tests[0] and model in ['FGOALS-g3','FGOALS-f3-L']:
+              if rcs[1] < 2000000:
+                error_status = 'pass'
+                error_severity = 'na'
+                error_message += '[c01.002]'
+             
+           
+        elif mv_errors:
+           if table in ['SImon']:
+             error_status='pass'
+             error_severity='minor'
+           elif inst == 'CMCC' and var == 'orog':
+             error_status = 'pass'
+             error_severity = 'minor'
+             error_message += '[ex01.001]'
+           else:
+             error_status='fail'
+             error_severity='major'
         else:
            error_status='pass'
            error_severity='minor'
@@ -412,12 +505,22 @@ class JprepRanges(object):
 
 
 if __name__ == "__main__":
+    import sys
+    j = JprepRanges()
+    if len(sys.argv) == 1:
     #j = Jprep()
     ##Test()
-    j = JprepRanges()
     ##j.run_test(all=True)
-    fcsv = open( 'fx.orog.csv', 'w' )
-    j.run_test(test_var='fx.orog', all=True, fcsv=fcsv )
-    fcsv.close()
+      fcsv = open( 'fx.orog.csv', 'w' )
+      j.run_test(test_var='fx.orog', all=True, fcsv=fcsv )
+      fcsv.close()
     ##tf = TestFile()
     ##tf.check_file('json_03/Amon.ts/ts_Amon_INM-CM5-0_ssp245_r1i1p1f1_gr1.json')
+    elif sys.argv[1] == '-d':
+      range_dump()
+    elif sys.argv[1] == '-v':
+      var = sys.argv[2]
+      assert os.path.isdir( 'json_05/%s' % var )
+      fcsv = open( '%s.csv' % var, 'w' )
+      j.run_test(test_var=var, all=True, fcsv=fcsv )
+      fcsv.close()

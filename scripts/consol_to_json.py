@@ -409,6 +409,7 @@ if __name__ == "__main__":
     print (s.range_comment )
     s.json_dump( input_files[0] + '...', json_file=json_file )
   elif sys.argv[1] == '-d':
+    group = 5
     input_files = sorted( glob.glob( '%s/*.dat' % sys.argv[2]  ) )
     isFixed = sys.argv[2].find( 'fx' ) != -1
     d1 = ssort( input_files, fixed=isFixed )
@@ -422,10 +423,10 @@ if __name__ == "__main__":
         s.get_summary()
         drs = s.summary['drs']
         sdir = '%s.%s' % tuple( drs[:2] )
-        if not os.path.isdir( 'json_03/%s' % sdir ):
-          os.mkdir( 'json_03/%s' % sdir )
+        if not os.path.isdir( 'json_%2.2i/%s' % (group,sdir) ):
+          os.mkdir( 'json_%2.2i/%s' % (group,sdir) )
   
-        json_file = 'json_03/%s/%s.json' % (sdir,k)
+        json_file = 'json_%2.2i/%s/%s.json' % (group,sdir,k)
       
         print (k)
         print (s.range_comment )
@@ -433,8 +434,8 @@ if __name__ == "__main__":
         print ('Failed to generate summary for %s' % k )
         raise
         sdir = '__no_drs__'
-        if not os.path.isdir( 'json_03/%s' % sdir ):
-          os.mkdir( 'json_03/%s' % sdir ) 
+        if not os.path.isdir( 'json_%2.2i/%s' % (group,sdir) ):
+          os.mkdir( 'json_%2.2i/%s' % (group,sdir) ) 
   
-        json_file = 'json_03/%s/%s.json' % (sdir,k)
+        json_file = 'json_%2.2i/%s/%s.json' % (group,sdir,k)
       s.json_dump( input_files[0] + '...', json_file=json_file )
