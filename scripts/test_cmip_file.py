@@ -347,7 +347,7 @@ if __name__ == "__main__":
          log_wf.info( 'path modified (stripping last two characters)' )
       else:
         skipping = True
-        log_wf.info( 'FILE NOT FOUND: %s' % ( CMIP_FILE_PREV )  )
+        log_wf.info( 'FILE NOT FOUND: %s' % ( CMIP_FILE )  )
       
     if not skipping:
       t = ConcTestCmipFile(input_file=CMIP_FILE)
@@ -361,7 +361,7 @@ if __name__ == "__main__":
       t.shdir = od2
       of1 = '%s/%s' % (od1,fstem)
       skipping = False
-      if os.path.isfile( of1 ):
+      if os.path.isfile( of1 ) and  os.stat(of1).st_size > 0:
         if NO_REPEAT_TEST: 
           print( 'Test for %s already complete' % fstem )
           skipping = True
@@ -369,7 +369,7 @@ if __name__ == "__main__":
 ##
 ## pause to avoid race condition with potential other job still writing file
 ##
-          time.sleep(1)
+          ## time.sleep(1)
           ii = open( of1 ).readlines()
           op1 = ii[0][7:].strip()
           if op1 == CMIP_FILE:
