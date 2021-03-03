@@ -61,7 +61,10 @@ class TestCmipFile:
   def test_file(self) -> dict( ov='Test of Sampler object: expected attributes', id='tc101',
                               obj='test Sampler attributes', p='SHOULD', tr='tbd', prec='None', i='None', expected=True ):
 
-      this_file = os.environ['CMIP_FILE'].replace( '//', '/' )
+      if self.input_file != None:
+        this_file = self.input_file.replace( '//', '/' )
+      else:
+        this_file = os.environ['CMIP_FILE'].replace( '//', '/' )
       ##log = logging.getLogger( LOG_NAME )
       ##log.info(  'Starting: %s' % this_file )
       print( 'Starting: %s' % this_file ) 
@@ -309,8 +312,8 @@ class TestCmipFile:
       Check3( self.test_wrapup )( True, cmt=Check3.review() )
 
 class ConcTestCmipFile(TestCmipFile):
-    def __init__(self):
-        pass
+    def __init__(self,input_file=None):
+        self.input_file=input_file
 
 NO_REPEAT_TEST = False
 NO_REPEAT_TEST_BY_PATH = True
@@ -336,33 +339,44 @@ if __name__ == "__main__":
     log_wf  = log_factory( '%s.%s' % (table,vname), mode="a", logfile=log_file, warnings=True )
     log_wf.info( 'STARTING test_cmip_file.py WORKFLOW, %s, %s' % ( time.ctime(), fname)  )
 
-    t = ConcTestCmipFile()
-    fstem = fname.rpartition( '.' )[0]
-    od1 = 'out_%2.2i/%s.%s' % (group,table,vname)
-    od2 = 'sh_%2.2i/%s.%s' % (group,table,vname)
-    if not os.path.isdir( od1 ):
-      os.mkdir(od1)
-    if not os.path.isdir( od2 ):
-      os.mkdir(od2)
-    t.shdir = od2
-    of1 = '%s/%s' % (od1,fstem)
     skipping = False
-    if os.path.isfile( of1 ):
-      if NO_REPEAT_TEST: 
-        print( 'Test for %s already complete' % fstem )
+    if not os.path.isfile( CMIP_FILE ):
+      if os.path.isfile( CMIP_FILE[:-2] ):
+         CMIP_FILE_PREV = CMIP_FILE
+         CMIP_FILE = CMIP_FILE[:-2]
+         log_wf.info( 'path modified (stripping last two characters)' )
+      else:
         skipping = True
-      elif NO_REPEAT_TEST_BY_PATH: 
+        log_wf.info( 'FILE NOT FOUND: %s' % ( CMIP_FILE_PREV )  )
+      
+    if not skipping:
+      t = ConcTestCmipFile(input_file=CMIP_FILE)
+      fstem = fname.rpartition( '.' )[0]
+      od1 = 'out_%2.2i/%s.%s' % (group,table,vname)
+      od2 = 'sh_%2.2i/%s.%s' % (group,table,vname)
+      if not os.path.isdir( od1 ):
+        os.mkdir(od1)
+      if not os.path.isdir( od2 ):
+        os.mkdir(od2)
+      t.shdir = od2
+      of1 = '%s/%s' % (od1,fstem)
+      skipping = False
+      if os.path.isfile( of1 ):
+        if NO_REPEAT_TEST: 
+          print( 'Test for %s already complete' % fstem )
+          skipping = True
+        elif NO_REPEAT_TEST_BY_PATH: 
 ##
 ## pause to avoid race condition with potential other job still writing file
 ##
-        time.sleep(1)
-        ii = open( of1 ).readlines()
-        op1 = ii[0][7:].strip()
-        if op1 == CMIP_FILE:
-          print( 'Test for %s already complete' % op1 )
-          skipping = True
-    else:
-      os.mknod( of1 )
+          time.sleep(1)
+          ii = open( of1 ).readlines()
+          op1 = ii[0][7:].strip()
+          if op1 == CMIP_FILE:
+            print( 'Test for %s already complete' % op1 )
+            skipping = True
+      else:
+        os.mknod( of1 )
 
     if not skipping:
       oo1 = open( of1, 'w' )
