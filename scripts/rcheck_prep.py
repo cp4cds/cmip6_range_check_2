@@ -77,14 +77,22 @@ class Rsplat(object):
      self.group=group
      jfile = "handle_scan_report_extended_20201019.json"
      jfile = 'scanned_dset_for_qc_%2.2i.json' % group
+     jfile = '../_work/QC_template.json'
      ee = json.load( open( jfile, 'r' ) )
      cc = collections.defaultdict( list )
      ff = collections.defaultdict( list )
      __all__ = True
-     for h,d in ee['data'].items():
+     __ignore_qc__ = True
+##
+## was ee['data'] for group 3
+##
+     for h,d in ee['datasets'].items():
        ds = d['dset_id']
        era,mip,inst,model,expt,variant,table,var,grid,version = ds.split('.')
-       if d['qc_status'] == 'pass' or (__all__ and d['qc_status'] != 'ERROR'):
+       if 'dir' not in d:
+         d['dir'] = '/badc/cmip6/data/CMIP6/%s/%s/%s/%s/%s/%s/%s/%s/%s/' % (mip,inst,model,expt,variant,table,var,grid,version)
+#/badc/cmip6/data//CMIP6/ScenarioMIP/CCCma/CanESM5/ssp126/r1i1p1f1/AERmon/od550aer/gn/v20190429/
+       if __ignore_qc__ or d['qc_status'] == 'pass' or (__all__ and d['qc_status'] != 'ERROR'):
          cc[(expt,table,var)].append( d )
        elif d['qc_message'] == 'No variable limits provided':
            ff[(table,var)].append(ds)
@@ -107,13 +115,62 @@ class Rsplat(object):
        oo = open( 'inputs_%2.2i/%s/x1_%s_%s.txt' % (self.group,*k), 'w' )
        for d in item:
          d1 = d['dir']
-         for f in d['files']:
-           oo.write( '%s/%s\n' % (d1,f) )
+         for fhdl,f in d['files'].items():
+           oo.write( '%s/%s\n' % (d1,f['filename']) )
        oo.close()
        
 
+def scan_group(a='inputs_05'):
+  """INCOMPLETE"""
+  dl = glob.glob( '%s/*' % a )
+  fl = []
+  for d in dl:
+    for f in glob.glob( '%s/*Amon_clt.txt' % d ):
+      fl.append( f )
+  nn = 0
+  na = 0
+  nnn =0
+  np = 0
+  for  f in sorted( fl ):
+       pl = [x.strip() for x in open(f).readlines() ]
+       np += len(pl)
+       for p in pl:
+         if not( os.path.isfile( p ) ):
+           if os.path.isfile( p[:-2] ):
+             na += 1
+           else:
+       ##      print( p )
+             nn += 1
+         else:
+           fn = p.rpartition( '/' )[-1]
+           fs = fn.rpartition( '.' )[0]
+           if not os.path.isfile( 'out_05/Amon.clt/%s' % fs ):
+             nnn += 1
+           
+  print( 'Amon.clt', np, na, nn, nnn )
+
+def compare_groups(a='inputs_06',b='inputs_05'):
+  """INCOMPLETE"""
+  dl = glob.glob( '%s/*' % a )
+  fl = []
+  for d in dl:
+    for f in glob.glob( '%s/*.txt' % d ):
+      fl.append( f )
+  for  f in sorted( fl ):
+     f0 = f.replace( a,b )
+     if not os.path.isfile( f0 ):
+       print( 'MISSING: %s' % f0 )
+     else:
+       s = set( [x.strip() for x in open(f).readlines() ] )
+       s0 = set( [x.strip() for x in open(f).readlines() ] )
+
 if __name__ == '__main__':
-    ##rp = Rprep(with_limits=False, group=3)
-    r = Rsplat(group=3)
+  ##rp = Rprep(with_limits=False, group=3)
+  import sys
+  if len(sys.argv) > 1:
+    if sys.argv[1] == '-s':
+       scan_group()
+  else:
+    r = Rsplat(group=6)
     r.splat()
     r.analysis()

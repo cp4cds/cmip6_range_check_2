@@ -201,13 +201,21 @@ def record_checks(fn, tags, rcbook,with_mask=False):
        mrep = None
      return brep, mrep
   
+class Hlook(object):
+  def __init__(self):
+    ee = json.load( open( '../_work/QC_template.json' ) )
+    self.ee = dict()
+    self.ff = dict()
+    for h,i in ee['datasets'].items():
+      self.ee[h] = i['dset_id']
+      self.ff[i['dset_id']] = h
 
 class TestFile(object):
   ATTRIBUTES = ('basic', 'drs', 'empty_count', 'extremes', 'mask', 'quantiles')
-  def __init__(self):
-    pass
+  def __init__(self,hlk):
+    self.hlk = hlk
     
-  def check_file(self,jfile, vmax=None, vmin=None, vmamax=None, vmamin=None, with_mask=False, jrep_file=None, fcsv=None):
+  def check_file(self,jfile, vmax=None, vmin=None, vmamax=None, vmamin=None, with_mask=False, jrep_file=None, fcsv=None, ffcsv=None, mkd=None):
     fr = FileReport( jfile )
     reps = {}
 ## json_03/Amon.ts/ts_Amon_INM-CM5-0_ssp245_r1i1p1f1_gr1.json
@@ -223,14 +231,22 @@ class TestFile(object):
     
     ests = set()
     esvs = set()
+    dsfail = False
     for fn,tags in fr.records.items():
       fns = fn[:-3]
       tid = fr.ee['data']['headers'][fns]['tech']['file_info']['tid']
+      contact = fr.ee['data']['headers'][fns]['tech']['file_info']['contact']
 ##
 ## table, var, inst, model, mip, expt, variant, grid, version
       drs = fr.ee['data']['headers'][fns]['tech']['file_info']['drs']
       table, var, inst, model, mip, expt, variant, grid, version = drs
       path = '/badc/cmip6/data/CMIP6/' + '/'.join( [mip,inst,model,expt,variant,table,var,grid,version] )
+
+#
+# should be unique in a set of file records
+##
+      esgf_id = '.'.join( ['CMIP6', mip, inst, model, expt, variant, table, var, grid, version ] )
+      hdl = self.hlk.ff[ esgf_id ]
 
       rcs,mcs = record_checks(fn,tags,fr.ee['data']['records'],with_mask=with_mask)
       if rcs[0] == None:
@@ -343,9 +359,18 @@ class TestFile(object):
       ests.add( error_status )
       esvs.add( error_severity )
       reps[tid] = dict( filename=fn, error_message = error_message, error_status=error_status, error_severity = error_severity )
+      if error_status == 'fail':
+         dsfail = True
       if fcsv != None:
         fcsv.write( '\t'.join( [path + '/' + fn,error_status,error_severity, error_message] ) + '\n' )
+      if ffcsv != None and error_status == 'fail':
+        ffcsv.write( '\t'.join( [path + '/' + fn,error_status,error_severity, error_message, tid, contact, hdl, esgf_id] ) + '\n' )
       print ( fn, tests )
+
+    if mkd != None and dsfail:
+        id_link = "[%s](https://cera-www.dkrz.de/WDCC/ui/cerasearch/cerarest/exportcmip6?input=%s)" % (esgf_id,esgf_id)
+        pid_link = "[%s](http://hdl.handle.net/%s)" % (hdl,hdl[4:])
+        mkd.write( '%s: %s [%s]\n' % (id_link,pid_link,contact) )
     print ('OUTPUT TO: %s' % jrep_file )
     oo = open( jrep_file, 'w' )
     if 'fail' in ests:
@@ -356,7 +381,7 @@ class TestFile(object):
       dsqc = dict( error_severity='na', error_message='na' )
       if 'minor' in esvs:
         dsqc['error_message'] = 'Minor errors encountered: details in file error log'
-    json.dump( dict( files=reps, dset_id='__todo__', qc_status=qc_status, dataset_qc=dsqc ), oo, indent=4, sort_keys=True )
+    json.dump( dict( files=reps, dset_id=esgf_id, qc_status=qc_status, dataset_qc=dsqc ), oo, indent=4, sort_keys=True )
       ##"dset_id": "<id>",
       ##"qc_status": "pass|fail",
       ##"dataset_qc": {
@@ -385,18 +410,18 @@ class JprepRanges(object):
         print ('Excluding: ',excluded )
         self.nr = get_new_ranges()
 
-    def run_test( self, test_var='LImon.snd', all=False, fcsv=None ):
+    def run_test( self, test_var='LImon.snd', all=False, fcsv=None, ffcsv=None, mkd=None ):
         assert test_var in self.nr
         assert test_var in self.dirs
         fl = sorted( glob.glob( '%s/*.json' % self.dirs[test_var] ) )
-        tf = TestFile()
+        tf = TestFile(hlk=Hlook())
         print (self.nr[test_var])
         r = self.nr[test_var]
         if not all:
-          tf.check_file( fl[0], vmax=r.max.value, vmin=r.min.value, vmamax=r.ma_max.value, vmamin=r.ma_min.value, with_mask=test_var in MASKS, fcsv=fcsv )
+          tf.check_file( fl[0], vmax=r.max.value, vmin=r.min.value, vmamax=r.ma_max.value, vmamin=r.ma_min.value, with_mask=test_var in MASKS, fcsv=fcsv, ffcsv=ffcsv, mkd=mkd )
         else:
           for f in fl:
-            tf.check_file( f, vmax=r.max.value, vmin=r.min.value, vmamax=r.ma_max.value, vmamin=r.ma_min.value, with_mask=test_var in MASKS, fcsv=fcsv )
+            tf.check_file( f, vmax=r.max.value, vmin=r.min.value, vmamax=r.ma_max.value, vmamin=r.ma_min.value, with_mask=test_var in MASKS, fcsv=fcsv, ffcsv=ffcsv, mkd=mkd )
 
     def run(self):
         
@@ -521,6 +546,8 @@ if __name__ == "__main__":
     elif sys.argv[1] == '-v':
       var = sys.argv[2]
       assert os.path.isdir( 'json_05/%s' % var )
-      fcsv = open( '%s.csv' % var, 'w' )
-      j.run_test(test_var=var, all=True, fcsv=fcsv )
+      fcsv = open( 'csv_05b/%s.csv' % var, 'w' )
+      ffcsv = open( 'csvf_05b/%s_fails.csv' % var, 'w' )
+      mkd = open( 'csvf_05b/%s_fails.md' % var, 'w' )
+      j.run_test(test_var=var, all=True, fcsv=fcsv, ffcsv=ffcsv, mkd=mkd )
       fcsv.close()
