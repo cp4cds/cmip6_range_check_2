@@ -11,6 +11,7 @@ __version__ = '0.1.0'
 pid_input_june = "../esgf_fetch/lists/wg1subset-r1-datasets-pids-clean.csv"
 pid_input_oct = "../esgf_fetch/lists/c3s34g_pids_qcTest_Oct2020.txt"
 pid_input_feb21 = "../ingest_scripts/c3s34g_pids_qcTest_Feb2021.txt"
+pid_input_mar21 = "../ingest_scripts/c3s34g_pids_qcTest_March2021.txt"
 
 NT__scope = collections.namedtuple( 'scope', ['overview','identifier','description','priority','traceability'] )
 NT__test_case_spec = collections.namedtuple( 'test_case_spec', ['ov', 'id', 'obj', 'p', 'tr', 'prec', 'i', 'expected'])
@@ -49,12 +50,18 @@ def check_parts(h,ev,drs_id,ds, errors):
           fns = set()
           cc = collections.defaultdict( set  )
           ccl = collections.defaultdict( set  )
+          replica_only = False
           for f in h.rec['HAS_PARTS']:
                   f.get()
                   if 'URL_ORIGINAL_DATA' not in f.rec:
                         print ('ERROR.ds.0040: URL_ORIGINAL_DATA missing from file hdl record %s :: %s' % (drs_id,f.rec.get('URL','__NO__URL__')))
                         err = 'ERROR.ds.0040: URL_ORIGINAL_DATA missing from file hdl record: %s' % ds
                         errors.append( err )
+                        this = f.rec['URL_REPLICA']
+                        fn = f.rec['FILE_NAME']
+                        replica_only = True
+                        vn = 'null'
+                            
                   else:    
                     this = f.rec['URL_ORIGINAL_DATA']
                     locs = re2.findall( this )
@@ -77,14 +84,14 @@ def check_parts(h,ev,drs_id,ds, errors):
                        vn = vnss.pop()
                     else:
                        vn = ev
-                    tt = fn.rpartition('.')[0].split('_')
-                    cc['l'].add( len(tt) )
-                    ccl[len(tt)].add( fn )
-                    for k in range(len(tt)):
+                  tt = fn.rpartition('.')[0].split('_')
+                  cc['l'].add( len(tt) )
+                  ccl[len(tt)].add( fn )
+                  for k in range(len(tt)):
                         cc[k].add(tt[k])
-                    vns.add(vn)
-                    fns.add(fn)
-          return err, vns, fns, cc, ccl 
+                  vns.add(vn)
+                  fns.add(fn)
+          return err, vns, fns, cc, ccl, replica_only 
 
 def matching( result, expected):
     if type(expected) == type('') and expected.find(':') != -1 and expected.split( ':' )[0] in ['lt','gt','le','ge']:
@@ -234,19 +241,26 @@ class CMIPDatasetSample(object):
     def review(self, dsids, ctag):
         self.nobs = 0
         self.kk = 0
-        oo = open('hdl-reviewed_datasets_%s.csv' % ctag,'w')
-        oo2 = open('summary-reviewed_datasets_%s.csv' % ctag,'w')
+        oo = open('hdl_06/hdl-reviewed_datasets_%s.csv' % ctag,'w')
+        oo2 = open('hdl_06/summary-reviewed_datasets_%s.csv' % ctag,'w')
+        nn = 0
         for ds, eid, ev in dsids:
+          if (nn//10)*10 == nn:
+              print ('STARTING RECORD: %s' % nn )
+          nn += 1
           if (not self.skipping) or (ds not in self.to_skip):
             self.dsr = DatasetReview(ds)
             h = hddump.Open( ds )
             drs_id, err = self.review_handle_record(oo, h, ds, eid, ev )
-            self.review_masks(drs_id)
+            if drs_id == None:
+              oo2.write( '\t'.join( ['NONE',ev,err,'na','na'] ) + '\n' )
+            else:
+              self.review_masks(drs_id)
 
-            eflag = 'OK' if err == None else err
-            mflag = 'OK' if self.dsr.current_mask_error == None else 'mask_error'
-            mcmt = self.dsr.current_mask_file if self.dsr.current_mask_error == None else self.dsr.current_mask_error
-            oo2.write( '\t'.join( [drs_id,ev,eflag,mflag,mcmt] ) + '\n' )
+              eflag = 'OK' if err == None else err
+              mflag = 'OK' if self.dsr.current_mask_error == None else 'mask_error'
+              mcmt = self.dsr.current_mask_file if self.dsr.current_mask_error == None else self.dsr.current_mask_error
+              oo2.write( '\t'.join( [drs_id,ev,eflag,mflag,mcmt] ) + '\n' )
 
         oo.close()
         oo2.close()
@@ -277,6 +291,11 @@ class CMIPDatasetSample(object):
 
     def review_handle_record(self,oo, h, ds, eid, ev):
             h.get()
+            if 'DRS_ID' not in h.rec:
+                print ('WORKFLOW ERROR??',h.rec.keys(),ds)
+                err = 'No DRS_ID'
+                return (None, err)
+
             drs_id = h.rec['DRS_ID']
             era,activity,inst,model,expt,variant,table,var,grid = drs_id.split('.')
             fncomps = [var,table,model,expt,variant,grid]
@@ -300,10 +319,13 @@ class CMIPDatasetSample(object):
                   self.obsolete = True
             else:
                 self.obsolete = False
-                err, vns, fns, cc, ccl = check_parts(h, ev, drs_id, ds, self.dsr.errors)
+                err, vns, fns, cc, ccl, replica_only = check_parts(h, ev, drs_id, ds, self.dsr.errors)
                 ### check parts
 
-                if len(cc.keys()) == 0:
+                if replica_only:
+                    ## skip further checks
+                    pass
+                elif len(cc.keys()) == 0:
                     print ('ERROR.ds.0101: no files found (empty cc) %s' % (drs_id) )
                     if err == None:
                         err = 'ERROR.ds.0101: %s: no files found (empty cc)' % ds
@@ -754,7 +776,7 @@ class CheckJson(object):
               self.known_errors[this].add( fn )
       ii.close()
     
-    ii = open( pid_input_feb21, 'r' )
+    ii = open( pid_input_mar21, 'r' )
     for l in ii.readlines()[1:]:
        esgf_id,pid = [x.strip() for x in l.split(',') ]
        self.pid_lookup[esgf_id] = pid
@@ -1034,7 +1056,7 @@ def run_dataset_review(targ='Amon',repeat=False, mode='a',query=False):
      else:
 
        review_version = '02-03'
-       ii = open( pid_input_oct).readlines()
+       ii = open( pid_input_feb21).readlines()
        set1 = ['Omon','Amon','Lmon','day']
        this_table = 'other'
        if targ in ['Amon-c','Amon-s']:
