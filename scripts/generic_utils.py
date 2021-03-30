@@ -1,4 +1,10 @@
-import logging, time, os, json, sys, shelve, glob, csv
+import logging, time, os, json, sys, shelve, glob, csv, collections
+
+
+NT_RangeValue = collections.namedtuple( "range_value", ["value","status"] )
+NT_RangeSet = collections.namedtuple( "range_set", ["max","min","ma_max","ma_min"] )
+NT_RangeSetX = collections.namedtuple( "range_set", ["max","min","ma_max","ma_min","max_l0","min_l0"] )
+null_range_value = NT_RangeValue( None, "NONE" )
 
 
 class Dq(object):

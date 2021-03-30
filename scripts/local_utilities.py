@@ -1,7 +1,7 @@
 import logging, time, os, collections, json, inspect, glob, warnings, numpy, shelve, re, random
 import csv
 from local_pytest_utils import BaseClassTS
-from generic_utils import LogFactory, WGIPriority
+from generic_utils import LogFactory, WGIPriority, NT_RangeValue, NT_RangeSet, null_range_value, NT_RangeSetX
 ##import hddump
 from local_utilities_dataset import CMIPDatasetSample
 try:
@@ -14,10 +14,10 @@ __version__ = '0.1.0'
 NT__scope = collections.namedtuple( 'scope', ['overview','identifier','description','priority','traceability'] )
 NT__test_case_spec = collections.namedtuple( 'test_case_spec', ['ov', 'id', 'obj', 'p', 'tr', 'prec', 'i', 'expected'])
 
-NT_RangeValue = collections.namedtuple( "range_value", ["value","status"] )
-NT_RangeSet = collections.namedtuple( "range_set", ["max","min","ma_max","ma_min"] )
-NT_RangeSetX = collections.namedtuple( "range_set", ["max","min","ma_max","ma_min","max_l0","min_l0"] )
-null_range_value = NT_RangeValue( None, "NONE" )
+#NT_RangeValue = collections.namedtuple( "range_value", ["value","status"] )
+#NT_RangeSet = collections.namedtuple( "range_set", ["max","min","ma_max","ma_min"] )
+#NT_RangeSetX = collections.namedtuple( "range_set", ["max","min","ma_max","ma_min","max_l0","min_l0"] )
+#null_range_value = NT_RangeValue( None, "NONE" )
 
 __overview__ = "Testing the local utilities module"
 __identifier__ = "scope01"
