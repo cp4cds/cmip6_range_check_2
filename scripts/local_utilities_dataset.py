@@ -1,7 +1,7 @@
 import logging, time, os, collections, json, inspect, glob, warnings, numpy, shelve, re, os
 import csv
 from local_pytest_utils import BaseClassTS
-from generic_utils import LogFactory
+from generic_utils import LogFactory, WGIPriority
 try:
   import hddump
 except:
@@ -655,9 +655,9 @@ def stn(x,nd=2):
       vv = '0.0'
   return vv
 
-class WGIPriority(object):
+class OBSOLETE__WGIPriority(object):
   known_masks = ['fx.sftlf', 'Ofx.sftof', 'Simon.siconc', 'fx.sftgif']
-  def __init__(self,ifile="AR6_priority_variables_02.csv" ):
+  def __init__(self,ifile="data/AR6_priority_variables_02.csv" ):
     ii = csv.reader( open( ifile ), delimiter='\t' )
     try:
       dq = Dq()

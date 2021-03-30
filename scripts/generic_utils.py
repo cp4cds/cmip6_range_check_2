@@ -1,5 +1,66 @@
-import logging, time, os, json, sys, shelve, glob
+import logging, time, os, json, sys, shelve, glob, csv
 
+
+class Dq(object):
+  def __init__(self):
+    from dreqPy import dreq
+    self.dq = dreq.loadDreq()
+
+    self.CMORvar_by_id = dict()
+    for i in self.dq.coll["CMORvar"].items:
+      self.CMORvar_by_id["%s.%s" % (i.mipTable,i.label) ] = i
+
+class WGIPriority(object):
+  known_masks = ['fx.sftlf', 'Ofx.sftof', 'Simon.siconc', 'fx.sftgif','Ofx.areacello','Ofx.basin']
+  def __init__(self,ifile="data/AR6_priority_variables_02.csv" ):
+    ii = csv.reader( open( ifile ), delimiter='\t' )
+    try:
+      dq = Dq()
+    except:
+      dq = None
+
+    self.ee = dict()
+    self.title = dict()
+    self.ranges = dict()
+    self.masks = dict()
+    for l in ii:
+      rec = l[2:]
+      id, units = rec[:2]
+      if dq != None:
+        self.title[id] = dq.CMORvar_by_id[id].title
+      vt = rec[3:11]
+      if rec[2].strip() != '':
+          self.masks[id] = rec[1].strip()
+
+      if not all( [vt[i] == "-" for i in [1,3,5,7]]):
+        xx = []
+        for i in [0,2,4,6]:
+          if vt[i+1] not in ["-",""]:
+            xx.append( NT_RangeValue(float(vt[i]),vt[i+1]) )
+          else:
+            xx.append( null_range_value )
+        self.ranges[id] = NT_RangeSet( xx[0], xx[1], xx[2], xx[3] )
+
+      self.ee[id] = units
+
+  @staticmethod
+  def _has_mask(fpath):
+      fn = fpath.rpartition( '/')[-1]
+      var,tab = fn.split('_')[:2]
+      return '%s.%s' % (tab,var) in self.known_masks
+
+  def review_masks(self,data_dir='../esgf_fetch/data_files_2/', verbose=False):
+      fl = [f for f in glob.glob( '%s/*.nc' ) if self._has_mask(f)]
+      fl = glob.glob( '%s/*.nc' % data_dir )
+      if verbose:
+        print ('review ... ',len(fl) )
+      self.mask_pool = collections.defaultdict( lambda: collections.defaultdict( set ) )
+      for fpath in fl:
+          fn = fpath.rpartition( '/')[-1]
+          var,tab,model = fn.split('_')[:3]
+          var_id = '%s.%s' % (tab,var)
+          if var_id in self.known_masks:
+              self.mask_pool[var_id][model].add( fpath )
 
 class ComplexEncoder(json.JSONEncoder):
      def default(self, obj):
