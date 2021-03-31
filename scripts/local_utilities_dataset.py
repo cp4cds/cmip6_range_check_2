@@ -164,7 +164,7 @@ def maketest(f):
     return this
 
 
-def get_mask( table, var, source,expt,grid):
+def XXX_get_mask( table, var, source,expt,grid):
           import netCDF4, numpy
           this_mask = None
           if table in ['fx','Ofx']:
@@ -390,7 +390,7 @@ class CMIPDatasetSample(object):
             self.kk += 1
             return (drs_id,err)
 
-class CMIPFileSample(object):
+class XXX_CMIPFileSample(object):
     def __init__(self,files,input_dir=None,mode='all',sh_file=None):
         ##
         ## TODO : add check on files, loop over files, extraction of variable and call to VariableSampler
@@ -422,13 +422,13 @@ class CMIPFileSample(object):
             else:
               fill_value = None
             print ("fill value = %s" % fill_value )
-            vs = VariableSampler( this_var[:], sampler, fill_value=fill_value )
+            vs = XXX_VariableSampler( this_var[:], sampler, fill_value=fill_value )
             vs.scan()
         return (vs, this_var, nc )
 
 
 
-class VariableSampler(object):
+class XXX_VariableSampler(object):
     def __init__(self,var,sampler,mode='all',with_time=True,ref_mask=None,fill_value=None,maxnt=10000,ref_mask_file=None):
         """
           var : numpy array object
@@ -510,125 +510,6 @@ class VariableSampler(object):
           self.kmax = max( kl )
         if len(kl2) > 0:
           self.klmax = max( kl2 )
-
-class XXXSampler(object):
-    def __init__(self,extremes=0,quantiles=None):
-        import numpy 
-
-        self.nextremes=extremes
-        self.quantiles=quantiles
-        self.q = quantiles != None
-        self.ext = extremes > 0
-
-    def load(self,array,fill_value=None,ref_mask=None):
-        self.ref_mask=ref_mask
-        self.fill_value=fill_value
-
-        self.has_fv = fill_value != None
-
-        self.has_msk = type( self.ref_mask ) != type( None )
-        if self.has_msk:
-            assert hasattr( self.ref_mask, 'mask' )
-
-        if self.has_fv:
-            self.get_basic = self._get_basic_ma
-            self.array = numpy.ma.masked_equal( array, fill_value )
-
-            if self.ext or self.q:
-                self.farray = self.array.ravel().compressed()
-        else:
-            self.get_basic = self._get_basic
-            self.array=array
-            if self.ext or self.q:
-                self.farray = self.array.ravel()
-
-    def apply(self,as_dict=True):
-        if as_dict:
-          self.sr = dict()
-          self.sr['basic'] = self.get_basic()
-          if self.q: self.sr['quantiles'] = self.get_quantiles()
-          if self.ext: self.sr['extremes'] = self.get_extremes()
-          if self.has_msk: self.sr['mask_ok'] = self.check_mask()
-        else:
-          self.sr = SampleReturn()
-          self.sr.basic = self.get_basic()
-          if self.q: self.sr.quantiles = self.get_quantiles()
-          if self.ext: self.sr.extremes = self.get_extremes()
-          if self.has_msk: self.sr.mask_ok = self.check_mask()
-
-    def check_mask(self):
-        import numpy
-
-        n1 = self.ref_mask.count()
-        if not hasattr( self.array, 'mask' ):
-            self.mask_rep = ('no_mask_defined',n1,0,0,0,0)
-        elif not self.array.shape == self.ref_mask.shape:
-            self.mask_rep = ('mask_has_wrong_shape',n1,self.ref_mask.shape,self.array.shape,0,0)
-        elif numpy.array_equal( self.ref_mask.mask, self.array.mask):
-            self.mask_rep = ('masks_match',n1,n1,n1,0,0)
-        else:
-            n1 = self.ref_mask.count()
-            n2 = self.array.count()
-            c0 = numpy.count_nonzero( ~self.ref_mask.mask & ~self.array.mask )
-            c1 = numpy.count_nonzero( ~self.ref_mask.mask & self.array.mask )
-            c2 = numpy.count_nonzero( self.ref_mask.mask & ~self.array.mask )
-            self.mask_rep = ('mask_mismatch',n1,n2,c0,c1,c2)
-        return self.mask_rep[0]
-
-    def _get_basic_ma(self):
-        """Return min, max, mean absolute value and number of filled values for masked array"""
-        import numpy
-        basic = (numpy.ma.min( self.array ),
-                 numpy.ma.max( self.array ),
-                 numpy.ma.mean( numpy.ma.abs( self.array ) ),
-                 self.array.size - self.array.count() )
-        return basic
-
-    def _get_basic(self):
-        """Return min, max, mean absolute value and number of filled values for unmasked array"""
-        basic = (numpy.min( self.array ),
-                 numpy.max( self.array ),
-                 numpy.mean( numpy.abs( self.array ) ),
-                 0 )
-        return basic
-
-    def get_quantiles(self):
-        """Return quantiles specified in self.quantiles.
-           Array is first flattened and then stripped of missing values"""
-        import numpy
-        return numpy.quantile( self.farray, self.quantiles ).tolist()
-
-    def get_extremes(self):
-        """
-        For a masked array, the negation has to be conditional .. or perhaps done before the ravel ...
-        Passing "-x" to argpartition results in fillValues being identifed as extreme data, as numpy.partition is not
-        recognising the mask.
-        """
-        import numpy
-
-        # ravel to flatten.
-        # masked set to large positive ....
-        if self.has_fv:
-            x = numpy.where( self.array.mask, 1.e20, self.array ).ravel()
-            xm = numpy.where( self.array.mask, 1.e20, -self.array ).ravel()
-        else:
-            x = self.farray
-            xm = -x
-
-        if len(x) > 0:
-            if self.nextremes > 0:
-              flat_indices_min = numpy.argpartition(x, self.nextremes-1)[:self.nextremes]
-              flat_indices_max = numpy.argpartition(xm, self.nextremes-1)[:self.nextremes]
-
-              row_indices_min, col_indices_min = numpy.unravel_index(flat_indices_min, self.array.shape)
-              min_elements = self.array[row_indices_min, col_indices_min]
-
-              row_indices_max, col_indices_max = numpy.unravel_index(flat_indices_max, self.array.shape)
-              max_elements = self.array[row_indices_max, col_indices_max]
-
-              self.extremes = ((row_indices_min.tolist(), col_indices_min.tolist(), min_elements.tolist()),
-                               (row_indices_max.tolist(), col_indices_max.tolist(), max_elements.tolist()) )
-              return self.extremes
 
 
 class Dq(object):
