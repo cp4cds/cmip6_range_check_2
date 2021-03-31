@@ -553,18 +553,21 @@ class Sampler(object):
     def _get_basic_ma(self):
         """Return min, max, mean absolute value and number of filled values for masked array"""
         import numpy
+        ##print( "CALL numpy.ma.abs" )
         basic = (numpy.ma.min( self.array ),
                  numpy.ma.max( self.array ),
-                 numpy.ma.mean( numpy.ma.abs( self.array ) ),
+                 numpy.ma.mean( numpy.ma.abs( self.array ), dtype='float64' ),
                  self.array.size - self.array.count() )
+        ##print( basic, numpy.mean( self.array ), numpy.mean( numpy.abs( self.array ) ) )
         if self.verbose: print ('basic_ma',basic)
         return basic
 
     def _get_basic(self):
         """Return min, max, mean absolute value and number of filled values for unmasked array"""
+        ##print( "CALL numpy.abs" )
         basic = (numpy.min( self.array ),
                  numpy.max( self.array ),
-                 numpy.mean( numpy.abs( self.array ) ),
+                 numpy.mean( numpy.abs( self.array ), dtype='float64' ),
                  0 )
         return basic
 
