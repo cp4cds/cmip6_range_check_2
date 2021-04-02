@@ -203,7 +203,7 @@ def record_checks(fn, tags, rcbook,with_mask=False):
   
 class Hlook(object):
   def __init__(self):
-    ee = json.load( open( '../_work/QC_template.json' ) )
+    ee = json.load( open( '../_work/QC_template_v5_2021-03-25.json' ) )
     self.ee = dict()
     self.ff = dict()
     for h,i in ee['datasets'].items():
@@ -216,6 +216,7 @@ class TestFile(object):
     self.hlk = hlk
     
   def check_file(self,jfile, vmax=None, vmin=None, vmamax=None, vmamin=None, with_mask=False, jrep_file=None, fcsv=None, ffcsv=None, mkd=None):
+    print (jfile )
     fr = FileReport( jfile )
     reps = {}
 ## json_03/Amon.ts/ts_Amon_INM-CM5-0_ssp245_r1i1p1f1_gr1.json
@@ -236,6 +237,8 @@ class TestFile(object):
       fns = fn[:-3]
       tid = fr.ee['data']['headers'][fns]['tech']['file_info']['tid']
       contact = fr.ee['data']['headers'][fns]['tech']['file_info']['contact']
+      if contact == None:
+        contact = '-'
 ##
 ## table, var, inst, model, mip, expt, variant, grid, version
       drs = fr.ee['data']['headers'][fns]['tech']['file_info']['drs']
@@ -293,6 +296,8 @@ class TestFile(object):
         mv_errors = False
       elif table in ['Omon', 'Ofx','Lmon','LImon']:
         mv_errors = False
+      elif var in ['mrsofc']:
+        mv_errors = False
       else:
         mv_errors = rcs[4] != 0
 
@@ -318,12 +323,44 @@ class TestFile(object):
                 error_status = 'pass'
                 error_severity = 'minor'
                 error_message += '[ex01.001]'
+           elif model == 'CIESM' and var in ['rsdt']:
+              if rcs[0] > -0.0001:
+                error_status = 'pass'
+                error_severity = 'minor'
+                error_message += '[ex01.005]'
+           elif model in ['EC-Earth3','EC-Earth3-Veg-LR', 'EC-Earth3-AerChem'] and var in ['rlds']:
+              if rcs[0] > 0.0:
+                error_status = 'pass'
+                error_severity = 'minor'
+                error_message += '[ex01.006]'
+           elif model in ['KACE-1-0-G'] and var in ['rsus']:
+              if rcs[0] > 0.0:
+                error_status = 'pass'
+                error_severity = 'minor'
+                error_message += '[ex02.002]'
            elif model == 'GISS-E2-1-H' and var in ['simass','sithick']:
              if tests[0]:
                 ## ex01.001: Extreme seaice thickness in GISS-E2-1-H
                 error_status = 'pass'
                 error_severity = 'minor'
                 error_message += '[ex01.002]'
+           elif model in ['MPI-M.MPI-ESM1-2-HR'] and var in ['sos']:
+             if rcs[0] > -0.3:
+                ## ex01.009: slight negative near surface salinity in MPI-M.MPI-ESM1-2-HR
+                error_status = 'pass'
+                error_severity = 'minor'
+                error_message += '[ex01.009]'
+           elif model == 'ACCESS-ESM1-5' and var in ['zos']:
+             if tests[0]:
+                ## ex01.001: Extreme seaice thickness in GISS-E2-1-H
+                error_status = 'pass'
+                error_severity = 'minor'
+                error_message += '[ex01.007]'
+           elif model in ['MIROC-ES2L','MIROC6','NorCPM1'] and var in ['zos']:
+                ## ex01.001: Extreme seaice thickness in GISS-E2-1-H
+                error_status = 'pass'
+                error_severity = 'minor'
+                error_message += '[ex01.008] Disjoint ocean mesh regions'
            elif var == 'evspsbl' and (not mv_errors) and tests[1]:
               if rcs[0] > -0.0003:
                 error_status = 'pass'
@@ -345,6 +382,11 @@ class TestFile(object):
            if table in ['SImon']:
              error_status='pass'
              error_severity='minor'
+           elif var in ['sftgif'] and model in ['MIROC-ES2L','CESM2','CESM2-WACCM','ACCESS-CM2','CMCC-CM2-SR5',
+                                    'ACCESS-ESM1-5', 'CESM2-FV2', 'CESM2-WACCM-FV2', 'CMCC-CM2-HR4', 'CNRM-CM6-1-HR', 'CNRM-CM6-1', 'CNRM-ESM2-1']:
+               error_status='pass'
+               error_severity='minor'
+               error_message += '[ex02.001]'
            elif inst == 'CMCC' and var == 'orog':
              error_status = 'pass'
              error_severity = 'minor'

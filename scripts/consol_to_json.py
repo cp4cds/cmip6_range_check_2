@@ -260,6 +260,7 @@ class ShToJson(object):
         basic_maps = [(numpy.min,0), (numpy.max,1), (numpy.min,2), (numpy.max,2) ]
         self.nn_filter_count = 0
       
+       #### for  f,i in basic_maps:
         bsc = [f( self.nn_filter( [this['basic'][i] for k,this in self.records.items() ] ) ) for  f,i in basic_maps]
         bsc.append( self.nn_filter_count )
         summary['basic'] = bsc
@@ -346,9 +347,13 @@ class ShToJson(object):
       data = dict( headers=self.headers, records=self.records )
       if hasattr( self, 'summary') :
         data['summary'] = self.summary
-      dumpd = {'header':{'title':'Dump of results from %s' % input_label, 'source':'consol_to_json.py', 'time':time.ctime() },
-                  'data':data }
-      json.dump( dumpd, oo, indent=4, sort_keys=True )
+      dumpd = self.w ( {'header':{'title':'Dump of results from %s' % input_label, 'source':'consol_to_json.py', 'time':time.ctime() },
+                  'data':data } )
+      try:
+        json.dump( dumpd, oo, indent=4, sort_keys=True )
+      except:
+        print ('CRASH on DUMP: %s' % self.input_file )
+        raise
     oo.close()
 
 
@@ -381,6 +386,31 @@ def fnfilt( ll ):
       oo.append(  f )
   return oo
 
+def proc_input_files( input_files, group, k ):
+      s = ShToJson( input_files[0], mode='multi' )
+      for f in input_files[1:]:
+        s.append(f)
+      try:
+        s.get_summary()
+        drs = s.summary['drs']
+        sdir = '%s.%s' % tuple( drs[:2] )
+        if not os.path.isdir( 'json_%2.2i/%s' % (group,sdir) ):
+          os.mkdir( 'json_%2.2i/%s' % (group,sdir) )
+  
+        json_file = 'json_%2.2i/%s/%s.json' % (group,sdir,k)
+      
+        print (k)
+        print (s.range_comment )
+      except:
+        print ('Failed to generate summary for %s' % k )
+        raise
+        sdir = '__no_drs__'
+        if not os.path.isdir( 'json_%2.2i/%s' % (group,sdir) ):
+          os.mkdir( 'json_%2.2i/%s' % (group,sdir) ) 
+  
+        json_file = 'json_%2.2i/%s/%s.json' % (group,sdir,k)
+      s.json_dump( input_files[0] + '...', json_file=json_file )
+
 
 if __name__ == "__main__":
   if sys.argv[1] == '-f':
@@ -408,34 +438,64 @@ if __name__ == "__main__":
     s._gather_basic()
     print (s.range_comment )
     s.json_dump( input_files[0] + '...', json_file=json_file )
+
+  elif sys.argv[1] == '-m':
+##
+## this entry designed to run from manifests so that consolidation only needs to run on updated sh files
+##
+## e.g. python consol_to_json.py -m inputs_06/historical/x3_day_tas.txt 
+##
+    group = 5
+    input_files = []
+    isFixed = sys.argv[2].find( 'fx' ) != -1
+    for l in open( sys.argv[2] ).readlines():
+      if len( l.strip() ) > 0:
+        fns = l.strip().rpartition('/')[-1].rpartition('.')[0]
+        var,tab = fns.split('_')[:2]
+        testf = 'sh_05/%s.%s/%s.dat' % (tab,var,fns)
+        if not os.path.isfile( testf ):
+          print ( 'No results for %s' % fns )
+        else:
+          input_files.append( testf )
+    print ( len( input_files) )
+    d1 = ssort( input_files, fixed=isFixed )
+    print( d1.keys() )
+    for k in sorted( list( d1.keys() ) ):
+      input_files = sorted( fnfilt( d1[k] ) )
+      proc_input_files( input_files, group, k )
+
   elif sys.argv[1] == '-d':
     group = 5
     input_files = sorted( glob.glob( '%s/*.dat' % sys.argv[2]  ) )
     isFixed = sys.argv[2].find( 'fx' ) != -1
     d1 = ssort( input_files, fixed=isFixed )
+    varid = sys.argv[2].rpartition('/')[-1]
+
+    NO_OVERWRITE = False
     print( d1.keys() )
     for k in sorted( list( d1.keys() ) ):
-      input_files = sorted( fnfilt( d1[k] ) )
-      s = ShToJson( input_files[0], mode='multi' )
-      for f in input_files[1:]:
-        s.append(f)
-      try:
-        s.get_summary()
-        drs = s.summary['drs']
-        sdir = '%s.%s' % tuple( drs[:2] )
-        if not os.path.isdir( 'json_%2.2i/%s' % (group,sdir) ):
-          os.mkdir( 'json_%2.2i/%s' % (group,sdir) )
+      json_file = 'json_%2.2i/%s/%s.json' % (group,varid,k)
+      if os.path.isfile(json_file) and NO_OVERWRITE:
+        pass
+      else:
+        input_files = sorted( fnfilt( d1[k] ) )
+        s = ShToJson( input_files[0], mode='multi' )
+        for f in input_files[1:]:
+          s.append(f)
+        try:
+          s.get_summary()
+          drs = s.summary['drs']
+          sdir = varid
+          if not os.path.isdir( 'json_%2.2i/%s' % (group,sdir) ):
+            os.mkdir( 'json_%2.2i/%s' % (group,sdir) )
   
-        json_file = 'json_%2.2i/%s/%s.json' % (group,sdir,k)
-      
-        print (k)
-        print (s.range_comment )
-      except:
-        print ('Failed to generate summary for %s' % k )
-        raise
-        sdir = '__no_drs__'
-        if not os.path.isdir( 'json_%2.2i/%s' % (group,sdir) ):
-          os.mkdir( 'json_%2.2i/%s' % (group,sdir) ) 
+          print (k)
+          print (s.range_comment )
+        except:
+          print ('Failed to generate summary for %s' % k )
+          raise
+          sdir = '__no_drs__'
+          if not os.path.isdir( 'json_%2.2i/%s' % (group,sdir) ):
+            os.mkdir( 'json_%2.2i/%s' % (group,sdir) ) 
   
-        json_file = 'json_%2.2i/%s/%s.json' % (group,sdir,k)
-      s.json_dump( input_files[0] + '...', json_file=json_file )
+        s.json_dump( input_files[0] + '...', json_file=json_file )

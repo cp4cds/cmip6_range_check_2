@@ -1,6 +1,7 @@
 #http://code.activestate.com/recipes/577982-recursively-walk-python-objects/
 
 from collections.abc import Mapping, Set, Sequence
+import numpy
 
 # dual python 2/3 compatability, inspired by the "six" library
 string_types = (str, unicode) if str is bytes else (str, bytes)
@@ -104,7 +105,7 @@ class Walker(object):
           return str(obj)
       elif isinstance(obj,float):
           return float(obj)
-      elif isinstance(obj,int):
+      elif isinstance(obj,(int,numpy.integer)):
           return int(obj)
       else:
           return obj

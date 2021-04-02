@@ -78,6 +78,8 @@ class Rsplat(object):
      jfile = "handle_scan_report_extended_20201019.json"
      jfile = 'scanned_dset_for_qc_%2.2i.json' % group
      jfile = '../_work/QC_template.json'
+     jfile = '../_work/QC_template_v3_20210317.json'
+     jfile = '../_work/QC_template_v5_2021-03-25.json'
      ee = json.load( open( jfile, 'r' ) )
      cc = collections.defaultdict( list )
      ff = collections.defaultdict( list )
@@ -89,9 +91,12 @@ class Rsplat(object):
      for h,d in ee['datasets'].items():
        ds = d['dset_id']
        era,mip,inst,model,expt,variant,table,var,grid,version = ds.split('.')
+       d['file_root'] = '_'.join( [var,table,model,expt,variant,grid] )
        if 'dir' not in d:
          d['dir'] = '/badc/cmip6/data/CMIP6/%s/%s/%s/%s/%s/%s/%s/%s/%s/' % (mip,inst,model,expt,variant,table,var,grid,version)
 #/badc/cmip6/data//CMIP6/ScenarioMIP/CCCma/CanESM5/ssp126/r1i1p1f1/AERmon/od550aer/gn/v20190429/
+       if table == 'fx':
+         print ( '001: %s' % ds )
        if __ignore_qc__ or d['qc_status'] == 'pass' or (__all__ and d['qc_status'] != 'ERROR'):
          cc[(expt,table,var)].append( d )
        elif d['qc_message'] == 'No variable limits provided':
@@ -114,26 +119,34 @@ class Rsplat(object):
          os.mkdir( d0 )
        oo = open( 'inputs_%2.2i/%s/x1_%s_%s.txt' % (self.group,*k), 'w' )
        for d in item:
+         if k[1] == 'fx':
+           print ( '002: %s, %s' % (d['dset_id'], len( d['files'])) )
          d1 = d['dir']
+         l1 = len( d['file_root'] )
          for fhdl,f in d['files'].items():
-           oo.write( '%s/%s\n' % (d1,f['filename']) )
+           if f['filename'][:l1] != d['file_root']:
+             print( 'SKIP BAD FILE NAME: %s -- %s' % (f['filename'], d['dset_id'] ) )
+           else:
+             oo.write( '%s/%s\n' % (d1,f['filename']) )
        oo.close()
        
 
-def scan_group(a='inputs_05'):
+def scan_group(a='inputs_05b', var='Omon.sos', input_key='x3a', out_key='x4'):
   """INCOMPLETE"""
+  tab,vn = var.split( '.' )
   dl = glob.glob( '%s/*' % a )
   fl = []
-  for d in dl:
-    for f in glob.glob( '%s/*Amon_clt.txt' % d ):
-      fl.append( f )
   nn = 0
   na = 0
   nnn =0
   np = 0
-  for  f in sorted( fl ):
-       pl = [x.strip() for x in open(f).readlines() ]
+  for d in dl:
+    fl = sorted( list( glob.glob( '%s/%s_%s_%s.txt' % (d,input_key,tab,vn) ) ) )
+    for  file_manifest in sorted( fl ):
+       pl = [x.strip() for x in open(file_manifest).readlines() ]
        np += len(pl)
+       flo = []
+       flo2 = []
        for p in pl:
          if not( os.path.isfile( p ) ):
            if os.path.isfile( p[:-2] ):
@@ -141,13 +154,43 @@ def scan_group(a='inputs_05'):
            else:
        ##      print( p )
              nn += 1
+             flo.append(p)
          else:
            fn = p.rpartition( '/' )[-1]
            fs = fn.rpartition( '.' )[0]
-           if not os.path.isfile( 'out_05/Amon.clt/%s' % fs ):
+           thisf = 'out_05/%s/%s' % (var,fs)
+           if not os.path.isfile( thisf ):
              nnn += 1
+             flo.append(p)
+           else:
+             ii = open( thisf ).readlines()
+             if len(ii) == 0 or (len( ii[-1] ) < 9) or (ii[-1][:9] != 'OK: tc900'):
+               nnn+=1
+               print ( 'FILE INCOMPLETE: %s' % thisf )
+               flo2.append(p)
+               os.rename( thisf, 'incomplete_05b/%s' % thisf.rpartition( '/' )[-1] )
+
+       if len(flo) > 0 or len(flo2) > 0:
+         #op = file_manifest.replace( 'inputs_05', 'inputs_05b' )
+         op = file_manifest
+         op1 = op.replace( '%s_' % input_key, '%sa_' % out_key )
+         op2 = op.replace( '%s_' % input_key, '%sb_' % out_key )
+         #diro = d.replace( 'inputs_05', 'inputs_05b' )
+         diro = d
+         if not os.path.isdir( diro ):
+           os.mkdir( diro )
+         if len( flo + flo2 ) > 0:
+           oo = open( op1, 'w' )
+           for l in flo + flo2:
+             oo.write(l + '\n' )
+           oo.close()
+         if len( flo2 ) > 0:
+           oo = open( op2, 'w' )
+           for l in flo2:
+             oo.write(l + '\n' )
+           oo.close()
            
-  print( 'Amon.clt', np, na, nn, nnn )
+  print( var, np, na, nn, nnn )
 
 def compare_groups(a='inputs_06',b='inputs_05'):
   """INCOMPLETE"""
@@ -167,10 +210,27 @@ def compare_groups(a='inputs_06',b='inputs_05'):
 if __name__ == '__main__':
   ##rp = Rprep(with_limits=False, group=3)
   import sys
+  ##vars = [x.strip() for x in open( 'data/vars.txt' ).readlines()]
+  vars = [x.strip() for x in open( 'vars3.txt' ).readlines()]
   if len(sys.argv) > 1:
     if sys.argv[1] == '-s':
-       scan_group()
+#
+# text .. run with specific variable
+       scan_group(a='inputs_06',var='Amon.ts')
+    elif sys.argv[1] == '-S':
+#
+# current production: run over coded subset
+#
+       tt = 'bar'
+       if len( sys.argv ) == 3:
+         tt = sys.argv[2]
+       for v in vars:
+         tab = v.rpartition('.')[0]
+         if tt == 'bar' and tab not in ['Amon','Omon']:
+           scan_group(a='inputs_06',var=v)
+         elif tt == tab or tt == 'all':
+           scan_group(a='inputs_07',var=v, input_key='x1', out_key='x4')
   else:
-    r = Rsplat(group=6)
+    r = Rsplat(group=7)
     r.splat()
     r.analysis()

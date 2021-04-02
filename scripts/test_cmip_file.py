@@ -43,7 +43,7 @@ def get_vs(data_file, sampler):
           else:
             fill_value = None
           print ("fill value = %s" % fill_value )
-          vs = VariableSampler( this_var[:], sampler, fill_value=fill_value )
+          vs = VariableSampler( this_var, sampler, fill_value=fill_value )
           vs.scan()
           vs.dump_shelve('test01',fname,mode='n')
           return (vs, this_var, nc )
