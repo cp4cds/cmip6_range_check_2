@@ -169,6 +169,7 @@ def record_checks(fn, tags, rcbook,with_mask=False):
      """Look through the NetCDF file level json output and generate QC report.
       current version gets as far as basic information .. need to add ranges , and mask info """
      basic = [ rcbook[ '%s:%s' % (fn,t) ]['basic'] for t in tags ]
+     quantiles = [ rcbook[ '%s:%s' % (fn,t) ]['quantiles'] for t in tags ]
      nn = sum( [x[3] for x in basic] )
      try:
        brep = ( min( [x[0] for x in basic] ),
@@ -199,7 +200,13 @@ def record_checks(fn, tags, rcbook,with_mask=False):
 
      else:
        mrep = None
-     return brep, mrep
+
+     try:
+       qrep = ( *[ max( [x[k] for x in quantiles] ) for k in range(5)],
+                *[ min( [x[-5+k] for x in quantiles] ) for k in range(5)] )
+     except:
+       qrep = None
+     return brep, mrep, qrep
   
 class Hlook(object):
   def __init__(self):
@@ -249,9 +256,14 @@ class TestFile(object):
 # should be unique in a set of file records
 ##
       esgf_id = '.'.join( ['CMIP6', mip, inst, model, expt, variant, table, var, grid, version ] )
-      hdl = self.hlk.ff[ esgf_id ]
+      if esgf_id not in self.hlk.ff:
+        print( "SEVERE: esgf ID not found: %s" % esgf_id )
+        hdl = 'hdl_not_found'
+      else:
+        hdl = self.hlk.ff[ esgf_id ]
 
-      rcs,mcs = record_checks(fn,tags,fr.ee['data']['records'],with_mask=with_mask)
+      rcs,mcs,qrep = record_checks(fn,tags,fr.ee['data']['records'],with_mask=with_mask)
+
       if rcs[0] == None:
         tests = [False,False]
       else:
@@ -314,7 +326,7 @@ class TestFile(object):
           
       else:
         error_message = '; '.join( emsg)
-        if range_errors:
+        if range_errors and (table == 'Omon' or not mv_errors):
            error_status='fail'
            error_severity='major'
            if model == 'HadGEM3-GC31-MM' and var in ['simass','sithick']:
@@ -338,18 +350,29 @@ class TestFile(object):
                 error_status = 'pass'
                 error_severity = 'minor'
                 error_message += '[ex02.002]'
-           elif model == 'GISS-E2-1-H' and var in ['simass','sithick']:
-             if tests[0]:
+           elif model in ['AWI-ESM-1-1-LR', 'AWI-CM-1-1-MR', 'xxGISS-E2-1-H'] and var in ['simass','sithick']:
+             if tests[0] and rcs[1] < 300.:
                 ## ex01.001: Extreme seaice thickness in GISS-E2-1-H
                 error_status = 'pass'
                 error_severity = 'minor'
                 error_message += '[ex01.002]'
-           elif model in ['MPI-M.MPI-ESM1-2-HR'] and var in ['sos']:
-             if rcs[0] > -0.3:
-                ## ex01.009: slight negative near surface salinity in MPI-M.MPI-ESM1-2-HR
-                error_status = 'pass'
-                error_severity = 'minor'
-                error_message += '[ex01.009]'
+           elif table == 'Omon' and var in ['sos']:
+             if rcs[0] > -15. and tests[1]:
+                if qrep != None and qrep[-4] > 0:
+                  ## ex01.009: slight negative near surface salinity in MPI-M.MPI-ESM1-2-HR
+                  error_status = 'pass'
+                  error_severity = 'minor'
+                  error_message += '[ex01.009]'
+                else:
+                  print( '###Omon.sos: ',rcs[0],qrep)
+             elif rcs[1] < 200. and tests[0]:
+                if qrep != None and qrep[1] < 100.:
+                  error_status = 'pass'
+                  error_severity = 'minor'
+                  error_message += '[ex03.003]'
+                else:
+                  print( '###Omon.sos: ',rcs[1],qrep)
+                  ## ex01.009: slight negative near surface salinity in MPI-M.MPI-ESM1-2-HR
            elif model == 'ACCESS-ESM1-5' and var in ['zos']:
              if tests[0]:
                 ## ex01.001: Extreme seaice thickness in GISS-E2-1-H
@@ -361,11 +384,49 @@ class TestFile(object):
                 error_status = 'pass'
                 error_severity = 'minor'
                 error_message += '[ex01.008] Disjoint ocean mesh regions'
+           elif model in ['MCM-UA-1-0'] and var in ['huss']:
+                if rcs[0] > -0.005:
+                  error_status = 'pass'
+                  error_severity = 'minor'
+                  error_message += '[ex02.005] Small negative values found in the data'
+           elif model in ['IITM-ESM', 'MCM-UA-1-0'] and var in ['hus']:
+                if rcs[0] > -0.005:
+                  error_status = 'pass'
+                  error_severity = 'minor'
+                  error_message += '[ex02.006] Small negative values found in the data'
            elif var == 'evspsbl' and (not mv_errors) and tests[1]:
               if rcs[0] > -0.0003:
                 error_status = 'pass'
                 error_severity = 'minor'
                 error_message += '[ex01.003]'
+           elif table == 'Lmon' and var in ['mrro']:
+              if rcs[1] < 0.02 and tests[0]:
+                if qrep != None and qrep[4] < 0.004:
+                  error_status = 'pass'
+                  error_severity = 'minor'
+                  error_message += '[ex03.001]'
+                else:
+                  print( '###Lmon.mrro: ',rcs[1],qrep)
+           elif table == 'Lmon' and var in ['mrsos']:
+              if rcs[1] < 400 and tests[0]:
+                  error_status = 'pass'
+                  error_severity = 'minor'
+                  error_message += '[ex03.002]'
+           elif table == 'Amon' and var in ['hur']:
+              if rcs[0] > -10.0 and tests[1]:
+                error_status = 'pass'
+                error_severity = 'minor'
+                error_message += '[ex02.007]'
+           elif table == 'day' and var in ['sfcWind']:
+              if rcs[0] > -10.0 and tests[1]:
+                error_status = 'pass'
+                error_severity = 'minor'
+                error_message += '[ex02.003]'
+           elif table == 'Amon' and var in ['prsn']:
+              if rcs[0] > -1.e-05 and all(tests[1:4]):
+                error_status = 'pass'
+                error_severity = 'minor'
+                error_message += '[ex02.008]'
            elif var == 'areacello' and (not mv_errors) and tests[1] and grid == 'gn':
               if rcs[0] > -0.0002:
                 error_status = 'pass'
@@ -383,6 +444,7 @@ class TestFile(object):
              error_status='pass'
              error_severity='minor'
            elif var in ['sftgif'] and model in ['MIROC-ES2L','CESM2','CESM2-WACCM','ACCESS-CM2','CMCC-CM2-SR5',
+                                    'CMCC-ESM2',
                                     'ACCESS-ESM1-5', 'CESM2-FV2', 'CESM2-WACCM-FV2', 'CMCC-CM2-HR4', 'CNRM-CM6-1-HR', 'CNRM-CM6-1', 'CNRM-ESM2-1']:
                error_status='pass'
                error_severity='minor'
