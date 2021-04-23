@@ -169,7 +169,11 @@ def record_checks(fn, tags, rcbook,with_mask=False):
      """Look through the NetCDF file level json output and generate QC report.
       current version gets as far as basic information .. need to add ranges , and mask info """
      basic = [ rcbook[ '%s:%s' % (fn,t) ]['basic'] for t in tags ]
-     quantiles = [ rcbook[ '%s:%s' % (fn,t) ]['quantiles'] for t in tags ]
+     try:
+       quantiles = [ rcbook[ '%s:%s' % (fn,t) ]['quantiles'] for t in tags ]
+     except:
+       print( 'quantiles missing' )
+       quantiles = None
      nn = sum( [x[3] for x in basic] )
      try:
        brep = ( min( [x[0] for x in basic] ),
@@ -201,12 +205,37 @@ def record_checks(fn, tags, rcbook,with_mask=False):
      else:
        mrep = None
 
-     try:
-       qrep = ( *[ max( [x[k] for x in quantiles] ) for k in range(5)],
-                *[ min( [x[-5+k] for x in quantiles] ) for k in range(5)] )
-     except:
+     if quantiles == None:
        qrep = None
-     return brep, mrep, qrep
+     else:
+       try:
+         qrep = ( *[ max( [x[k] for x in quantiles] ) for k in range(5)],
+                *[ min( [x[-5+k] for x in quantiles] ) for k in range(5)] )
+       except:
+         qrep = None
+
+     if tags[0].find('-') == -1:
+       lrep = None
+     else:
+       cc = collections.defaultdict( list)      
+       for t in tags:
+         lev = int( t.split('-')[-1] )
+         basic =  rcbook[ '%s:%s' % (fn,t) ]['basic']
+         try:
+           cc[lev].append( float(basic[0]) )
+         except:
+           pass
+           ##print( 'SKIPPPING LREP BASIC:',basic[0] )
+           ##raise
+
+       lrep = []
+       for l in range(19):
+         if len( cc[l] ) > 0:
+           lrep.append( min(cc[l]) )
+         else:
+           lrep.append(None)
+
+     return brep, mrep, qrep, lrep
   
 class Hlook(object):
   def __init__(self):
@@ -262,7 +291,7 @@ class TestFile(object):
       else:
         hdl = self.hlk.ff[ esgf_id ]
 
-      rcs,mcs,qrep = record_checks(fn,tags,fr.ee['data']['records'],with_mask=with_mask)
+      rcs,mcs,qrep,lrep = record_checks(fn,tags,fr.ee['data']['records'],with_mask=with_mask)
 
       if rcs[0] == None:
         tests = [False,False]
@@ -340,11 +369,15 @@ class TestFile(object):
                 error_status = 'pass'
                 error_severity = 'minor'
                 error_message += '[ex01.005]'
-           elif model in ['EC-Earth3','EC-Earth3-Veg-LR', 'EC-Earth3-AerChem'] and var in ['rlds']:
+           elif model in ['EC-Earth3','EC-Earth3-Veg-LR', 'EC-Earth3-AerChem','EC-Earth3-CC','EC-Earth3-Veg'] and var in ['rlds','rsus']:
               if rcs[0] > 0.0:
                 error_status = 'pass'
                 error_severity = 'minor'
                 error_message += '[ex01.006]'
+              elif qrep != None and qrep[-3] > 0:
+                error_status = 'pass'
+                error_severity = 'minor'
+                error_message += '[ex03.004]'
            elif model in ['KACE-1-0-G'] and var in ['rsus']:
               if rcs[0] > 0.0:
                 error_status = 'pass'
@@ -413,10 +446,21 @@ class TestFile(object):
                   error_severity = 'minor'
                   error_message += '[ex03.002]'
            elif table == 'Amon' and var in ['hur']:
-              if rcs[0] > -10.0 and tests[1]:
-                error_status = 'pass'
-                error_severity = 'minor'
-                error_message += '[ex02.007]'
+              if tests[1]:
+                if rcs[0] > -10.0:
+                  error_status = 'pass'
+                  error_severity = 'minor'
+                  error_message += '[ex02.007]'
+                else:
+                  try:
+                    if all( [lrep[x] > 0 for x in range(18)] ):
+                      error_status = 'pass'
+                      error_severity = 'minor'
+                      error_message += '[ex03.005]'
+                      print( 'LREP PASS ................' )
+                  except:
+                    pass
+                    ## lrep array may have None values ...
            elif table == 'day' and var in ['sfcWind']:
               if rcs[0] > -10.0 and tests[1]:
                 error_status = 'pass'
@@ -462,7 +506,7 @@ class TestFile(object):
 
       ests.add( error_status )
       esvs.add( error_severity )
-      reps[tid] = dict( filename=fn, error_message = error_message, error_status=error_status, error_severity = error_severity )
+      reps[tid] = dict( filename=fn, file_error_message = error_message, file_qc_status=error_status, file_error_severity = error_severity )
       if error_status == 'fail':
          dsfail = True
       if fcsv != None:
@@ -479,13 +523,18 @@ class TestFile(object):
     oo = open( jrep_file, 'w' )
     if 'fail' in ests:
       qc_status = 'fail'
-      dsqc = dict( error_severity='major', error_message='Major errors encountered: details in file error log' )
+      dset_error_severity='major'
+      dset_error_message='Major errors encountered: details in file error log'
     else:
       qc_status = 'pass'
-      dsqc = dict( error_severity='na', error_message='na' )
+      dset_error_severity='na' 
+      dset_error_message='na'
       if 'minor' in esvs:
-        dsqc['error_message'] = 'Minor errors encountered: details in file error log'
-    json.dump( dict( files=reps, dset_id=esgf_id, qc_status=qc_status, dataset_qc=dsqc ), oo, indent=4, sort_keys=True )
+        dset_error_message = 'Minor errors encountered: details in file error log'
+
+    jdict = dict( files=reps, dset_id=esgf_id, dset_qc_status=qc_status,
+                  dset_error_severity=dset_error_severity, dset_error_message=dset_error_message )
+    json.dump( jdict, oo, indent=4, sort_keys=True )
       ##"dset_id": "<id>",
       ##"qc_status": "pass|fail",
       ##"dataset_qc": {
@@ -493,7 +542,7 @@ class TestFile(object):
         ##"error_message": "<output from check>|na"
       ##},
     oo.close()
-    return jrep_file, qc_status, dsqc
+    return jrep_file, qc_status
         
         
 
