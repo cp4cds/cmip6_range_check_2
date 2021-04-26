@@ -126,9 +126,17 @@ class FileReport(object):
     for fn,x in tmp.items():
       self.records[fn] = sorted( list( x ) )
 
-def range_dump( ofile='ranges_clean.csv'):
+def range_dump( ofile='ranges_clean.csv',c3s_filter=True):
         nr = get_new_ranges()
         ks = sorted( list( nr.keys() ) )
+        print(ks)
+        if c3s_filter:
+          ee = json.load( open('data/c3s34g_variables.json' ) )
+          requested = set()
+          for k,l in ee['requested'].items():
+            for i in l:
+              requested.add( '%s.%s' % (k,i) )
+          ks = [k for k in ks if k in requested]
         oo = open( ofile, 'w' )
         for k in ks:
           this = nr[k]._asdict()
