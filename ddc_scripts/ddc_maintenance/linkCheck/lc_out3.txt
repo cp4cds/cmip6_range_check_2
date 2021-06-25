@@ -1,0 +1,299 @@
+LinkChecker 10.0.0.dev2
+Copyright (C) 2000-2016 Bastian Kleineidam, 2010-2020 LinkChecker Authors
+LinkChecker comes with ABSOLUTELY NO WARRANTY!
+This is free software, and you are welcome to redistribute it under
+certain conditions. Look at the file `LICENSE' within this distribution.
+Get the newest version at https://linkchecker.github.io/linkchecker/
+Write comments and bugs to https://github.com/linkchecker/linkchecker/issues
+
+Start checking at 2021-03-23 07:23:41+001
+
+URL        `https://www.ipcc.ch/task-group-on-data-and-scenario-support-for-impact-and-climate-analysis-tgica'
+Name       `Task Group on Data Support for Climate Change Assessments (TG-DATA)'
+Parent URL http://www.ipcc-data.org/ddc/ddc_runs.html, line 242, col 1
+Real URL   https://www.ipcc.ch/task-group-on-data-and-scenario-support-for-impact-and-climate-analysis-tgica
+Check time 2.358 seconds
+Result     Error: 404 Not Found
+
+URL        `http://cdiac.esd.ornl.gov/trends/co2/vostok.html'
+Name       `Vostok'
+Parent URL http://www.ipcc-data.org/observ/ddc_co2.html, line 363, col 2
+Real URL   http://cdiac.esd.ornl.gov/trends/co2/vostok.html
+Check time 2.916 seconds
+Result     Error: ConnectionError: HTTPConnectionPool(host='cdiac.esd.ornl.gov', port=80): Max retries exceeded with url: /trends/co2/vostok.html (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f7ec037d040>: Failed to establish...
+
+URL        `http://cdiac.ornl.gov/trends/temp/lugina/lugina.html'
+Name       `Info'
+Parent URL http://www.ipcc-data.org/observ/clim/ar4_global.html, line 266, col 7
+Real URL   http://cdiac.ornl.gov/trends/temp/lugina/lugina.html
+Check time 0.137 seconds
+Result     Error: ConnectionError: HTTPConnectionPool(host='cdiac.ornl.gov', port=80): Max retries exceeded with url: /trends/temp/lugina/lugina.html (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f7ec8076c10>: Failed to estab...
+
+URL        `http://cdiac.ornl.gov/ftp/trends/temp/lugina/90N-60S.dat'
+Name       `Data'
+Parent URL http://www.ipcc-data.org/observ/clim/ar4_global.html, line 269, col 2
+Real URL   http://cdiac.ornl.gov/ftp/trends/temp/lugina/90N-60S.dat
+Check time 0.472 seconds
+Result     Error: ConnectionError: HTTPConnectionPool(host='cdiac.ornl.gov', port=80): Max retries exceeded with url: /ftp/trends/temp/lugina/90N-60S.dat (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f7ec14cf6d0>: Failed to e...
+
+URL        `POST'
+Parent URL http://www.ipcc-data.org/observ/clim/cru_ts2_1.html, line 268, col 1
+Real URL   http://www.ipcc-data.org/observ/clim/POST
+Check time 0.728 seconds
+Size       315B
+Result     Error: 404 Not Found
+
+URL        `http://www.ihdp.org/'
+Name       `International Human Dimensions Programme on Global Environmental Change (IHDP)'
+Parent URL http://www.ipcc-data.org/observ/ddc_envdata.html, line 317, col 6
+Real URL   http://www.ihdp.org/
+Check time 0.315 seconds
+Size       207B
+Result     Error: ConnectionError: HTTPConnectionPool(host='www.ihdp.unu.edu', port=80): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f7ec81ab460>: Failed to establish a new connection: [Errn...
+
+URL        `http://eng.nimr.go.kr/AE/MA/main.jsp'
+Name       `METRI'
+Parent URL http://www.ipcc-data.org/sim/gcm_monthly/SRES_AR4/index.html, line 442, col 18
+Real URL   http://eng.nimr.go.kr/AE/MA/main.jsp
+Check time 1.892 seconds
+Result     Error: ConnectionError: HTTPConnectionPool(host='eng.nimr.go.kr', port=80): Max retries exceeded with url: /AE/MA/main.jsp (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f7e99eaa970>: Failed to establish a new conne...
+
+URL        `https://apps.ipcc-data.org/maps/'
+Name       `Data Visualisation Pages'
+Parent URL http://www.ipcc-data.org/ddc/ddc_faq.html, line 296, col 57
+Real URL   https://apps.ipcc-data.org/maps/
+Check time 60.080 seconds
+Result     Error: ConnectTimeout: HTTPSConnectionPool(host='apps.ipcc-data.org', port=443): Max retries exceeded with url: /robots.txt (Caused by ConnectTimeoutError(<urllib3.connection.VerifiedHTTPSConnection object at 0x7f7ec80e7430>, 'Connection to apps.i...
+
+URL        `http://ccsr.aori.u-tokyo.ac.jp/index-e.html'
+Name       `AORI'
+Parent URL http://www.ipcc-data.org/sim/gcm_monthly/SRES_AR4/index.html, line 632, col 34
+Real URL   http://ccsr.aori.u-tokyo.ac.jp/index-e.html
+Check time 2.444 seconds
+Result     Error: ConnectionError: HTTPConnectionPool(host='ccsr.aori.u-tokyo.ac.jp', port=80): Max retries exceeded with url: /index-e.html (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f7e99fdbc40>: Failed to establish a ne...
+
+URL        `https://apps.ipcc-data.org/maps/wms/tar?FORMAT=image%2Fgif&VERSION=1.3.0&CRS=CRS%3A84&SERVICE=WMS&REQUEST=GetMap&STYLES=&EXCEPTIONS=application%2Fvnd.ogc.se_inimage&LAYERS=nies99%3Aa1%2Ftmp200&TIME=1984-1-15T0%3A0%3A0.0Z&SRS=EPSG%3A4326&BBOX=-180,-90,180,90&WIDTH=256&HEIGHT=256'
+Name       `Example WMS image request'
+Parent URL http://www.ipcc-data.org/ddc/ddc_faq.html, line 719, col 4
+Real URL   https://apps.ipcc-data.org/maps/wms/tar?FORMAT=image/gif&VERSION=1.3.0&CRS=CRS:84&SERVICE=WMS&REQUEST=GetMap&STYLES=&EXCEPTIONS=application/vnd.ogc.se_inimage&LAYERS=nies99:a1/tmp200&TIME=1984-1-15T0:0:0.0Z&SRS=EPSG:4326&BBOX=-180,-90,180,90&WIDTH=256&HEIGHT=256
+Check time 118.302 seconds
+Result     Error: ConnectTimeout: HTTPSConnectionPool(host='apps.ipcc-data.org', port=443): Max retries exceeded with url: /robots.txt (Caused by ConnectTimeoutError(<urllib3.connection.VerifiedHTTPSConnection object at 0x7f7e99e614f0>, 'Connection to apps.i...
+
+URL        `ftp://ftp.dwd.de/pub/data/gpcc/html/fulldata_v6_doi_download.html'
+Name       `Global Precipitation Climatology Centre (GPCC)'
+Parent URL http://www.ipcc-data.org/guidelines/pages/approvedDatasetLinks.html, line 251, col 4
+Real URL   ftp://ftp.dwd.de/pub/data/gpcc/html/fulldata_v6_doi_download.html
+Check time 0.108 seconds
+Result     Error: ConnectionRefusedError: [Errno 111] Connection refused
+
+URL        `http://www.esrl.noaa.gov/gmd/ccgg/trends/co2_data_mlo.html'
+Name       `Mauna Loa CO2'
+Parent URL http://www.ipcc-data.org/guidelines/pages/approvedDatasetLinks.html, line 245, col 4
+Real URL   https://www.esrl.noaa.gov/gmd/ccgg/trends/co2_data_mlo.html
+Check time 1.888 seconds
+Info       Redirected to
+           `https://www.esrl.noaa.gov/gmd/ccgg/trends/co2_data_mlo.html'.
+Result     Error: 404 Not Found
+
+URL        `http://disc.sci.gsfc.nasa.gov/daac-bin/DataHoldings.pl'
+Name       `Modern Era Retrospective-analysis for Research and Applications (MERRA)'
+Parent URL http://www.ipcc-data.org/guidelines/pages/approvedDatasetLinks.html, line 262, col 4
+Real URL   https://disc.sci.gsfc.nasa.gov/daac-bin/DataHoldings.pl
+Check time 3.030 seconds
+Size       527B
+Info       Redirected to
+           `https://disc.sci.gsfc.nasa.gov/daac-bin/DataHoldings.pl'.
+Result     Error: 500 Internal Server Error
+
+URL        `https://apps.ipcc-data.org/maps/wms/ar4?FORMAT=text%2Fhtml&VERSION=1.3.0&CRS=CRS%3A84&SERVICE=WMS&REQUEST=GetLegend&STYLES=&EXCEPTIONS=application%2Fvnd.ogc.se_inimage&LAYERS=CGMR%3A20C3M%3Aclim_30%2Fspecific_humidity&TIME=1915-1-16T0%3A0%3A0.0Z&SRS=EPSG%3A4326'
+Name       `colour bar information'
+Parent URL http://www.ipcc-data.org/ddc/ddc_faq.html, line 722, col 138
+Real URL   https://apps.ipcc-data.org/maps/wms/ar4?FORMAT=text/html&VERSION=1.3.0&CRS=CRS:84&SERVICE=WMS&REQUEST=GetLegend&STYLES=&EXCEPTIONS=application/vnd.ogc.se_inimage&LAYERS=CGMR:20C3M:clim_30/specific_humidity&TIME=1915-1-16T0:0:0.0Z&SRS=EPSG:4326
+Check time 177.939 seconds
+Result     Error: ConnectTimeout: HTTPSConnectionPool(host='apps.ipcc-data.org', port=443): Max retries exceeded with url: /robots.txt (Caused by ConnectTimeoutError(<urllib3.connection.VerifiedHTTPSConnection object at 0x7f7ec17e19d0>, 'Connection to apps.i...
+
+URL        `http://www.ihdp.unu.edu/'
+Name       `International Human Dimensions Programme on Global Environmental Change'
+Parent URL http://www.ipcc-data.org/guidelines/pages/glossary/glossary_hi.html, line 276, col 17
+Real URL   http://www.ihdp.unu.edu/
+Check time 0.064 seconds
+Result     Error: ConnectionError: HTTPConnectionPool(host='www.ihdp.unu.edu', port=80): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f7ec1551a00>: Failed to establish a new connection: [Errn...
+
+URL        `http://cmip-pcmdi.llnl.gov/cmip5/'
+Name       `Fifth Coupled Model Intercomparison Project'
+Parent URL http://www.ipcc-data.org/guidelines/pages/glossary/glossary_c.html, line 300, col 18
+Real URL   https://pcmdi.llnl.gov/cmip5/
+Check time 2.474 seconds
+Size       204B
+Info       Redirected to `https://cmip-pcmdi.llnl.gov/cmip5/'.
+           Redirected to `https://pcmdi.llnl.gov/cmip5/'.
+Result     Error: 404 Not Found
+
+URL        `https://www.ethz.ch/en.html'
+Name       `ETHZ'
+Parent URL http://www.ipcc-data.org/sim/gcm_monthly/SR15/index.html, line 264, col 18
+Real URL   https://ethz.ch/en.html
+Check time 1.143 seconds
+Size       4KB
+Info       Redirected to `https://ethz.ch/en.html'.
+Result     Error: 404 Not found UA
+
+URL        `https://pcmdi.llnl.gov/mips/cmip5/docs/CMIP5_modeling_groups.pdf'
+Name       `terms of use for the CMIP5 modeling groups'
+Parent URL http://www.ipcc-data.org/sim/gcm_monthly/AR5/WG1-Archive.html, line 237, col 432
+Real URL   https://pcmdi.llnl.gov/mips/cmip5/docs/CMIP5_modeling_groups.pdf
+Check time 3.274 seconds
+Size       239B
+Result     Error: 404 Not Found
+
+URL        `http://english.bnu.edu.cn/'
+Name       `BNU'
+Parent URL http://www.ipcc-data.org/sim/gcm_monthly/AR5/Reference-Archive.html, line 362, col 18
+Real URL   http://english.bnu.edu.cn/
+Check time 4.424 seconds
+Size       0B
+Result     Error: SSLError: HTTPSConnectionPool(host='english.bnu.edu.cn', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLError(1, '[SSL: DH_KEY_TOO_SMALL] dh key too small (_ssl.c:1123)')))
+
+URL        `http://mms.dkrz.de/pdf/reports/ReportNo.07.pdf'
+Name       `Report No.7'
+Parent URL http://www.ipcc-data.org/gcm/models/tar/echam4opyc3.html, line 39, col 1
+Real URL   http://mms.dkrz.de/pdf/reports/ReportNo.07.pdf
+Check time 120.817 seconds
+Result     Error: ConnectionError: HTTPConnectionPool(host='mms.dkrz.de', port=80): Max retries exceeded with url: /pdf/reports/ReportNo.07.pdf (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f7ec83f3ac0>: Failed to establish a...
+
+URL        `http://mms.dkrz.de/pdf/reports/ReportNo.06.pdf'
+Name       `Report No.6'
+Parent URL http://www.ipcc-data.org/gcm/models/tar/echam4opyc3.html, line 34, col 1
+Real URL   http://mms.dkrz.de/pdf/reports/ReportNo.06.pdf
+Check time 121.764 seconds
+Result     Error: ConnectionError: HTTPConnectionPool(host='mms.dkrz.de', port=80): Max retries exceeded with url: /pdf/reports/ReportNo.06.pdf (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f7ec8204dc0>: Failed to establish a...
+
+URL        `http://eng.nimr.go.kr'
+Name       `NIMR'
+Parent URL http://www.ipcc-data.org/sim/gcm_monthly/AR5/Reference-Archive.html, line 1521, col 18
+Real URL   http://eng.nimr.go.kr
+Check time 1.978 seconds
+Result     Error: ConnectionError: HTTPConnectionPool(host='eng.nimr.go.kr', port=80): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f7e99fa29d0>: Failed to establish a new connection: [Errno ...
+
+URL        `http://web.kma.go.kr/eng/'
+Name       `KMA'
+Parent URL http://www.ipcc-data.org/sim/gcm_monthly/AR5/Reference-Archive.html, line 1522, col 34
+Real URL   http://web.kma.go.kr/eng/
+Check time 5.026 seconds
+Size       1KB
+Result     Error: 403 Forbidden
+
+URL        `https://madwiki.dkrz.de/WarningsESGMPI-ESMDataUsers'
+Name       `MPI-M page'
+Parent URL http://www.ipcc-data.org/sim/gcm_monthly/AR5/Reference-Archive.html, line 1146, col 32
+Real URL   https://madwiki.dkrz.de/WarningsESGMPI-ESMDataUsers
+Check time 122.151 seconds
+Result     Error: ConnectionError: HTTPSConnectionPool(host='madwiki.dkrz.de', port=443): Max retries exceeded with url: /WarningsESGMPI-ESMDataUsers (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7f7ec0078c40>: Failed...
+
+URL        `pages/scatterd-reg22-2010-39.html'
+Parent URL http://www.ipcc-data.org/syn/tar_scatter/regional_galleries/region_plots22/index.html, line 24, col 23
+Real URL   http://www.ipcc-data.org/syn/tar_scatter/regional_galleries/region_plots22/pages/scatterd-reg22-2010-39.html
+Check time 4.986 seconds
+Result     Error: ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+
+URL        `pages/scatterd-reg22-2040-69.html'
+Parent URL http://www.ipcc-data.org/syn/tar_scatter/regional_galleries/region_plots22/index.html, line 25, col 23
+Real URL   http://www.ipcc-data.org/syn/tar_scatter/regional_galleries/region_plots22/pages/scatterd-reg22-2040-69.html
+Check time 4.979 seconds
+Result     Error: ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+
+URL        `pages/scatterd-reg22-2070-99.html'
+Parent URL http://www.ipcc-data.org/syn/tar_scatter/regional_galleries/region_plots22/index.html, line 26, col 23
+Real URL   http://www.ipcc-data.org/syn/tar_scatter/regional_galleries/region_plots22/pages/scatterd-reg22-2070-99.html
+Check time 4.985 seconds
+Result     Error: ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+
+URL        `pages/scatterd-reg23-2010-39.html'
+Parent URL http://www.ipcc-data.org/syn/tar_scatter/regional_galleries/region_plots23/index.html, line 28, col 23
+Real URL   http://www.ipcc-data.org/syn/tar_scatter/regional_galleries/region_plots23/pages/scatterd-reg23-2010-39.html
+Check time 4.984 seconds
+Result     Error: ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+
+URL        `pages/scatterd-reg23-2040-69.html'
+Parent URL http://www.ipcc-data.org/syn/tar_scatter/regional_galleries/region_plots23/index.html, line 29, col 23
+Real URL   http://www.ipcc-data.org/syn/tar_scatter/regional_galleries/region_plots23/pages/scatterd-reg23-2040-69.html
+Check time 4.958 seconds
+Result     Error: ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+
+URL        `https://doi.org/10.5281/zenodo.4113081'
+Name       `CMIP5 historicalMisc forcing document'
+Parent URL http://www.ipcc-data.org/sim/gcm_monthly/AR5/CMIP5-Experiments.html#1pctCO2, line 384, col 222
+Real URL   https://doi.org/10.5281/zenodo.4113081
+Check time 63.563 seconds
+Result     Error: ReadTimeout: HTTPSConnectionPool(host='doi.org', port=443): Read timed out. (read timeout=60)
+
+URL        `http://doi.org/10.1594/WDCC/CMIP5.NCCNMc1'
+Name       `1pctCO2 (DOI)'
+Parent URL http://www.ipcc-data.org/sim/gcm_monthly/AR5/Additional-Data.html#ACCESS1.0, line 246, col 18
+Real URL   http://doi.org/10.1594/WDCC/CMIP5.NCCNMc1
+Check time 63.741 seconds
+Result     Error: ReadTimeout: HTTPSConnectionPool(host='doi.org', port=443): Read timed out. (read timeout=60)
+
+URL        `http://doi.org/10.1594/WDCC/CMIP5.NCCNMc2'
+Name       `abrupt4xCO2 (DOI)'
+Parent URL http://www.ipcc-data.org/sim/gcm_monthly/AR5/Additional-Data.html#ACCESS1.0, line 254, col 18
+Real URL   http://doi.org/10.1594/WDCC/CMIP5.NCCNMc2
+Check time 63.185 seconds
+Result     Error: ReadTimeout: HTTPSConnectionPool(host='doi.org', port=443): Read timed out. (read timeout=60)
+
+URL        `http://doi.org/10.1594/WDCC/CMIP5.NCCNMhi'
+Name       `historical (DOI)'
+Parent URL http://www.ipcc-data.org/sim/gcm_monthly/AR5/Additional-Data.html#ACCESS1.0, line 261, col 18
+Real URL   http://doi.org/10.1594/WDCC/CMIP5.NCCNMhi
+Check time 62.500 seconds
+Result     Error: ReadTimeout: HTTPSConnectionPool(host='doi.org', port=443): Read timed out. (read timeout=60)
+
+URL        `http://doi.org/10.1594/WDCC/CMIP5.NCCNMhx'
+Name       `historicalExt (DOI)'
+Parent URL http://www.ipcc-data.org/sim/gcm_monthly/AR5/Additional-Data.html#ACCESS1.0, line 268, col 18
+Real URL   http://doi.org/10.1594/WDCC/CMIP5.NCCNMhx
+Check time 61.925 seconds
+Result     Error: ReadTimeout: HTTPSConnectionPool(host='doi.org', port=443): Read timed out. (read timeout=60)
+
+URL        `http://doi.org/10.1594/WDCC/CMIP5.NCCNMhg'
+Name       `historicalGHG (DOI)'
+Parent URL http://www.ipcc-data.org/sim/gcm_monthly/AR5/Additional-Data.html#ACCESS1.0, line 275, col 18
+Real URL   http://doi.org/10.1594/WDCC/CMIP5.NCCNMhg
+Check time 61.581 seconds
+Result     Error: ReadTimeout: HTTPSConnectionPool(host='doi.org', port=443): Read timed out. (read timeout=60)
+
+URL        `http://doi.org/10.1594/WDCC/CMIP5.NCCNMhm'
+Name       `historicalMisc (DOI)'
+Parent URL http://www.ipcc-data.org/sim/gcm_monthly/AR5/Additional-Data.html#ACCESS1.0, line 282, col 18
+Real URL   http://doi.org/10.1594/WDCC/CMIP5.NCCNMhm
+Check time 61.110 seconds
+Result     Error: ReadTimeout: HTTPSConnectionPool(host='doi.org', port=443): Read timed out. (read timeout=60)
+
+URL        `http://doi.org/10.1594/WDCC/CMIP5.NCCNMhn'
+Name       `historicalNat (DOI)'
+Parent URL http://www.ipcc-data.org/sim/gcm_monthly/AR5/Additional-Data.html#ACCESS1.0, line 289, col 18
+Real URL   http://doi.org/10.1594/WDCC/CMIP5.NCCNMhn
+Check time 60.896 seconds
+Result     Error: ReadTimeout: HTTPSConnectionPool(host='doi.org', port=443): Read timed out. (read timeout=60)
+
+URL        `http://doi.org/10.1594/WDCC/CMIP5.NCCNMpc'
+Name       `piControl (DOI)'
+Parent URL http://www.ipcc-data.org/sim/gcm_monthly/AR5/Additional-Data.html#ACCESS1.0, line 296, col 18
+Real URL   http://doi.org/10.1594/WDCC/CMIP5.NCCNMpc
+Check time 60.521 seconds
+Result     Error: ReadTimeout: HTTPSConnectionPool(host='doi.org', port=443): Read timed out. (read timeout=60)
+
+URL        `http://doi.org/10.1594/WDCC/CMIP5.NCCNMr2'
+Name       `rcp26 (DOI)'
+Parent URL http://www.ipcc-data.org/sim/gcm_monthly/AR5/Additional-Data.html#ACCESS1.0, line 303, col 18
+Real URL   http://doi.org/10.1594/WDCC/CMIP5.NCCNMr2
+Check time 60.257 seconds
+Result     Error: ReadTimeout: HTTPSConnectionPool(host='doi.org', port=443): Read timed out. (read timeout=60)
+
+Statistics:
+Downloaded: 17.6MB.
+Content types: 435 image, 3446 text, 0 video, 0 audio, 126 application, 9 mail and 34289 other.
+URL lengths: min=16, max=262, avg=85.
+
+That's it. 38305 links in 41503 URLs checked. 0 warnings found. 39 errors found.
+Stopped checking at 2021-03-23 07:46:05+001 (22 minutes, 23 seconds)

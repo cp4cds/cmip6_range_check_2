@@ -1,0 +1,134 @@
+{
+    "ALA": [
+        "Alaska/NW Canada", 
+        "land"
+    ], 
+    "AMZ": [
+        "South America: Amazon", 
+        "land"
+    ], 
+    "ANT": [
+        "Antarctica (sea)", 
+        "sea"
+    ], 
+    "ARC": [
+        "Arctic (sea)", 
+        "sea"
+    ], 
+    "CAM": [
+        "Central America", 
+        "land"
+    ], 
+    "CAR": [
+        "Caribbean (land and sea)", 
+        "all"
+    ], 
+    "CAS": [
+        "Central Asia", 
+        "land"
+    ], 
+    "CEU": [
+        "Central Europe", 
+        "land"
+    ], 
+    "CGI": [
+        "High-latitudes: Canada/Greenland/Iceland", 
+        "land"
+    ], 
+    "CNA": [
+        "Central North America", 
+        "land"
+    ], 
+    "EAF": [
+        "East Africa", 
+        "land"
+    ], 
+    "EAS": [
+        "Eastern Asia", 
+        "land"
+    ], 
+    "ENA": [
+        "Eastern North America", 
+        "land"
+    ], 
+    "ETP": [
+        "Equatorial Pacific", 
+        "all"
+    ], 
+    "MED": [
+        "Southern Europe/Mediterranean", 
+        "land"
+    ], 
+    "NAS": [
+        "North Asia", 
+        "land"
+    ], 
+    "NAU": [
+        "Australia/North Australia", 
+        "land"
+    ], 
+    "NEB": [
+        "Northeast Brazil", 
+        "land"
+    ], 
+    "NEU": [
+        "Northern Europe", 
+        "land"
+    ], 
+    "NTP": [
+        "Northern Tropical Pacific", 
+        "all"
+    ], 
+    "SAF": [
+        "Southern Africa", 
+        "land"
+    ], 
+    "SAH": [
+        "Africa: Sahara", 
+        "land"
+    ], 
+    "SAS": [
+        "South Asia", 
+        "land"
+    ], 
+    "SAU": [
+        "South Australia/New Zealand", 
+        "land"
+    ], 
+    "SEA": [
+        "Southeast Asia (sea)", 
+        "sea"
+    ], 
+    "SSA": [
+        "Southeastern South America", 
+        "land"
+    ], 
+    "STP": [
+        "Southern Pacific", 
+        "all"
+    ], 
+    "TIB": [
+        "Tibetan Plateau", 
+        "land"
+    ], 
+    "WAF": [
+        "West Africa", 
+        "land"
+    ], 
+    "WAS": [
+        "West Asia", 
+        "land"
+    ], 
+    "WIO": [
+        "West Indian Ocean", 
+        "sea"
+    ], 
+    "WNA": [
+        "West North America", 
+        "land"
+    ], 
+    "WSA": [
+        "West Coast South America", 
+        "land"
+    ]
+}

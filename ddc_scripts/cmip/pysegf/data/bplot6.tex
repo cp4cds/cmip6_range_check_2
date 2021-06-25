@@ -1,0 +1,60 @@
+%%
+%% from https://tex.stackexchange.com/questions/459345/plot-bar-chart-from-csv-with-different-styles-depending-on-row-in-csv
+%%
+\documentclass{article}
+\usepackage{tikz}
+\usepackage{filecontents}
+\usepackage{pgfplotstable}
+\usetikzlibrary{patterns}
+
+\begin{document}
+\begin{figure}
+\center
+\begin{tikzpicture}
+    \pgfplotstableread[col sep = comma]{freq_cmip6_01.csv}\datatable
+
+
+
+%%\pgfplotstableread{datatable.dat}{\datatable}
+%%\pgfplotstablegetrowsof{datatable.dat}
+
+
+    \pgfplotstableread[col sep = comma]{freq_cmip6_01.csv}\labtable
+
+    \begin{axis}[xticklabels from table = {\labtable}{Models}, bar width=0.15cm, x=0.20cm]
+
+       \addplot [ybar,draw = blue,fill=blue!50] table 
+                          [x expr=\coordindex, 
+                           col sep=comma,
+                           y={Variables}] {\datatable};
+
+
+\pgfplotstablegetrowsof{\datatable}
+\pgfmathsetmacro{\rows}{\pgfplotsretval-1}
+
+\foreach \i in {0,...,\rows}{%
+%%\pgfplotsinvokeforeach \i in {0,...,\rows}{%
+  \pgfplotstablegetelem{\i}{[index] 0}\of{\datatable} 
+  \let\xA\pgfplotsretval 
+  \pgfplotstablegetelem{\i}{[index] 1}\of{\datatable} 
+  \edef\yA{\pgfplotsretval}
+  \edef\ii{\i}
+%%
+%% this di not work with pgfplotsinvokeforeach
+%% bit the use of edef in foreach appears to get things going.
+%%
+  \message{COORDINATE \ii, \yA^^J}
+  \edef\tmp{%
+        \noexpand\node [draw,circle,green] (dx-\xA) at (axis cs:\ii,\yA) {};%
+          }
+  \tmp
+ }%  
+     \coordinate (a1) at (axis cs:30,134);
+%%\node [draw,circle,blue] at (a1) {\ii};
+    \end{axis}
+
+\node [draw,circle,red] at (a1) {};
+\node [draw,circle,green,thick] at (dx-48) {X};%
+\end{tikzpicture}
+\end{figure}
+\end{document}

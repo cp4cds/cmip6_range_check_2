@@ -1,0 +1,10 @@
+
+should be able to deal with ceda format with a line to find "data" and "end data" lik match( c(20,40), tab1[,1] )
+e
+
+after tab1 <- read.csv(file="IPCC-AR5-WGII-Chap21SM_scatter.csv",head=FALSE,sep=",",na.strings=c("NA"))
+
+and then read with "skip" and "nlines" to get the data frame for plotting and head=TRUE.
+
+
+draft page at /var/www/ipccddc_devel/html/ssic/sim/ar5_tables, http://www.ipcc-data.org/sim/ar5_tables/ar5_scatter.html
