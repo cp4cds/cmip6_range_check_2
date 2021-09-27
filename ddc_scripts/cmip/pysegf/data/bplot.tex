@@ -1,0 +1,96 @@
+%%
+%% from https://tex.stackexchange.com/questions/459345/plot-bar-chart-from-csv-with-different-styles-depending-on-row-in-csv
+%%
+\documentclass[16pt]{article}
+\usepackage{tikz}
+\usepackage{filecontents}
+\usepackage{pgfplotstable}
+\usetikzlibrary{patterns}
+\usetikzlibrary{calc}
+
+\begin{document}
+
+
+\tikzset{%
+  >=latex,
+%%  inner sep=0pt,%
+  %%outer sep=2pt,%
+  mark coordinate/.style={inner sep=0pt,outer sep=0pt,minimum size=2pt, fill=black,circle},
+  red dot/.style={inner sep=0pt,outer sep=0pt,minimum size=3.5mm, fill=BrickRed,circle, path picture={
+       \draw[white](path picture bounding box.south east) -- (path picture bounding box.north west) %
+                   (path picture bounding box.north east) -- (path picture bounding box.south west);}},
+  red dotx/.style={inner sep=0pt,outer sep=0pt,minimum size=5mm, fill=BrickRed,circle}
+}
+
+\begin{figure}
+\center
+\begin{tikzpicture}[font=\Large]
+\pgfplotstableread[col sep = comma]{/data/tmp/cmip5/freq.csv}\datatable
+
+
+\pgfplotstableread[col sep = comma]{freq_f4.csv}\labtable
+
+\begin{axis}[xticklabels from table = {\labtable}{Models},
+            xtick={0,4,...,56},
+            bar width=0.15cm, x=0.20cm,
+            xlabel={Models},
+            ylabel={Variables}]
+
+\addplot [ybar,draw = blue,fill=blue!50] table 
+                          [x expr=\coordindex, 
+                           col sep=comma,
+                           y={Variables}] {\datatable};
+
+
+\pgfplotstablegetrowsof{\datatable}
+\pgfmathsetmacro{\rows}{\pgfplotsretval-1}
+
+\foreach \i in {0,...,\rows}{%
+%%\pgfplotsinvokeforeach \i in {0,...,\rows}{%
+  \pgfplotstablegetelem{\i}{[index] 0}\of{\datatable} 
+  \let\xA\pgfplotsretval 
+  \pgfplotstablegetelem{\i}{[index] 1}\of{\datatable} 
+  \edef\yA{\pgfplotsretval}
+  \edef\ii{\i}
+%%
+%% this di not work with pgfplotsinvokeforeach
+%% bit the use of edef in foreach appears to get things going.
+%%
+  \message{COORDINATE \ii, \yA^^J}
+  \edef\tmp{%
+        %%\noexpand\node [draw,circle,green] (dx-\xA) at (axis cs:\ii,\yA) {};%
+        \noexpand\coordinate (dx-\xA) at (axis cs:\ii,\yA) {};%
+          }
+  \tmp
+ }%  
+     \coordinate (a1) at (axis cs:30,134);
+%%\node [draw,circle,blue] at (a1) {\ii};
+\end{axis}
+
+
+\newif\ifboxes
+
+
+%% comment out to suppress boxes
+\boxestrue
+
+
+\ifboxes
+
+\coordinate [mark coordinate] (a1) at (dx-59);%
+\coordinate [mark coordinate] (b0) at (dx-0);%
+\coordinate [mark coordinate] (b1) at (dx-1);%
+\coordinate [mark coordinate] (b2) at (dx-2);%
+\node [text width=7cm,draw, anchor=west] (a1t) at ($(a1)+(-1.,4.)$)
+       {hfss, pr, ps, psl, rlut, rsds, ta, tas, ts, ua, va, wap, zg: produced by almost all models};
+\node [text width=12.5cm,draw, anchor=east] (b1t) at ($(b1)+(1.6,2.5)$)
+       {agesno, chepsoa, cltc, concaerh2o, eparag100, fGrazing, loadno3, prAdjust, pslAdjust, tasAdjust, tsAdjust, wetnh4: produced by 0,1 or 2 models};
+
+\path [blue] (a1) edge (a1t.south);
+\path [blue] (b0) edge ($(b1t.south) + (2cm,0)$);
+\path [blue] (b1) edge ($(b1t.south) + (2cm,0)$);
+\path [blue] (b2) edge ($(b1t.south) + (2cm,0)$);
+\fi
+\end{tikzpicture}
+\end{figure}
+\end{document}

@@ -1,0 +1,31 @@
+LinkChecker 10.0.0.dev2
+Copyright (C) 2000-2016 Bastian Kleineidam, 2010-2020 LinkChecker Authors
+LinkChecker comes with ABSOLUTELY NO WARRANTY!
+This is free software, and you are welcome to redistribute it under
+certain conditions. Look at the file `LICENSE' within this distribution.
+Get the newest version at https://linkchecker.github.io/linkchecker/
+Write comments and bugs to https://github.com/linkchecker/linkchecker/issues
+
+Start checking at 2021-05-07 15:30:27+001
+
+URL        `POST'
+Parent URL http://www.ipcc-data.org/observ/clim/cru_ts2_1.html, line 268, col 1
+Real URL   http://www.ipcc-data.org/observ/clim/POST
+Check time 4.366 seconds
+Size       315B
+Result     Error: 404 Not Found
+
+URL        `/ar4/info/BCCR-BCM2_COMMIT_uas.html'
+Name       `info'
+Parent URL http://www.ipcc-data.org/auto/ar4/model-BCCR-BCM2.html, line 462, col 7
+Real URL   http://www.ipcc-data.org/ar4/info/BCCR-BCM2_COMMIT_uas.html
+Check time 4.939 seconds
+Result     Error: ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+
+Statistics:
+Downloaded: 17.6MB.
+Content types: 436 image, 1455 text, 0 video, 0 audio, 68 application, 9 mail and 36296 other.
+URL lengths: min=16, max=262, avg=84.
+
+That's it. 38264 links in 38265 URLs checked. 0 warnings found. 2 errors found.
+Stopped checking at 2021-05-07 15:41:52+001 (11 minutes, 25 seconds)

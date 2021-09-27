@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+<base href="https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/tropical-nights-2011-2099/" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><style>.header{position:absolute;width:100%;z-index:99}.logo{margin:8px 0}.sticky-header{position:fixed !important;top:0}.top-page-area .header{position:relative}.top-menu{background-color:rgba(255,255,255,0.9);height:65px;position:relative;z-index:99}.top-menu .fa-bars{color:#005c96;font-size:28px}.top-menu-right-section{margin-top:20px}.top-menu-wrapper{display:flex;justify-content:space-between}.top-menu-right-section a,.personal-menu-action{color:#3a3a3a;margin-right:5px}.action-selected,.action-selected a{color:#0170b7}.top-menu-nav{display:inline-block;vertical-align:top;margin-top:2px}.top-menu-nav-item{display:inline-block;margin-left:10px;position:relative;cursor:pointer}.help-menu{margin-right:10px}.login-container,.help-container{display:none}body.userrole-anonymous #personal-menu:hover a,body.search-app #personal-menu:hover a{color:#0170b7}body.userrole-anonymous #portal-personaltools,body.search-app #portal-personaltools{min-width:auto;columns:auto;background-color:transparent;top:auto;left:auto;border:none;box-shadow:none;display:inline-flex;right:auto;width:auto;height:auto;vertical-align:bottom;padding:0;position:relative}body.userrole-anonymous #portal-personaltools>a,body.search-app #portal-personaltools>a,body.userrole-anonymous #portal-personaltools .personal-menu-action,body.search-app #portal-personaltools .personal-menu-action{margin:0}body.userrole-anonymous .top-menu-nav-item:hover .login>.login-container,body.search-app .top-menu-nav-item:hover .login>.login-container{display:none}.top-menu-nav-item:hover .login>.login-container,.help-menu:hover>.help-container{display:block}.top-menu-nav-item:hover #user-name,.top-menu-nav-item:hover>.login #personal-menu .personal-menu-action,.top-menu-nav-item:hover>.help-link,.top-menu-right-section a:hover{color:#0170b7}.top-menu-nav-item:hover .help-link>.angle-down-icon,.top-menu-nav-item:hover .personal-menu-action>.angle-down-icon{border-top:4px solid #0170b7}#portal-personaltools,#help-items{width:100%;min-width:230px;background-color:#f7f7f7;border-bottom:5px solid #005c96;position:absolute;top:19px;right:4px;padding:10px;box-shadow:0 2px 2px rgba(0,0,0,0.4)}#portal-personaltools li,#help-items li{display:block}#portal-personaltools li:not(:last-child),#help-items li:not(:last-child){padding-bottom:.3em}.userrole-anonymous #portal-personaltools li{text-align:right}.help-main-nav-link{padding-bottom:.3em;display:block}#portal-personaltools a:hover{color:#0170b7}.angle-down-icon{display:inline-block;width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:4px solid #fff;margin-bottom:2px}.top-menu-nav-item .angle-down-icon{border-top:4px solid #3a3a3a}.mobile-menu{display:none}.mobile-menu .fa-times{color:#005c96;font-size:28px}.search-box{display:inline-block;position:relative;right:20px}.search-box:after{-webkit-transform:translate(-50%, -50%);-moz-transform:translate(-50%, -50%);-ms-transform:translate(-50%, -50%);-o-transform:translate(-50%, -50%);transform:translate(-50%, -50%);content:"";background-color:#3a3a3a;position:absolute;right:-7px;top:50%;height:80%;width:2px}.search-box .line{-webkit-transition:.3s width ease-in-out;-moz-transition:.3s width ease-in-out;-o-transition:.3s width ease-in-out;transition:.3s width ease-in-out;background-color:darkgrey;bottom:-5px;display:block;height:2px;position:absolute;width:0}.search-box input{-webkit-transition:width .4s ease-in-out;-moz-transition:width .4s ease-in-out;-o-transition:width .4s ease-in-out;transition:width .4s ease-in-out;background-color:transparent;border:none;height:25px;min-width:220px;font-size:smaller}.search-box input:focus{width:80%}.search-box input:focus+.line{background-color:#005c96;width:100%}.search-submit{background-color:transparent;border:none}.search-box .search-submit i{font-size:18px}.search-box .search-submit i:hover{color:#005c96}::-webkit-input-placeholder{color:#3a3a3a;font-style:italic}:-moz-placeholder{color:#3a3a3a;font-style:italic}::-moz-placeholder{color:#3a3a3a;font-style:italic}:-ms-input-placeholder{color:#3a3a3a;font-style:italic}.header ul{list-style:none}.header a{text-decoration:none;display:inline-block}.header a:hover{text-decoration:none}.header .main-nav-menu{display:-webkit-flex;display:-ms-flexbox;display:-moz-box;display:flex;position:relative;background-color:#005c96;box-shadow:0 3px 8px 0 rgba(0,0,0,0.4)}.header .main-nav-menu .fa-database{display:inline;margin-right:5px;line-height:18px;color:#005c96}.header .main-nav-item{flex-grow:1;position:relative;text-align:center}.header .main-nav-item>span{display:block}.header .main-nav-item:hover>span{background:#8a9c3a}.header .main-nav-item:not(:last-child){border-right:1px solid #014673}.header .main-nav-link{display:inline-block;padding:15px 0;color:#fff;font-size:18px;text-transform:uppercase;cursor:pointer}.header .sub-menu{min-width:200px;text-align:left}.header .main-nav-item:hover>.sub-menu-wrapper{display:block}.header .sub-menu-wrapper{position:absolute;left:0;height:auto;background-color:#fff;z-index:10;padding:15px;border-bottom:5px solid #8a9c3a;box-shadow:0 3px 8px 0 rgba(0,0,0,0.3);display:none}.header .sub-menu-item{padding:13px 0}.header .sub-menu-item:first-of-type{padding-top:0}.header .sub-menu-item:last-of-type{padding-bottom:0}.header .sub-menu-item:not(:last-of-type){border-bottom:1px solid #ddd}.header .sub-menu-link{color:#005c96;font-size:14px;text-transform:uppercase}.header .sub-sub-menu-item{display:block;padding-top:8px}.header .sub-sub-menu-link{color:#3a3a3a;font-family:OpenSansR;font-size:13px;display:block}.header .sub-menu-link:hover,.header .sub-sub-menu-link:hover{color:#6b7427}.header .toggle-down{border:none;background-color:transparent;padding:0;cursor:pointer;display:inline-block}.header .mobile-clearfix{display:none}.site-cca .header #main-nav-item-1 .sub-menu-wrapper{min-width:480px}.site-cca .header #main-nav-item-1 .sub-menu-wrapper,.site-cca .header #main-nav-item-2 .sub-menu-wrapper{column-count:auto !important}.site-cca .header #main-nav-item-1 .sub-menu>.sub-menu-item:first-child>ul,.site-cca .header #main-nav-item-2 .sub-menu>.sub-menu-item:first-child>ul,.site-cca .header #main-nav-item-1 .sub-menu>.sub-menu-item:nth-child(2)>ul,.site-cca .header #main-nav-item-2 .sub-menu>.sub-menu-item:nth-child(2)>ul{column-count:2}.site-cca .header #main-nav-item-2 .sub-menu>.sub-menu-item:nth-child(2){padding-top:0;border-left:1px solid #ddd;padding-left:4%;float:left;width:48%}.site-cca .header #main-nav-item-2 .sub-menu>.sub-menu-item:first-child{float:left;width:48%}.site-cca .header #main-nav-item-2 .sub-menu>.sub-menu-item:last-of-type{clear:both}.site-cca .header #main-nav-item-2 .sub-menu>.sub-menu-item:last-of-type ul{column-count:2}.site-cca .header #main-nav-item-3 .sub-menu-wrapper{column-count:auto !important;min-width:500px}.site-cca .header #main-nav-item-3 .sub-menu{float:left;width:50%}.site-cca .header #main-nav-item-3 .sub-menu:first-child{border-right:1px solid #ddd}.site-cca .header #main-nav-item-3 .sub-menu:last-child>.sub-menu-item{padding-left:15px}</style><link rel="preload" onload="this.onload=null;this.rel='stylesheet'" as="style" href="https://climate-adapt.eea.europa.eu/portal_css/Sunburst%20Theme/collective.js.jqueryui.custom.min-cachekey-7963dac2fd4e8034b4e96d96d1692d2f.css" /><link rel="stylesheet" href="https://climate-adapt.eea.europa.eu/portal_css/Sunburst%20Theme/collective.js.jqueryui.custom.min-cachekey-7963dac2fd4e8034b4e96d96d1692d2f.css" /><style type="text/css" media="screen">@import url(https://climate-adapt.eea.europa.eu/portal_css/Sunburst%20Theme/resourceplone.formwidget.contenttreecontenttree-cachekey-9963bef452f2d96b07bab3f435189463.css);</style><link rel="preload" onload="this.onload=null;this.rel='stylesheet'" as="style" href="https://climate-adapt.eea.europa.eu/portal_css/Sunburst%20Theme/resourceplone.formwidget.querystring.querywidget-cachekey-f4cf921e01e28a047501d397bb49aed9.css" /><link rel="stylesheet" href="https://climate-adapt.eea.europa.eu/portal_css/Sunburst%20Theme/resourceplone.formwidget.querystring.querywidget-cachekey-f4cf921e01e28a047501d397bb49aed9.css" /><link rel="preload" onload="this.onload=null;this.rel='stylesheet'" media="screen" as="style" href="https://climate-adapt.eea.europa.eu/portal_css/Sunburst%20Theme/resourceplone.app.jquerytools.overlays-cachekey-3dddc0b181356cc95bbf4b54c1a583c8.css" /><link rel="stylesheet" media="screen" href="https://climate-adapt.eea.europa.eu/portal_css/Sunburst%20Theme/resourceplone.app.jquerytools.overlays-cachekey-3dddc0b181356cc95bbf4b54c1a583c8.css" /><style type="text/css">@import url(https://climate-adapt.eea.europa.eu/portal_css/Sunburst%20Theme/ecdc-fixes-cachekey-d342de498e6a75bdca42db476dad4140.css);</style><link rel="canonical" href="https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/tropical-nights-2011-2099" /><link rel="alternate" href="https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/tropical-nights-2011-2099/RSS" title="Tropical Nights, 2011-2099 - RSS 1.0" type="application/rss+xml" /><link rel="alternate" href="https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/tropical-nights-2011-2099/rss.xml" title="Tropical Nights, 2011-2099 - RSS 2.0" type="application/rss+xml" /><link rel="alternate" href="https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/tropical-nights-2011-2099/atom.xml" title="Tropical Nights, 2011-2099 - Atom" type="application/rss+xml" /><link rel="search" href="https://climate-adapt.eea.europa.eu/@@search" title="Search this site" /><meta name="viewport" content="width=device-width, initial-scale=0.6666, maximum-scale=1.0, minimum-scale=0.6666" /><meta name="generator" content="Plone - http://plone.org" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <link rel="preload" href="/++theme++climateadaptv2/static/bs3/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="/++theme++climateadaptv2/static/bs3/css/bootstrap.min.css" /></noscript>
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css" /></noscript>
+    
+    <link rel="preload" href="/++theme++climateadaptv2/static/css/compiled-css.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="/++theme++climateadaptv2/static/css/compiled-css.css" /></noscript>
+    
+    <link rel="preload" href="/++theme++climateadaptv2/static/css/compiled-less.css?rel=0071ecaf17" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="/++theme++climateadaptv2/static/css/compiled-less.css?rel=0071ecaf17" /></noscript>
+    
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/++theme++climateadaptv2/static/images/favicon/apple-touch-icon-57x57.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/++theme++climateadaptv2/static/images/favicon/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/++theme++climateadaptv2/static/images/favicon/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/++theme++climateadaptv2/static/images/favicon/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/++theme++climateadaptv2/static/images/favicon/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/++theme++climateadaptv2/static/images/favicon/apple-touch-icon-152x152.png" />
+    <link rel="icon" type="image/png" href="/++theme++climateadaptv2/static/images/favicon/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/++theme++climateadaptv2/static/images/favicon/favicon-16x16.png" sizes="16x16" />
+    <link rel="shortcut icon" type="image/x-icon" href="/++theme++climateadaptv2/static/images/favicon/favicon.ico" />
+    
+    <meta name="application-name" content="Climate-ADAPT" />
+    <meta name="msapplication-TileColor" content="#FFFFFF" />
+    <meta name="msapplication-TileImage" content="mstile-144x144.png" />
+    <meta name="theme-color" content="#005C96" />
+    <title>Tropical Nights, 2011-2099 — Climate-ADAPT</title>
+  </head>
+
+  <body dir="ltr" class="template-view portaltype-eea-climateadapt-c3sindicator site-cca section-knowledge subsection-european-climate-data-explorer subsection-european-climate-data-explorer-agriculture subsection-european-climate-data-explorer-agriculture-tropical-nights-2011-2099 icons-on userrole-anonymous"><div class="top-page-area">
+      <div class="edit-bar-wrapper">
+        <div class="content-container">
+          
+        </div>
+      </div>
+      <div class="header">
+        <div class="top-menu nav-down">
+          <div class="content-container top-menu-wrapper">
+            <div class="logo">
+              <a href="/">
+                <img src="/++theme++climateadaptv2/static/images/climate-adapt-logo.svg" alt="Climate-ADAPT Logo" width="265" height="52" />
+              </a>
+            </div>
+            <div class="top-menu-right-section">
+              <div class="top-menu-content">
+                <div class="search-box">
+                  <form action="https://climate-adapt.eea.europa.eu/redirect_to_search_page">
+                    <input type="text" name="SearchableText" placeholder="Search Climate-ADAPT Database items ..." />
+                    <div class="line"></div>
+                    <button class="search-submit" aria-label="Search on Climate-ADAPT">
+                      <i class="fa fa-search"></i>
+                    </button>
+                  </form>
+                </div>
+                <ul class="top-menu-nav">
+                  <li class="top-menu-nav-item help-menu">
+                    <a class="help-link">
+                      <i class="fa fa-question-circle"></i>
+                      Help
+                    </a>
+                    <i class="angle-down-icon"></i>
+                    <div class="help-container">
+                      <div id="help-items"><ul id="help-navbar" class="help-nav-menu">
+
+  
+    
+  
+  
+    
+  
+  
+    
+  
+  
+    
+  
+  
+    
+  
+  
+    <li>
+
+      <span>
+        <a href="https://climate-adapt.eea.europa.eu/help" class="help-main-nav-link">
+          <span>Help introduction</span>
+        </a>
+      </span>
+
+      <div>
+        
+          <ul>
+            <li>
+              <a href="https://climate-adapt.eea.europa.eu/help/glossary">Glossary</a>
+            </li>
+            <li>
+              <a href="https://climate-adapt.eea.europa.eu/help/faq">FAQ for users</a>
+            </li>
+            <li>
+              <a href="https://climate-adapt.eea.europa.eu/help/faq-providers">FAQ for providers</a>
+            </li>
+            <li>
+              <a href="https://climate-adapt.eea.europa.eu/help/guidance">Guidance to search function</a>
+            </li>
+            <li>
+              <a href="https://climate-adapt.eea.europa.eu/help/tutorial-videos">Tutorial Videos</a>
+            </li>
+            <li>
+              <a href="https://climate-adapt.eea.europa.eu/help/Webinars">Webinars</a>
+            </li>
+            <li>
+              <a href="https://climate-adapt.eea.europa.eu/help/share-your-info/general">Share your information</a>
+            </li>
+          </ul>
+        
+      </div>
+
+    </li>
+  
+</ul></div>
+                    </div>
+                  </li>
+                  <li class="top-menu-nav-item help-menu">
+                    <a href="/news-archive">
+                      <i class="fa fa-newspaper-o"></i>
+                      News
+                    </a>
+                  </li>
+                  <li class="top-menu-nav-item help-menu">
+                    <a href="/more-events">
+                      <i class="fa fa-calendar"></i>
+                      Events
+                    </a>
+                  </li>
+                  <li class="top-menu-nav-item help-menu">
+                    <a href="/newsletter">
+                      <i class="fa fa-envelope"></i>
+                      Newsletter
+                    </a>
+                  </li>
+      
+      
+                  <!--
+                  <li class="top-menu-nav-item">
+                    <div class="login">
+                      <div id="personal-menu">
+                        <a class="personal-menu-action">
+                          <i class="fa fa-user"></i>
+                          <span class="login-text">Login</span>
+                          <span class="user-name">user name</span>
+                          <i class="angle-down-icon"></i>
+                        </a>
+                      </div>
+                      <div class="login-container">
+                        <form class="login-form">
+                          <input type="text" placeholder="Email" />
+                          <input type="text" placeholder="Password" />
+                          <button type="submit" class="btn btn-header"><i class="fa fa-user" aria-hidden="true"></i> Log in</button>
+                        </form>
+                        <ul id="portal-personaltools">
+                          <li><a href="#">test</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </li>
+              -->
+                </ul>
+      
+                
+              </div>
+              <div class="mobile-menu">
+                <i class="fa fa-bars"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <div class="content-container">
+      
+          <ul id="navbar" class="main-nav main-nav-menu">
+  
+    <li class="main-nav-item" id="main-nav-item-0">
+
+      <span>
+        <a class="main-nav-link">
+          
+          <span>About</span>
+        </a>
+        <div class="toggle-down">
+          <i class="angle-down-icon"></i>
+        </div>
+      </span>
+
+      <div class="sub-menu-wrapper">
+        
+
+          <ul class="sub-menu">
+            <li class="sub-menu-item">
+              
+              <a href="https://climate-adapt.eea.europa.eu/about" class="sub-menu-link">
+                 <span>About Climate-ADAPT</span>
+              </a>
+              
+            </li>
+            <li class="sub-menu-item">
+              
+              <a href="https://climate-adapt.eea.europa.eu/about/Outreach" class="sub-menu-link">
+                 <span>Outreach</span>
+              </a>
+              
+            </li>
+            <li class="sub-menu-item">
+              
+              <a href="https://climate-adapt.eea.europa.eu/sitemap" class="sub-menu-link">
+                 <span>Site map</span>
+              </a>
+              
+            </li>
+            <div class="mobile-clearfix"></div>
+          </ul>
+        
+      </div>
+
+    </li>
+  
+  
+    <li class="main-nav-item" id="main-nav-item-1">
+
+      <span>
+        <a class="main-nav-link">
+          
+          <span>EU policy</span>
+        </a>
+        <div class="toggle-down">
+          <i class="angle-down-icon"></i>
+        </div>
+      </span>
+
+      <div class="sub-menu-wrapper">
+        
+
+          <ul class="sub-menu">
+            <li class="sub-menu-item">
+              
+              <a class="sub-menu-link">
+                 <span>EU ADAPTATION POLICY</span>
+              </a>
+              <ul class="sub-sub-menu-wrapper">
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/eu-adaptation-policy/strategy" class="sub-sub-menu-link">
+                     <span>EU Adaptation Strategy</span>
+                  </a>
+                </li>
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/eu-adaptation-policy/eu-adaptation-reporting-mmr" class="sub-sub-menu-link">
+                     <span>EU Reporting on Adaptation</span>
+                  </a>
+                </li>
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/eu-adaptation-policy/covenant-of-mayors" class="sub-sub-menu-link">
+                     <span>EU Covenant of Mayors</span>
+                  </a>
+                </li>
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/eu-adaptation-policy/funding" class="sub-sub-menu-link">
+                     <span>EU funding of adaptation</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="sub-menu-item">
+              
+              <a href="https://climate-adapt.eea.europa.eu/eu-adaptation-policy/sector-policies" class="sub-menu-link">
+                 <span>ADAPTATION IN EU POLICY SECTORS</span>
+              </a>
+              <ul class="sub-sub-menu-wrapper">
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/eu-adaptation-policy/sector-policies/agriculture" class="sub-sub-menu-link">
+                     <span>Agriculture</span>
+                  </a>
+                </li>
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/eu-adaptation-policy/sector-policies/biodiversity" class="sub-sub-menu-link">
+                     <span>Biodiversity</span>
+                  </a>
+                </li>
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/eu-adaptation-policy/sector-policies/buildings" class="sub-sub-menu-link">
+                     <span>Buildings</span>
+                  </a>
+                </li>
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/eu-adaptation-policy/sector-policies/coastal-areas" class="sub-sub-menu-link">
+                     <span>Coastal areas</span>
+                  </a>
+                </li>
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/eu-adaptation-policy/sector-policies/disaster-risk-reduction" class="sub-sub-menu-link">
+                     <span>Disaster risk reduction</span>
+                  </a>
+                </li>
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/eu-adaptation-policy/sector-policies/ecosystem" class="sub-sub-menu-link">
+                     <span>Ecosystem-based approaches</span>
+                  </a>
+                </li>
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/eu-adaptation-policy/sector-policies/energy" class="sub-sub-menu-link">
+                     <span>Energy</span>
+                  </a>
+                </li>
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/eu-adaptation-policy/sector-policies/financial" class="sub-sub-menu-link">
+                     <span>Financial</span>
+                  </a>
+                </li>
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/eu-adaptation-policy/sector-policies/forestry" class="sub-sub-menu-link">
+                     <span>Forestry</span>
+                  </a>
+                </li>
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/eu-adaptation-policy/sector-policies/health" class="sub-sub-menu-link">
+                     <span>Health</span>
+                  </a>
+                </li>
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/eu-adaptation-policy/sector-policies/marine-and-fisheries" class="sub-sub-menu-link">
+                     <span>Marine and fisheries</span>
+                  </a>
+                </li>
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/eu-adaptation-policy/sector-policies/transport" class="sub-sub-menu-link">
+                     <span>Transport</span>
+                  </a>
+                </li>
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/eu-adaptation-policy/sector-policies/urban" class="sub-sub-menu-link">
+                     <span>Urban</span>
+                  </a>
+                </li>
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/eu-adaptation-policy/sector-policies/water-management" class="sub-sub-menu-link">
+                     <span>Water management</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="sub-menu-item">
+              
+              <a href="https://climate-adapt.eea.europa.eu/other-eu-policies/eu-regional-policy" class="sub-menu-link">
+                 <span>EU REGIONAL POLICY</span>
+              </a>
+              
+            </li>
+            <div class="mobile-clearfix"></div>
+          </ul>
+        
+      </div>
+
+    </li>
+  
+  
+    <li class="main-nav-item" id="main-nav-item-2">
+
+      <span>
+        <a class="main-nav-link">
+          
+          <span>Countries, Transnational regions, Cities</span>
+        </a>
+        <div class="toggle-down">
+          <i class="angle-down-icon"></i>
+        </div>
+      </span>
+
+      <div class="sub-menu-wrapper">
+        
+
+          <ul class="sub-menu">
+            <li class="sub-menu-item">
+              
+              <a href="https://climate-adapt.eea.europa.eu/countries-regions/countries" class="sub-menu-link">
+                 <span>Country Profiles</span>
+              </a>
+              
+            </li>
+            <li class="sub-menu-item">
+              
+              <a href="https://climate-adapt.eea.europa.eu/eu-adaptation-policy/sector-policies/urban" class="sub-menu-link">
+                 <span>Cities and towns</span>
+              </a>
+              
+            </li>
+            <li class="sub-menu-item">
+              
+              <a href="https://climate-adapt.eea.europa.eu/countries-regions/transnational-regions" class="sub-menu-link">
+                 <span>Transnational regions</span>
+              </a>
+              <ul class="sub-sub-menu-wrapper">
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/countries-regions/transnational-regions/adriatic-ionian" class="sub-sub-menu-link">
+                     <span>Adriatic-Ionian</span>
+                  </a>
+                </li>
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/countries-regions/transnational-regions/alpine-space" class="sub-sub-menu-link">
+                     <span>Alpine Space</span>
+                  </a>
+                </li>
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/countries-regions/transnational-regions/atlantic-area" class="sub-sub-menu-link">
+                     <span>Atlantic Area</span>
+                  </a>
+                </li>
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/countries-regions/transnational-regions/balkan-mediterranean" class="sub-sub-menu-link">
+                     <span>Balkan-Mediterranean</span>
+                  </a>
+                </li>
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/countries-regions/transnational-regions/baltic-sea-region" class="sub-sub-menu-link">
+                     <span>Baltic Sea</span>
+                  </a>
+                </li>
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/countries-regions/transnational-regions/central-europe" class="sub-sub-menu-link">
+                     <span>Central Europe</span>
+                  </a>
+                </li>
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/countries-regions/transnational-regions/danube" class="sub-sub-menu-link">
+                     <span>Danube</span>
+                  </a>
+                </li>
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/countries-regions/transnational-regions/mediterranean" class="sub-sub-menu-link">
+                     <span>Mediterranean</span>
+                  </a>
+                </li>
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/countries-regions/transnational-regions/north-sea" class="sub-sub-menu-link">
+                     <span>North Sea</span>
+                  </a>
+                </li>
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/countries-regions/transnational-regions/north-west-europe" class="sub-sub-menu-link">
+                     <span>North West Europe</span>
+                  </a>
+                </li>
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/countries-regions/transnational-regions/northern-periphery" class="sub-sub-menu-link">
+                     <span>Northern Periphery and Arctic</span>
+                  </a>
+                </li>
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/countries-regions/transnational-regions/south-west-europe" class="sub-sub-menu-link">
+                     <span>South West Europe</span>
+                  </a>
+                </li>
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/countries-regions/transnational-regions/other-regions" class="sub-sub-menu-link">
+                     <span>Other regions</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <div class="mobile-clearfix"></div>
+          </ul>
+        
+      </div>
+
+    </li>
+  
+  
+    <li class="main-nav-item" id="main-nav-item-3">
+
+      <span>
+        <a class="main-nav-link">
+          
+          <span>Knowledge</span>
+        </a>
+        <div class="toggle-down">
+          <i class="angle-down-icon"></i>
+        </div>
+      </span>
+
+      <div class="sub-menu-wrapper">
+        
+
+          <ul class="sub-menu">
+            <li class="sub-menu-item">
+              
+              <a class="sub-menu-link">
+                 <span>TOPICS</span>
+              </a>
+              <ul class="sub-sub-menu-wrapper">
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/knowledge/adaptation-information/vulnerabilities-and-risks" class="sub-sub-menu-link">
+                     <span>Impacts, risks and vulnerabilities</span>
+                  </a>
+                </li>
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/knowledge/adaptation-information/adaptation-measures" class="sub-sub-menu-link">
+                     <span>Adaptation options</span>
+                  </a>
+                </li>
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/knowledge/tools/uncertainty-guidance" class="sub-sub-menu-link">
+                     <span>Uncertainty guidance</span>
+                  </a>
+                </li>
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/knowledge/mre" class="sub-sub-menu-link">
+                     <span>Monitoring, Reporting and Evaluation</span>
+                  </a>
+                </li>
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/knowledge/eu-vulnerability/eu-vulnerability-to-cc-impacts-occurring-outside/" class="sub-sub-menu-link">
+                     <span>Europe's vulnerability to climate change impacts occurring outside Europe</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="sub-menu-item">
+              
+              <a class="sub-menu-link">
+                 <span>DATA AND INDICATORS</span>
+              </a>
+              <ul class="sub-sub-menu-wrapper">
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/knowledge/adaptation-information/climate-services/" class="sub-sub-menu-link">
+                     <span>Climate  Services</span>
+                  </a>
+                </li>
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/knowledge/c-a-indicators" class="sub-sub-menu-link">
+                     <span>Indicators in Climate-ADAPT</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="sub-menu-item">
+              
+              <a href="https://climate-adapt.eea.europa.eu/knowledge/adaptation-information/research-projects" class="sub-menu-link">
+                 <span>RESEARCH AND INNOVATION PROJECTS</span>
+              </a>
+              
+            </li>
+            <li class="sub-menu-item">
+              
+              <a href="https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/" class="sub-menu-link">
+                 <span>EUROPEAN CLIMATE DATA EXPLORER</span>
+              </a>
+              
+            </li>
+            <div class="mobile-clearfix"></div>
+          </ul>
+        
+        
+
+          <ul class="sub-menu">
+            <li class="sub-menu-item">
+              
+              <a class="sub-menu-link">
+                 <span>TOOLS</span>
+              </a>
+              <ul class="sub-sub-menu-wrapper">
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/knowledge/tools/adaptation-support-tool" class="sub-sub-menu-link">
+                     <span>Adaptation Support Tool</span>
+                  </a>
+                </li>
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/knowledge/tools/urban-ast/step-0-0" class="sub-sub-menu-link">
+                     <span>Urban Adaptation Support Tool</span>
+                  </a>
+                </li>
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/knowledge/tools/urban-adaptation" class="sub-sub-menu-link">
+                     <span>Urban Adaptation Map Viewer</span>
+                  </a>
+                </li>
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/knowledge/tools/economic-tools" class="sub-sub-menu-link">
+                     <span>Economic tools</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="sub-menu-item">
+              
+              <a class="sub-menu-link">
+                 <span>PRACTICE</span>
+              </a>
+              <ul class="sub-sub-menu-wrapper">
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/knowledge/tools/case-studies-climate-adapt/" class="sub-sub-menu-link">
+                     <span>Case studies</span>
+                  </a>
+                </li>
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/knowledge/life-projects" class="sub-sub-menu-link">
+                     <span>LIFE projects</span>
+                  </a>
+                </li>
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/knowledge/interreg-projects" class="sub-sub-menu-link">
+                     <span>INTERREG projects</span>
+                  </a>
+                </li>
+                <li class="sub-sub-menu-item">
+                    
+                  <a href="https://climate-adapt.eea.europa.eu/knowledge/climate-adapt-use-cases" class="sub-sub-menu-link">
+                     <span>Climate-ADAPT use cases</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="sub-menu-item">
+              <icon class="fa fa-database"></icon>
+              <a href="https://climate-adapt.eea.europa.eu/data-and-downloads" class="sub-menu-link">
+                 <span>Search the database</span>
+              </a>
+              
+            </li>
+            <li class="sub-menu-item">
+              
+              <a href="https://climate-adapt.eea.europa.eu/observatory" class="sub-menu-link">
+                 <span>EUROPEAN Climate and Health Observatory</span>
+              </a>
+              
+            </li>
+            <div class="mobile-clearfix"></div>
+          </ul>
+        
+      </div>
+
+    </li>
+  
+  
+    <li class="main-nav-item" id="main-nav-item-4">
+
+      <span>
+        <a class="main-nav-link" href="https://climate-adapt.eea.europa.eu/network/organisations">
+          
+          <span>Networks</span>
+        </a>
+        
+      </span>
+
+      
+
+    </li>
+  
+  
+    
+  
+</ul>
+      
+        </div>
+      
+      </div>
+    </div><div class="content-container site-container">
+      <div id="portal-columns">
+
+        <div id="portal-column-content" class="cell width-full position-0">
+
+            <div id="viewlet-above-content"><div id="portal-breadcrumbs">
+
+    <span id="breadcrumbs-home">
+        <a href="https://climate-adapt.eea.europa.eu">Home</a>
+    </span>
+    <span class="breadcrumbSeparator">
+        
+        
+    </span>
+    <span>
+        <a href="https://climate-adapt.eea.europa.eu/knowledge">Knowledge</a>
+        
+    </span>
+    <span>
+        <a href="https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer">European Climate Data Explorer</a>
+        
+    </span>
+    <span>
+        <a href="https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture">Agriculture</a>
+        
+    </span>
+    <span>
+        
+        <span id="breadcrumbs-current">Tropical Nights, 2011-2099</span>
+    </span>
+
+</div>
+
+
+
+
+<div id="sentry" data-sentry-user="{}" data-sentry-ver="21.1.30" data-sentry-dsn="https://ff314b7e06cf4fe082692ecd9c8048e6@sentry.eea.europa.eu/31" data-sentry-site="climate-adapt.eea.europa.eu" data-sentry-env="Prod3 CPH" data-sentry-server="69b94d6ef49b"><!-- Sentry config --></div>
+</div>
+
+            
+                <div class="">
+
+                    
+
+                    
+
+    <dl class="portalMessage info" id="kssPortalMessage" style="display:none">
+        <dt>Info</dt>
+        <dd></dd>
+    </dl>
+
+
+
+                    
+                        <div id="content">
+
+                            
+
+                            
+
+      <style>
+        .bottom > * {
+          vertical-align: bottom;
+        }
+      </style>
+
+      <div class="bottom">
+        <h1>Tropical Nights, 2011-2099</h1>
+        
+        </div>
+        <div>
+            
+        </div>
+
+
+        <div class="c3s c3s_overview">
+          <div><p><strong>Context</strong>
+The number of tropical nights provides an indication of the likely occurrence of various pests.</p>
+<p><strong>Definition</strong>
+On a tropical night the minimum temperature remains above 20°C.</p>
+<p><strong>Data Sources</strong>
+The number of tropical nights index is calculated from an ensemble of five global climate model (GCM) simulations for two CMIP5 scenario projections: RCP2.6 (with low greenhouse gas emissions) and RCP8.5 (with high greenhouse gas emissions). Projected changes are calculated relative to a (1981-2010) ERA5 reference period.</p>
+<p><strong>Understand</strong>
+A positive value indicates more tropical nights than the reference period while a negative value indicates fewer tropical nights than the reference period.</p>
+<p><strong>Supporting Information</strong>
+The data was collated on behalf of the Copernicus Climate Change Service (C3S).  Further information about this index can be found in the C3S documentation resources in the <a href="https://cds.climate.copernicus.eu/cdsapp#!/dataset/sis-agroclimatic-indicators?tab=overview">Climate Data Store</a>.</p>
+<hr />
+<p><strong>Visualisation and Navigation</strong>
+Monthly and annual projected changes in the number of tropical nights index are presented as 30-year means for two CMIP5 scenarios; RCP2.6 with low greenhouse gas emissions and RCP8.5 with high greenhouse gas emissions.</p>
+<p>Statistics for the number of tropical nights are also available via the "Explore in Detail" button as national, sub-national and trans-national area-means for which time series data can be plotted.</p>
+</div>
+
+          <div style="clear: both; padding-top: 50px;"></div>
+
+          <div class="row">
+          <div class="column col-md-10">
+              <h2>Projected change in the number of tropical nights</h2>
+          </div>
+          <div class="column col-md-2">
+            <a href="#details" class="standard-button primary-button" onclick="c3sView('details');return false;" style="float: right; position: relative;">
+               Explore in detail
+            </a>
+            <div style="clear: both;"></div>
+          </div>
+      </div>
+
+            <hr />
+
+          <div class="column col-md-12">
+            
+
+            
+
+            <div class="t-ct">
+              <div id="toolbox-app-overview">
+                <div class="pre-app-loading">
+                  <img src="https://cds.climate.copernicus.eu/toolbox/assets/spinner.svg" alt="Loading" />
+                  <div>
+                      ...loading configuration...
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            
+
+            
+
+          </div>
+        </div>
+
+        <div class="c3s c3s_details">
+
+          <div style="clear: both; padding-top: 50px;"><p><strong>Context</strong>
+The number of tropical nights provides an indication of the likely occurrence of various pests.</p>
+<p><strong>Definition</strong>
+On a tropical night the minimum temperature remains above 20°C.</p>
+<p><strong>Data Sources</strong>
+The number of tropical nights index is calculated from an ensemble of five global climate model (GCM) simulations for two CMIP5 scenario projections: RCP2.6 (with low greenhouse gas emissions) and RCP8.5 (with high greenhouse gas emissions). Projected changes are calculated relative to a (1981-2010) ERA5 reference period.</p>
+<p><strong>Understand</strong>
+A positive value indicates more tropical nights than the reference period while a negative value indicates fewer tropical nights than the reference period.</p>
+<p><strong>Supporting Information</strong>
+The data was collated on behalf of the Copernicus Climate Change Service (C3S).  Further information about this index can be found in the C3S documentation resources in the <a href="https://cds.climate.copernicus.eu/cdsapp#!/dataset/sis-agroclimatic-indicators?tab=overview">Climate Data Store</a>.</p>
+<hr />
+<p><strong>Visualisation and Navigation</strong>
+The projected change of the monthly and annual number of tropical nights for the chosen scenario and time period are plotted as area means for each region. The EUROSTAT NUTS classification (<a href="https://ec.europa.eu/eurostat/web/nuts/background">Nomenclature of Territorial Units for Statistics</a>) is a hierarchical system for dividing up the economic territory of Europe. The size of the regions shown on the map can be adjusted by selecting the appropriate NUTS level: national level (NUTS-0), first sub-national level (NUTS-1), second sub-national level (NUTS-2), and third sub-national level (NUTS-3).</p>
+<p>The regions on the map facilitate dynamic access to the underlying data. Hover the mouse pointer over a region to view the value of the area mean or click on a region to request a time series plot.  Likewise, the trans-national average for the EEA member and cooperating countries (EEA 38) can be accessed via the "Europe" bounding box.</p>
+<p>The time series plot shows the ensemble mean and range of tropical night responses to the chosen scenario conditions across an ensemble of five CMIP5 climate models. Click and hover the mouse over the time series plot to view the data values and to reveal action buttons for features such as “zoom” and “download plot as a png”.  Links below the plot enable the download of time series data in the spreadsheet compatible .csv format.</p>
+<p>This index is expressed as a change relative to a reference period so the (1981-2010) ERA5 reference climatology is also provided. The reference climate contains the mean climatology, the standard deviation from the mean, and the 5th and 95th percentiles.</p>
+</div>
+
+          <!--
+          <a href="#"
+             class="standard-button primary-button c3s_details"
+             onclick="c3sView('overview');return false;"
+             style="float: left; position: relative;">
+             Go back</a>
+         -->
+         <div class="row">
+         <div class="column col-md-10">
+             <h2>Projected change in the number of tropical nights - Explore index</h2>
+         </div>
+         <div class="column col-md-2">
+           <a href="#" class="standard-button primary-button" onclick="c3sView('overview');return false;" style="float: right; position: relative; width:200px;">
+              Go back</a>
+           <div style="clear: both;"></div>
+         </div>
+         </div>
+
+
+          <div style="clear:both;"></div>
+
+          <div class="t-ct">
+            <div id="toolbox-app-details">
+              <div class="pre-app-loading">
+                <img src="https://cds.climate.copernicus.eu/toolbox/assets/spinner.svg" alt="Loading" />
+                <div>
+                    ...loading configuration...
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="c3s_details_js">
+            
+          </div>
+        </div>
+
+        <!--
+        <div style="clear:both;padding-top:25px;width:100%;text-align:right;"
+             tal:condition="python: context.relatedItems and len(context.relatedItems)"
+        >
+          <a tal:define="related_url python: context.relatedItems[0].to_object.absolute_url()"
+              tal:attributes="href related_url;"
+              href=""
+              class="standard-button primary-button">
+              Open as database item
+          </a>
+        </div>
+        -->
+
+      <div style="clear:both;"></div>
+
+      
+
+      <style>
+      .row.c3s {
+        clear:both;
+      }
+
+      .c3s h2 {
+        color:#000;
+        background-color:#fff;
+      }
+
+      hr {
+        background: #005C96;
+        height: 4px;
+      }
+      </style>
+
+      
+  <br />
+  <p>Content in the European Climate Data Explorer pages is delivered by the <a href="https://climate.copernicus.eu/">Copernicus Climate Change Service (C3S)</a> implemented by ECMWF. <a href="/knowledge/european-climate-data-explorer/disclaimer">Disclaimer</a></p>
+    
+                        </div>
+                    
+
+                    
+                </div>
+            
+
+            <div id="viewlet-below-content">
+
+
+
+
+
+
+
+</div>
+        </div>
+
+        
+        
+
+        
+        
+    </div>
+    </div><footer>
+    
+      <div class="footer-nav-wrapper">
+        <div class="content-container">
+          <nav class="footer-nav" role="navigation">
+            <ul>
+              <li class="footer-nav-item">
+                <a href="/" class="footer-nav-link">Home</a>
+              </li>
+              <li class="footer-nav-item">
+                <a href="mailto:climate.adapt@eea.europa.eu" class="footer-nav-link">Contact</a>
+              </li>
+              <li class="footer-nav-item">
+                <a href="/sitemap" class="footer-nav-link">SITE MAP</a>
+              </li>
+              <li class="footer-nav-item">
+                <a href="/privacy-and-legal-notice" class="footer-nav-link">Privacy and Legal Notice</a>
+              </li>
+              <li class="footer-nav-item align-right footer-login">
+                  <!-- <a href="/login" id="personaltools-login" rel="#pb_1" class="footer-nav-link link-overlay" style="cursor: pointer;"><i class="fa fa-user"></i> Log in</a> -->
+    
+                  <div class="login">
+                    <div id="personal-menu">
+                      <a class="personal-menu-action">
+                        <i class="fa fa-user"></i>
+                        <span class="login-text"><ul class="actionMenu deactivated" id="portal-personaltools">
+  <li id="anon-personalbar">
+    
+        <a href="https://climate-adapt.eea.europa.eu/login" id="personaltools-login">Log in</a>
+    
+  </li>
+</ul></span>
+                        
+                        
+                      </a>
+                    </div>
+                    <div class="login-container">
+                      <form class="login-form">
+                        <input type="text" placeholder="Email" />
+                        <input type="text" placeholder="Password" />
+                        <button type="submit" class="footer-nav-link"><i class="fa fa-user" aria-hidden="true"></i> Log in</button>
+                      </form>
+                      <ul id="portal-personaltools">
+                        <li><a href="#">test</a></li>
+                      </ul>
+                    </div>
+                  </div>
+    
+              </li>
+              
+            </ul>
+          </nav>
+        </div>
+      </div>
+    
+      <div class="content-container">
+        <div class="row footer-content">
+          <div class="column col-md-6 col-xs-12">
+            <p class="site-info">The European Climate Adaptation Platform Climate-ADAPT is a partnership between the <a href="https://ec.europa.eu/">European Commission</a> and the <a href="https://www.eea.europa.eu/">European Environment Agency.</a></p>
+            <div class="footer-logos-wrapper">
+              <a href="https://ec.europa.eu/" rel="noopener">
+                <img data-src="/cca/++theme++climateadaptv2/static/images/ec_logo.svg" alt="European Commission Logo" title="European Commission" width="160" height="40" class="lazyload" />
+              </a>
+              <a href="https://www.eea.europa.eu/" rel="noopener">
+                <img data-src="/cca/++theme++climateadaptv2/static/images/EEA-logo.png" alt="EEA Logo" title="European Environment Agency" width="114" height="40" class="lazyload" />
+              </a>
+            </div>
+          </div>
+    
+          <div class="eu-systems column col-md-6 col-xs-12">
+            <div class="eu-systems-wrapper">
+              <p>Other European Information Systems:</p>
+              <ul class="footer-logos">
+                <li class="footer-logo-item">
+                  <a href="https://biodiversity.europa.eu/" rel="noopener">
+                    <img data-src="/cca/++theme++climateadaptv2/static/images/bise-logo.svg" alt="BISE Logo" title="Biodiversity Information System for Europe" width="105" height="35" class="lazyload" />
+                  </a>
+                </li>
+                <li class="footer-logo-item">
+                  <a href="https://water.europa.eu/" rel="noopener">
+                    <img data-src="/cca/++theme++climateadaptv2/static/images/wise-logo.png" alt="WISE Logo" title="Water Information System for Europe" width="78" height="35" class="lazyload" />
+                  </a>
+                </li>
+                <li class="footer-logo-item">
+                  <a href="https://climate.copernicus.eu/" rel="noopener">
+                    <img data-src="/cca/++theme++climateadaptv2/static/images/c3s-logo.png" alt="Copernicus Climate Logo" title="Climate Change Service" width="124" height="37" class="lazyload" />
+                  </a>
+                </li>
+                <li class="footer-logo-item">
+                  <a href="https://drmkc.jrc.ec.europa.eu/" rel="noopener">
+                    <img data-src="/cca/++theme++climateadaptv2/static/images/drmkc-logo.png" alt="DRMKC Logo" title="Disaster Risk Management Knowledge Centre" width="84" height="30" class="lazyload" />
+                  </a>
+                </li>
+                <li class="footer-logo-item">
+                  <a href="https://forest.eea.europa.eu/" rel="noopener">
+                    <img data-src="/cca/++theme++climateadaptv2/static/images/forest.svg" alt="FISE Logo" title="Forest Information System for Europe" width="133" height="36" class="lazyload" />
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+    </footer><script>
+    	(function(){
+    		window.lazySizesConfig = window.lazySizesConfig || {};
+    		window.lazySizesConfig.loadMode = 1;
+    		window.lazySizesConfig.expand = 10;
+    		window.lazySizesConfig.expFactor = 1.5;
+    	})();
+    </script><script type="text/javascript">
+    		!function(t){"use strict";t.loadCSS||(t.loadCSS=function(){});var e=loadCSS.relpreload={};if(e.support=function(){var e;try{e=t.document.createElement("link").relList.supports("preload")}catch(t){e=!1}return function(){return e}}(),e.bindMediaToggle=function(t){function e(){t.media=a}var a=t.media||"all";t.addEventListener?t.addEventListener("load",e):t.attachEvent&&t.attachEvent("onload",e),setTimeout(function(){t.rel="stylesheet",t.media="only x"}),setTimeout(e,3e3)},e.poly=function(){if(!e.support())for(var a=t.document.getElementsByTagName("link"),n=0;n<a.length;n++){var o=a[n];"preload"!==o.rel||"style"!==o.getAttribute("as")||o.getAttribute("data-loadcss")||(o.setAttribute("data-loadcss",!0),e.bindMediaToggle(o))}},!e.support()){e.poly();var a=t.setInterval(e.poly,500);t.addEventListener?t.addEventListener("load",function(){e.poly(),t.clearInterval(a)}):t.attachEvent&&t.attachEvent("onload",function(){e.poly(),t.clearInterval(a)})}"undefined"!=typeof exports?exports.loadCSS=loadCSS:t.loadCSS=loadCSS}("undefined"!=typeof global?global:this);
+    </script><script type="text/javascript" src="https://climate-adapt.eea.europa.eu/portal_javascripts/Sunburst%20Theme/resourceraven.min-cachekey-d423adb4bc7b549d2d0c975585d5db53.js"></script><script type="text/javascript" src="https://climate-adapt.eea.europa.eu/portal_javascripts/Sunburst%20Theme/resourceplone.app.jquery-cachekey-5776f24b98115febaa8f7207b2c61e64.js"></script><script type="text/javascript" src="https://climate-adapt.eea.europa.eu/portal_javascripts/Sunburst%20Theme/register_function-cachekey-f1d05ddf5713b35652c89c37c50871cb.js"></script><script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.js"></script><script type="text/javascript" src="https://climate-adapt.eea.europa.eu/portal_javascripts/Sunburst%20Theme/themeclimateadaptv2staticjsslick.min-cachekey-41be2a047b3ca2a81cdd101808700285.js"></script><script type="text/javascript">
+        jQuery(function($){
+            if (typeof($.datepicker) != "undefined"){
+              $.datepicker.setDefaults(
+                jQuery.extend($.datepicker.regional[''],
+                {dateFormat: 'mm/dd/yy'}));
+            }
+        });
+        </script><script>
+              window._define = window.define;
+              window.define = undefined;
+            </script><script type="text/javascript">
+              window.cds_toolbox = { cds_public_path: 'https://cds.climate.copernicus.eu/toolbox/' };
+            </script><script type="text/javascript" src="https://cds.climate.copernicus.eu/toolbox/toolbox-4.25.1.js"></script><script type="text/javascript">(function () {
+                    document.addEventListener('DOMContentLoaded', function () {
+                        window.cds_toolbox.runApp('toolbox-app-overview', 'https://cds.climate.copernicus.eu/workflows/c3s/hidden-app-agriculture-tropicalnights-overview-web/master/configuration.json?configuration_version=3.0', {});
+                    }, false);
+                })();
+                </script><script type="text/javascript">
+                    var c3s_details_url  = 'https://cds.climate.copernicus.eu/workflows/c3s/hidden-app-agriculture-tropicalnights-detail-web/master/configuration.json?configuration_version=3.0';
+                    var c3s_details_params  = {};
+                </script><script>
+        window.define = window._define;
+      </script><script>
+        if((window.location.hash && window.location.hash=="#details")
+            // Laci removed condition, see task #134136 || window.location.search.length
+            ) {
+            c3sView('details');
+        } else {
+            c3sView('overview');
+        }
+        function c3sView(type) {
+            if (type=='details') {
+                location.hash = '#details';
+                $('.c3s_overview').css('display','none');
+                $('.c3s_details').attr('style','display:block;margin-top:-60px;');
+                window.cds_toolbox.runApp('toolbox-app-details', c3s_details_url, c3s_details_params);
+            } else {
+                location.hash = '';
+                $('.c3s_details').attr('style','display:none;');
+                $('.c3s_overview').attr('style','display:block;');
+            }
+        }
+      </script><script data-diazo="matomo-analytics">
+
+  var _paq = _paq || [];
+  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="https://matomo.eea.europa.eu/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    if (window.location.pathname.startsWith('/observatory')) {
+        _paq.push(['setSiteId', '49']);
+    }
+    else {
+        _paq.push(['setSiteId', '13']);
+    }
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+
+</script><script data-diazo-keep="true" type="application/ld+json">
+{
+  "@context": {
+    "http://schema.org/Image": "http://schema.org/ImageObject",
+    "http://schema.org/productID": "http://schema.org/about"
+  },
+  "@graph": [
+    {
+      "@id": "https://climate-adapt.eea.europa.eu#breadcrumb",
+      "@type": "http://schema.org/Thing",
+      "http://schema.org/image": "https://climate-adapt.eea.europa.eu/image_large",
+      "http://schema.org/name": "Climate-ADAPT",
+      "http://schema.org/url": "https://climate-adapt.eea.europa.eu"
+    },
+    {
+      "@id": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/tropical-nights-2011-2099/image_thumb",
+      "@type": "http://schema.org/Image",
+      "http://schema.org/height": "128px",
+      "http://schema.org/width": "128px"
+    },
+    {
+      "@id": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/tropical-nights-2011-2099/image_mini",
+      "@type": "http://schema.org/Image",
+      "http://schema.org/height": "200px",
+      "http://schema.org/width": "200px"
+    },
+    {
+      "@id": "https://climate-adapt.eea.europa.eu#author:admin",
+      "@type": "http://schema.org/Person",
+      "http://schema.org/name": "admin"
+    },
+    {
+      "@id": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/tropical-nights-2011-2099#breadcrumb",
+      "@type": "http://schema.org/Thing",
+      "http://schema.org/image": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/tropical-nights-2011-2099/image_large",
+      "http://schema.org/name": "Tropical Nights, 2011-2099",
+      "http://schema.org/url": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/tropical-nights-2011-2099"
+    },
+    {
+      "@id": "https://climate-adapt.eea.europa.eu/document_icon.png",
+      "@type": "http://schema.org/Image"
+    },
+    {
+      "@id": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/tropical-nights-2011-2099/image_icon",
+      "@type": "http://schema.org/Image",
+      "http://schema.org/height": "32px",
+      "http://schema.org/width": "32px"
+    },
+    {
+      "@id": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/tropical-nights-2011-2099/image_portrait",
+      "@type": "http://schema.org/Image",
+      "http://schema.org/height": "1370px",
+      "http://schema.org/width": "771px"
+    },
+    {
+      "@id": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/tropical-nights-2011-2099/image_xlarge",
+      "@type": "http://schema.org/Image",
+      "http://schema.org/height": "950px",
+      "http://schema.org/width": "950px"
+    },
+    {
+      "@id": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture#breadcrumb",
+      "@type": "http://schema.org/Thing",
+      "http://schema.org/image": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/image_large",
+      "http://schema.org/name": "Agriculture",
+      "http://schema.org/url": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture"
+    },
+    {
+      "@id": "BreadCrumbsListItem1",
+      "@type": "http://schema.org/ListItem",
+      "http://schema.org/item": {
+        "@id": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/tropical-nights-2011-2099#breadcrumb"
+      },
+      "http://schema.org/position": 5
+    },
+    {
+      "@id": "BreadCrumbsListItem3",
+      "@type": "http://schema.org/ListItem",
+      "http://schema.org/item": {
+        "@id": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer#breadcrumb"
+      },
+      "http://schema.org/position": 3
+    },
+    {
+      "@id": "BreadCrumbsListItem2",
+      "@type": "http://schema.org/ListItem",
+      "http://schema.org/item": {
+        "@id": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture#breadcrumb"
+      },
+      "http://schema.org/position": 4
+    },
+    {
+      "@id": "BreadCrumbsListItem5",
+      "@type": "http://schema.org/ListItem",
+      "http://schema.org/item": {
+        "@id": "https://climate-adapt.eea.europa.eu#breadcrumb"
+      },
+      "http://schema.org/position": 1
+    },
+    {
+      "@id": "BreadCrumbsListItem4",
+      "@type": "http://schema.org/ListItem",
+      "http://schema.org/item": {
+        "@id": "https://climate-adapt.eea.europa.eu/knowledge#breadcrumb"
+      },
+      "http://schema.org/position": 2
+    },
+    {
+      "@id": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/tropical-nights-2011-2099#article",
+      "@type": "http://schema.org/Article",
+      "http://schema.org/author": {
+        "@id": "https://climate-adapt.eea.europa.eu#author:admin"
+      },
+      "http://schema.org/dateModified": "2021-05-18T13:21:37+00:00",
+      "http://schema.org/datePublished": "2021-04-29T07:00:37.726810+00:00",
+      "http://schema.org/description": "Tropical Nights, 2011-2099 ",
+      "http://schema.org/headline": "Tropical Nights, 2011-2099",
+      "http://schema.org/image": {
+        "@id": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/tropical-nights-2011-2099/image_large"
+      },
+      "http://schema.org/mainEntityOfPage": {
+        "@id": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/tropical-nights-2011-2099"
+      },
+      "http://schema.org/publisher": {
+        "@id": "https://climate-adapt.eea.europa.eu#organization"
+      }
+    },
+    {
+      "@id": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer#breadcrumb",
+      "@type": "http://schema.org/Thing",
+      "http://schema.org/image": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/image_large",
+      "http://schema.org/name": "European Climate Data Explorer",
+      "http://schema.org/url": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer"
+    },
+    {
+      "@id": "#breadcrumb",
+      "@type": "http://schema.org/BreadcrumbList",
+      "http://schema.org/itemListElement": [
+        {
+          "@id": "BreadCrumbsListItem5"
+        },
+        {
+          "@id": "BreadCrumbsListItem2"
+        },
+        {
+          "@id": "BreadCrumbsListItem1"
+        },
+        {
+          "@id": "BreadCrumbsListItem4"
+        },
+        {
+          "@id": "BreadCrumbsListItem3"
+        }
+      ]
+    },
+    {
+      "@id": "https://climate-adapt.eea.europa.eu/knowledge#breadcrumb",
+      "@type": "http://schema.org/Thing",
+      "http://schema.org/image": "https://climate-adapt.eea.europa.eu/knowledge/image_large",
+      "http://schema.org/name": "Knowledge",
+      "http://schema.org/url": "https://climate-adapt.eea.europa.eu/knowledge"
+    },
+    {
+      "@id": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/tropical-nights-2011-2099/image_panoramic",
+      "@type": "http://schema.org/Image",
+      "http://schema.org/height": "1080px",
+      "http://schema.org/width": "1920px"
+    },
+    {
+      "@id": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/tropical-nights-2011-2099/image_print",
+      "@type": "http://schema.org/Image",
+      "http://schema.org/height": "2000px",
+      "http://schema.org/width": "2000px"
+    },
+    {
+      "@id": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/tropical-nights-2011-2099/image_landscape",
+      "@type": "http://schema.org/Image",
+      "http://schema.org/height": "771px",
+      "http://schema.org/width": "1370px"
+    },
+    {
+      "@id": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/tropical-nights-2011-2099/image_wide",
+      "@type": "http://schema.org/Image",
+      "http://schema.org/height": "183px",
+      "http://schema.org/width": "325px"
+    },
+    {
+      "@id": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/tropical-nights-2011-2099/image_tile",
+      "@type": "http://schema.org/Image",
+      "http://schema.org/height": "64px",
+      "http://schema.org/width": "64px"
+    },
+    {
+      "@id": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/tropical-nights-2011-2099/image_fp-slide",
+      "@type": "http://schema.org/Image",
+      "http://schema.org/height": "420px",
+      "http://schema.org/width": "1920px"
+    },
+    {
+      "@id": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/tropical-nights-2011-2099/image_listing",
+      "@type": "http://schema.org/Image",
+      "http://schema.org/height": "16px",
+      "http://schema.org/width": "16px"
+    },
+    {
+      "@id": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/tropical-nights-2011-2099",
+      "@type": "http://schema.org/WebPage"
+    },
+    {
+      "@id": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/tropical-nights-2011-2099/image_preview",
+      "@type": "http://schema.org/Image",
+      "http://schema.org/height": "400px",
+      "http://schema.org/width": "400px"
+    },
+    {
+      "@id": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/tropical-nights-2011-2099/image_large",
+      "@type": "http://schema.org/Image",
+      "http://schema.org/contentSize": 1056,
+      "http://schema.org/height": "768px",
+      "http://schema.org/thumbnail": [
+        {
+          "@id": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/tropical-nights-2011-2099/image_icon"
+        },
+        {
+          "@id": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/tropical-nights-2011-2099/image_listing"
+        },
+        {
+          "@id": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/tropical-nights-2011-2099/image_wide"
+        },
+        {
+          "@id": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/tropical-nights-2011-2099/image_xlarge"
+        },
+        {
+          "@id": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/tropical-nights-2011-2099/image_fp-slide"
+        },
+        {
+          "@id": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/tropical-nights-2011-2099/image_large"
+        },
+        {
+          "@id": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/tropical-nights-2011-2099/image_print"
+        },
+        {
+          "@id": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/tropical-nights-2011-2099/image_mini"
+        },
+        {
+          "@id": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/tropical-nights-2011-2099/image_landscape"
+        },
+        {
+          "@id": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/tropical-nights-2011-2099/image_portrait"
+        },
+        {
+          "@id": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/tropical-nights-2011-2099/image_thumb"
+        },
+        {
+          "@id": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/tropical-nights-2011-2099/image_preview"
+        },
+        {
+          "@id": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/tropical-nights-2011-2099/image_panoramic"
+        },
+        {
+          "@id": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/tropical-nights-2011-2099/image_tile"
+        }
+      ],
+      "http://schema.org/url": "https://climate-adapt.eea.europa.eu/knowledge/european-climate-data-explorer/agriculture/tropical-nights-2011-2099/image_large",
+      "http://schema.org/width": "768px"
+    }
+  ]
+}
+</script></body>
+</html>

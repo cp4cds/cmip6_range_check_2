@@ -1,0 +1,11 @@
+
+linkchecker --ignore-url=".*/downl.*" --ignore-url=".*/awstats*" --ignore-url=^mailto: -r 6 www.ipcc-data.org/ 2>&1 > lc_out.txt
+## above works .. without too many dud checks -- but need to chekc whether it could be improved.
+
+linkchecker --ignore-url=".*/downl.*" --ignore-url="http://cera-www.dkrz.de/WDCC/ui/*" --ignore-url=".*/awstats*" --ignore-url=^mailto:  --ignore-url="http://www.ipcc-data.org/maps/*" --ignore-url="http://validator.w3.org/*" www.ipcc-data.org/ 2>&1 > lc_out_mon.txt
+
+## add --check-extern to get external links:
+
+linkchecker --ignore-url=".*/downl.*" --ignore-url=".*/awstats*" --check-extern --ignore-url=^mailto: -r 6 www.ipcc-data.org/ 2>&1 > lc_out.txt
+
+###  http://dx.doi.org/10.1594/WDCC/* is very slow -- could ignore for routine checks.

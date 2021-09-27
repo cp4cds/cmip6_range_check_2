@@ -1,0 +1,2 @@
+/js/2018/jquery-ui-1.12.1/index.html   ## jquery information page
+/syn/tar_scatter/scatter_2080_galleries/ ## legacy pages ... displaying OK but crash w3c validator

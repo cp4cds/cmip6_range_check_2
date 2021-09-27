@@ -1,0 +1,37 @@
+Help on package readme_renderer:
+
+NNAAMMEE
+    readme_renderer
+
+DDEESSCCRRIIPPTTIIOONN
+    # Copyright 2014 Donald Stufft
+    #
+    # Licensed under the Apache License, Version 2.0 (the "License");
+    # you may not use this file except in compliance with the License.
+    # You may obtain a copy of the License at
+    #
+    # http://www.apache.org/licenses/LICENSE-2.0
+    #
+    # Unless required by applicable law or agreed to in writing, software
+    # distributed under the License is distributed on an "AS IS" BASIS,
+    # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    # See the License for the specific language governing permissions and
+    # limitations under the License.
+
+PPAACCKKAAGGEE  CCOONNTTEENNTTSS
+    __about__
+    __main__
+    clean
+    integration (package)
+    markdown
+    rst
+    txt
+
+DDAATTAA
+    aabbssoolluuttee__iimmppoorrtt = _Feature((2, 5, 0, 'alpha', 1), (3, 0, 0, 'alpha', 0...
+    ddiivviissiioonn = _Feature((2, 2, 0, 'alpha', 2), (3, 0, 0, 'alpha', 0), 8192...
+    pprriinntt__ffuunnccttiioonn = _Feature((2, 6, 0, 'alpha', 2), (3, 0, 0, 'alpha', 0)...
+
+FFIILLEE
+    /home/mjuckes/.local/lib/python3.6/site-packages/readme_renderer/__init__.py
+
