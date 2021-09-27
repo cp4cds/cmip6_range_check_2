@@ -317,6 +317,7 @@ class ConcTestCmipFile(TestCmipFile):
 
 NO_REPEAT_TEST = False
 NO_REPEAT_TEST_BY_PATH = True
+NO_REPEAT_TEST_BY_PATH = False
 
 if __name__ == "__main__":
 ##
@@ -329,7 +330,7 @@ if __name__ == "__main__":
 
 #vname, table, model, expt, vnt_id, grid = fname.rpartition('.')[0].split('_')[0:6]
     import generic_utils
-    group = 5
+    group = 8
     log_dir = 'logs_%2.2i' % group
     log_factory = generic_utils.LogFactory(dir=log_dir)
 

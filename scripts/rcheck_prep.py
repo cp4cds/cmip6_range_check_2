@@ -80,6 +80,7 @@ class Rsplat(object):
      jfile = '../_work/QC_template.json'
      jfile = '../_work/QC_template_v3_20210317.json'
      jfile = '../_work/QC_template_v5_2021-03-25.json'
+     jfile = '../_work/QC_template_batch4.json'
      ee = json.load( open( jfile, 'r' ) )
      cc = collections.defaultdict( list )
      ff = collections.defaultdict( list )
@@ -231,6 +232,6 @@ if __name__ == '__main__':
          elif tt == tab or tt == 'all':
            scan_group(a='inputs_07',var=v, input_key='x1', out_key='x4')
   else:
-    r = Rsplat(group=7)
+    r = Rsplat(group=8)
     r.splat()
     r.analysis()
