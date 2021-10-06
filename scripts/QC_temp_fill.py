@@ -2,19 +2,20 @@ import json, collections, os, time
 
      ## ee = json.load( open('../_work/QC_template.json' ) )
 QC_TEMPLATE = '../_work/QC_template_v5_2021-03-25.json'
+QC_TEMPLATE = '../_work/QC_template_batch4_v3.json'
 
 HEADER = {
-        "abstract": "Results from a review of data ranges, provided as a dictionary for each handle identifier. Error level 0 indicates no errors found. The report also includes a check on the availability of mask files ",
+        "abstract": "Results from a review of data ranges, provided as a dictionary for each handle identifier. Error level 0 indicates no errors found.",
         "contact": "support@ceda.ac.uk (ref C3S 34g,Martin Juckes)",
         "creation_date": None,
         "history": "Created at CEDA, based on a scan of all data files",
-        "inputs": "QC_template_v5_2021-03-25.json",
+        "inputs": "QC_template_batch4_v3.json",
         "source": "jprep_ranges.py",
         "summary": None,
         "title": "Data Range QC Report"
     }
 
-SUMMARY_FMT =  "12200 records, 10334 passed, 1866 failed",
+SUMMARY_FMT =  "14570 datasets, 104590 files, all passed, 0 failed",
 SUMMARY_FMT =  "%s records, %s passed, %s failed"
 
 def run():
@@ -33,9 +34,10 @@ def run():
        cc[ '%s.%s' % (table,var) ].add( (id2,k) )
      print (cc.keys())
      print ('Summary: <name> - <dsets>: pass, <minor>, <fail>, <missing>, <missing files> -- pass includes minor, fail includes missing files'  )
+     oom = open( 'files_missing.txt', 'w' )
      for k in sorted( cc.keys() ):
        table,var = k.split( '.' )
-       if not os.path.isdir( 'json_rep_05/%s' % k ):
+       if not os.path.isdir( 'json_rep_08/%s' % k ):
          print ('MISSING: %s' % k )
          cc2['dset']['MISSING_ALL'] += 1
        elif table == 'Lmonxx':
@@ -50,19 +52,26 @@ def run():
          nnh = 0
          for id2, kk in cc[k]:
            this_targ = ee['datasets'][kk]
-           if os.path.isfile( 'json_rep_05/%s/%s.json' % (k,id2) ):
+           if os.path.isfile( 'json_rep_08/%s/%s.json' % (k,id2) ):
               files_missing = 0
               files_minor = 0
-              this_item = json.load( open( 'json_rep_05/%s/%s.json' % (k,id2) ) )
+              this_item = json.load( open( 'json_rep_08/%s/%s.json' % (k,id2) ) )
               assert 'dset_qc_status' in this_item, 'File %s has no dset_qc_status:' % id2
               for x in ['dset_error_message','dset_error_severity','dset_id','dset_qc_status']:
                 this_targ[x] = this_item.get(x,'')
+              activity, mip, inst, model, expt,variant_id,table,var,grid_id,version = this_targ['dset_id'].split('.')
               for h in this_targ['files']:
                 if h not in this_item['files']:
+                   fn = this_targ['files'][h]['filename']
+                   # simass_SImon_GISS-E2-1-H_historical_r1i1p1f1_gn
+                   if tuple( fn.split('_')[:6] ) == (var,table,model,expt,variant_id,grid_id):
                    ##print( h,this_targ['files'][h]['filename'] )
-                   files_missing += 1
-                   nnh+=1
-                   cc2['file']['MISSING'] += 1
+                     files_missing += 1
+                     oom.write( '%s,%s,\n' % (this_targ['dset_id'], fn ) )
+                     nnh+=1
+                     cc2['file']['MISSING'] += 1
+                   else:
+                     cc2['file']['OUTOFPLACE'] += 1
                 else:
                    this_file = this_item['files'][h]
                    assert 'file_qc_status' in this_file
@@ -95,6 +104,7 @@ def run():
          print ('OK: %16s - %4s: %s, %s, %s, %s, %s' % (k, nds, ok, okm, nfa, nn, nfm) )
 
      oo.close()
+     oom.close()
      HEADER['creation_date'] = str( time.ctime() )
      HEADER['summary'] = 'TODO'
      ee['header'] = HEADER

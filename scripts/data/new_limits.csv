@@ -1,4 +1,5 @@
 table,var,limit name,Max,Min,kind,status,basis
+AERday,zg500,valid_max,20000,1000,new,proposed,
 Amon,rsds,mean_absolute_valid ..,220,,update,robust,"Range set was too narrow, one model exceded by 0.08 W m-2."
 Amon,rlds,valid_max,700,,update,robust,
 Amon,rlus,mean_absolute,500,,update,robust,

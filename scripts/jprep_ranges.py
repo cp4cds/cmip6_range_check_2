@@ -98,7 +98,7 @@ workflow_errors_detected = []
 
 class Base(object):
     DataRoot = '../../cmip6_range_check/scripts/json_03/'
-    DataRoot = './json_05/'
+    DataRoot = './json_08/'
 
 def get_result_directories(root_dir=None):
         if root_dir == None:
@@ -269,7 +269,7 @@ class TestFile(object):
       tree = jrep_file.split( '/' )
       if tree[0] == '.':
         tree=tree[1:]
-      assert os.path.isdir( tree[0] )
+      assert os.path.isdir( tree[0] ), '%s not found' % tree[0]
       if not os.path.isdir( '/'.join( tree[:2] ) ):
         os.mkdir( '/'.join( tree[:2] ) )
     
@@ -345,7 +345,7 @@ class TestFile(object):
         mv_errors = False
       elif table in ['Omon', 'Ofx','Lmon','LImon']:
         mv_errors = False
-      elif var in ['mrsofc']:
+      elif var in ['mrsofc', 'zg500']:
         mv_errors = False
       else:
         mv_errors = rcs[4] != 0
@@ -571,7 +571,7 @@ class JprepRanges(object):
         print ('Excluding: ',excluded )
         self.nr = get_new_ranges()
 
-    def run_test( self, test_var='LImon.snd', all=False, fcsv=None, ffcsv=None, mkd=None ):
+    def run_test( self, test_var='Amon.tas', all=False, fcsv=None, ffcsv=None, mkd=None ):
         assert test_var in self.nr
         assert test_var in self.dirs
         fl = sorted( glob.glob( '%s/*.json' % self.dirs[test_var] ) )
@@ -706,9 +706,9 @@ if __name__ == "__main__":
       range_dump()
     elif sys.argv[1] == '-v':
       var = sys.argv[2]
-      assert os.path.isdir( 'json_05/%s' % var )
-      fcsv = open( 'csv_05b/%s.csv' % var, 'w' )
-      ffcsv = open( 'csvf_05b/%s_fails.csv' % var, 'w' )
-      mkd = open( 'csvf_05b/%s_fails.md' % var, 'w' )
+      assert os.path.isdir( 'json_08/%s' % var )
+      fcsv = open( 'csv_08/%s.csv' % var, 'w' )
+      ffcsv = open( 'csvf_08/%s_fails.csv' % var, 'w' )
+      mkd = open( 'csvf_08/%s_fails.md' % var, 'w' )
       j.run_test(test_var=var, all=True, fcsv=fcsv, ffcsv=ffcsv, mkd=mkd )
       fcsv.close()

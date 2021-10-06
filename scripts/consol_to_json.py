@@ -445,14 +445,14 @@ if __name__ == "__main__":
 ##
 ## e.g. python consol_to_json.py -m inputs_06/historical/x3_day_tas.txt 
 ##
-    group = 5
+    group = 8
     input_files = []
     isFixed = sys.argv[2].find( 'fx' ) != -1
     for l in open( sys.argv[2] ).readlines():
       if len( l.strip() ) > 0:
         fns = l.strip().rpartition('/')[-1].rpartition('.')[0]
         var,tab = fns.split('_')[:2]
-        testf = 'sh_05/%s.%s/%s.dat' % (tab,var,fns)
+        testf = 'sh_%2.2i/%s.%s/%s.dat' % (group,tab,var,fns)
         if not os.path.isfile( testf ):
           print ( 'No results for %s' % fns )
         else:
@@ -471,7 +471,7 @@ if __name__ == "__main__":
     d1 = ssort( input_files, fixed=isFixed )
     varid = sys.argv[2].rpartition('/')[-1]
 
-    NO_OVERWRITE = False
+    NO_OVERWRITE = True
     print( d1.keys() )
     for k in sorted( list( d1.keys() ) ):
       json_file = 'json_%2.2i/%s/%s.json' % (group,varid,k)

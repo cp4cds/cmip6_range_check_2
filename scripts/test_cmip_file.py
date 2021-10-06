@@ -316,8 +316,8 @@ class ConcTestCmipFile(TestCmipFile):
         self.input_file=input_file
 
 NO_REPEAT_TEST = False
-NO_REPEAT_TEST_BY_PATH = True
 NO_REPEAT_TEST_BY_PATH = False
+NO_REPEAT_TEST_BY_PATH = True
 
 if __name__ == "__main__":
 ##
@@ -335,7 +335,7 @@ if __name__ == "__main__":
     log_factory = generic_utils.LogFactory(dir=log_dir)
 
     date_ymd = '%s%2.2i%2.2i' % time.gmtime()[:3] 
-    log_name = '%s.%s' % (table,vname)
+    log_name = os.environ.get( 'LOG_FILE_NAME', '%s.%s' % (table,vname) )
     log_file = '%s.%s' % (log_name, date_ymd)
     log_wf  = log_factory( '%s.%s' % (table,vname), mode="a", logfile=log_file, warnings=True )
     log_wf.info( 'STARTING test_cmip_file.py WORKFLOW, %s, %s' % ( time.ctime(), fname)  )

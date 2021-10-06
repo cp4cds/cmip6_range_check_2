@@ -80,7 +80,7 @@ class Rsplat(object):
      jfile = '../_work/QC_template.json'
      jfile = '../_work/QC_template_v3_20210317.json'
      jfile = '../_work/QC_template_v5_2021-03-25.json'
-     jfile = '../_work/QC_template_batch4.json'
+     jfile = '../_work/QC_template_batch4_v4.json'
      ee = json.load( open( jfile, 'r' ) )
      cc = collections.defaultdict( list )
      ff = collections.defaultdict( list )
@@ -99,7 +99,7 @@ class Rsplat(object):
        if table == 'fx':
          print ( '001: %s' % ds )
        if __ignore_qc__ or d['qc_status'] == 'pass' or (__all__ and d['qc_status'] != 'ERROR'):
-         cc[(expt,table,var)].append( d )
+         cc[(expt,variant,table,var)].append( d )
        elif d['qc_message'] == 'No variable limits provided':
            ff[(table,var)].append(ds)
      self.cc = cc
@@ -118,7 +118,7 @@ class Rsplat(object):
        d0 = 'inputs_%2.2i/%s' %  (self.group,k[0])
        if not os.path.isdir(d0):
          os.mkdir( d0 )
-       oo = open( 'inputs_%2.2i/%s/x1_%s_%s.txt' % (self.group,*k), 'w' )
+       oo = open( 'inputs_%2.2i/%s/x4_%s_%s_%s.txt' % (self.group,*k), 'w' )
        for d in item:
          if k[1] == 'fx':
            print ( '002: %s, %s' % (d['dset_id'], len( d['files'])) )
@@ -132,17 +132,20 @@ class Rsplat(object):
        oo.close()
        
 
-def scan_group(a='inputs_05b', var='Omon.sos', input_key='x3a', out_key='x4'):
+def scan_group(a='inputs_05b', var='Omon.sos', input_key='x3a', out_key='x4', odir='out_05'):
   """INCOMPLETE"""
   tab,vn = var.split( '.' )
   dl = glob.glob( '%s/*' % a )
+  print( 'dl', dl )
   fl = []
   nn = 0
   na = 0
   nnn =0
   np = 0
+  group = odir.rpartition( '_')[-1]
   for d in dl:
-    fl = sorted( list( glob.glob( '%s/%s_%s_%s.txt' % (d,input_key,tab,vn) ) ) )
+    ##x4_s1963-r2i1p1f1_day_pr.txt
+    fl = sorted( list( glob.glob( '%s/%s_*_%s_%s.txt' % (d,input_key,tab,vn) ) ) )
     for  file_manifest in sorted( fl ):
        pl = [x.strip() for x in open(file_manifest).readlines() ]
        np += len(pl)
@@ -159,7 +162,7 @@ def scan_group(a='inputs_05b', var='Omon.sos', input_key='x3a', out_key='x4'):
          else:
            fn = p.rpartition( '/' )[-1]
            fs = fn.rpartition( '.' )[0]
-           thisf = 'out_05/%s/%s' % (var,fs)
+           thisf = '%s/%s/%s' % (odir,var,fs)
            if not os.path.isfile( thisf ):
              nnn += 1
              flo.append(p)
@@ -169,7 +172,7 @@ def scan_group(a='inputs_05b', var='Omon.sos', input_key='x3a', out_key='x4'):
                nnn+=1
                print ( 'FILE INCOMPLETE: %s' % thisf )
                flo2.append(p)
-               os.rename( thisf, 'incomplete_05b/%s' % thisf.rpartition( '/' )[-1] )
+               os.rename( thisf, 'incomplete_%sb/%s' % (group,thisf.rpartition( '/' )[-1]) )
 
        if len(flo) > 0 or len(flo2) > 0:
          #op = file_manifest.replace( 'inputs_05', 'inputs_05b' )
@@ -180,6 +183,7 @@ def scan_group(a='inputs_05b', var='Omon.sos', input_key='x3a', out_key='x4'):
          diro = d
          if not os.path.isdir( diro ):
            os.mkdir( diro )
+           print ('CREATING DIRECTORY: ',diro )
          if len( flo + flo2 ) > 0:
            oo = open( op1, 'w' )
            for l in flo + flo2:
@@ -214,23 +218,38 @@ if __name__ == '__main__':
   ##vars = [x.strip() for x in open( 'data/vars.txt' ).readlines()]
   vars = [x.strip() for x in open( 'vars3.txt' ).readlines()]
   if len(sys.argv) > 1:
-    if sys.argv[1] == '-s':
+    if sys.argv[1] == '-h':
+      print( 'No args: scan json file and create text files listing netcdf files' )
+      print( '-s : check results for a single variable ... configured for out_05 and Amon.ts' )
+      print( '-S [out_08|bar|all]: check results for a group ... configuration in code needed' )
+    elif sys.argv[1] == '-s':
 #
 # text .. run with specific variable
-       scan_group(a='inputs_06',var='Amon.ts')
+       ##scan_group(a='inputs_06',var='Amon.ts')
+      if len(sys.argv) > 2:
+         target_var = sys.argv[2] 
+      else:
+         target_var = 'Amon.tas'
+      scan_group(a='inputs_08',var=target_var, input_key='x4', out_key='x6', odir='out_08')
     elif sys.argv[1] == '-S':
+      if sys.argv[2] == 'out_08':
+         vars = [x.rpartition('/')[-1] for x in glob.gob( 'out_08/*' )]
+         print (vars)
+         for v in vars:
+           scan_group(a='inputs_08',var=v, input_key='x4', out_key='x5', odir='out_08')
+      else:
 #
 # current production: run over coded subset
 #
-       tt = 'bar'
-       if len( sys.argv ) == 3:
-         tt = sys.argv[2]
-       for v in vars:
-         tab = v.rpartition('.')[0]
-         if tt == 'bar' and tab not in ['Amon','Omon']:
-           scan_group(a='inputs_06',var=v)
-         elif tt == tab or tt == 'all':
-           scan_group(a='inputs_07',var=v, input_key='x1', out_key='x4')
+        tt = 'bar'
+        if len( sys.argv ) == 3:
+          tt = sys.argv[2]
+        for v in vars:
+          tab = v.rpartition('.')[0]
+          if tt == 'bar' and tab not in ['Amon','Omon']:
+            scan_group(a='inputs_06',var=v)
+          elif tt == tab or tt == 'all':
+            scan_group(a='inputs_07',var=v, input_key='x1', out_key='x4')
   else:
     r = Rsplat(group=8)
     r.splat()
